@@ -7,7 +7,13 @@
 
 import Foundation
 
-class Store {
+class Store: Equatable {
+    static func == (lhs: Store, rhs: Store) -> Bool {
+        (lhs.name.caseInsensitiveCompare(rhs.name) == .orderedSame) && (lhs.location.caseInsensitiveCompare(rhs.location) == .orderedSame)
+    }
+    
+    var name: String = ""
+    var location: String = ""
     var timeSpentBuying: Int = 0
     var timeSpentSelling: Int = 0
     var recordsBought: Int = 0

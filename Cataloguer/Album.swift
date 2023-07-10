@@ -38,4 +38,18 @@ struct Album {
         self.store = store
         self.records = records
     }
+    
+    /// - Description: Helper function counts the number of records in an array of albums
+    /// - Parameter albums: Array of albums
+    /// - Returns: Number of records in all of the albums
+    static func recordCount(_ albums: [Album]) -> Int {
+        var count: Int = 0
+        for album in albums {
+            count += album.records.count
+        }
+        
+        return count
+    }
 }
+
+
