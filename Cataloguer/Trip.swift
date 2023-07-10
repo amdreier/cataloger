@@ -151,6 +151,8 @@ struct Trip {
     ///   - newValue: New timeSpent value
     /// - Throws: illegalStore exception if stop index out of bounds
     mutating func editTimeSpent(stop: Int, newValue: Double) throws {
-        
+        if stop >= stores.count || stop < 0 {
+            throw illegalArgument.illegalStore(message: "Stop outside of Stops range when editing timeSpent: \(stop)")
+        }
     }
 }
