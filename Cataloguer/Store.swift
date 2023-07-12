@@ -7,6 +7,8 @@
 
 import Foundation
 
+
+/// - TODO: Add metric calculations
 class Store: Equatable {
     static func == (lhs: Store, rhs: Store) -> Bool {
         (lhs.name.caseInsensitiveCompare(rhs.name) == .orderedSame) && (lhs.location.caseInsensitiveCompare(rhs.location) == .orderedSame)

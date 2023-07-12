@@ -56,6 +56,13 @@ struct Trip {
         updateAverages()
     }
     
+    
+    /// - Description: Ends the Trip, updates User catalogue, unique tracks, and wishlist, updates Store metrics
+    /// - TODO: Finish method in line with description
+    mutating func endTrip() {
+        self.isFinished = true
+    }
+    
     /// - Description: Adds a bought album to the list for the corresponding index
     /// - Parameters:
     ///   - stop: Which stop/store in the Trip to add the Album
@@ -145,14 +152,56 @@ struct Trip {
         self.averageSellPrice = (Double (self.totalMoneySpent)) / (Double (self.numRecordsSold))
     }
     
-    /// - Description: Edits timeSpent for a stop
+    /// - Description: Sets timeSpent for a stop
     /// - Parameters:
-    ///   - stop: Stop index to edit
+    ///   - stop: Stop index to set
     ///   - newValue: New timeSpent value
     /// - Throws: illegalStore exception if stop index out of bounds
-    mutating func editTimeSpent(stop: Int, newValue: Double) throws {
+    mutating func setTimeSpent(stop: Int, newValue: Int) throws {
         if stop >= stores.count || stop < 0 {
             throw illegalArgument.illegalStore(message: "Stop outside of Stops range when editing timeSpent: \(stop)")
         }
+        
+        self.timeSpent[stop] = newValue
+    }
+    
+    /// - Description: Sets moneySpent for a stop
+    /// - Parameters:
+    ///   - stop: Stop index to set
+    ///   - newValue: New moneySpent value
+    /// - Throws: illegalStore exception if stop index out of bounds
+    mutating func setMoneySpent(stop: Int, newValue: Double) throws {
+        if stop >= stores.count || stop < 0 {
+            throw illegalArgument.illegalStore(message: "Stop outside of Stops range when editing moneySpent: \(stop)")
+        }
+        
+        self.totalMoneySpent -= self.moneySpent[stop]
+        self.moneySpent[stop] = newValue
+        self.totalMoneySpent += self.moneySpent[stop]
+        
+        updateAverages()
+    }
+    
+    /// - Description: Sets moneyEarned for a stop
+    /// - Parameters:
+    ///   - stop: Stop index to set
+    ///   - newValue: New moneyEarned value
+    /// - Throws: illegalStore exception if stop index out of bounds
+    mutating func setMoneyEarned(stop: Int, newValue: Double) throws {
+        if stop >= stores.count || stop < 0 {
+            throw illegalArgument.illegalStore(message: "Stop outside of Stops range when editing moneyEarned: \(stop)")
+        }
+        
+        self.totalMoneyEarned -= self.moneyEarned[stop]
+        self.moneyEarned[stop] = newValue
+        self.totalMoneyEarned += self.moneyEarned[stop]
+        
+        updateAverages()
+    }
+    
+    /// - Description: Sets totalTimeTraveled
+    /// - Parameter newValue: Value to give to TotalTimeTraveled
+    mutating func setTotalTimeTraveled(newValue: Int) {
+        self.totalTimeTraveled = newValue
     }
 }
