@@ -7,11 +7,12 @@
 
 import Foundation
 
-struct Album {
+struct Album: Hashable {
     var isCompilation: Bool     // songs not originally released together
     var isMix: Bool             // different artists
     var isGH: Bool              // greatest hits
     var isCollection: Bool      // box set, etc
+    var isLive: Bool            // is this is a live recording
     var genre: String           // from standard list
     var releaseYear: Int        // release year
     var title: String           // Album title
@@ -23,11 +24,12 @@ struct Album {
     
     var records = [Record]()
     
-    init(isCompilation: Bool, isMix: Bool, isGH: Bool, isCollection: Bool, genre: String, releaseYear: Int, title: String, label: String, artists: [String] = [String](), value: Double, cost: Double, store: Store? = nil, records: [Record] = [Record]()) {
+    init(isCompilation: Bool, isMix: Bool, isGH: Bool, isCollection: Bool, isLive: Bool, genre: String, releaseYear: Int, title: String, label: String, artists: [String] = [String](), value: Double, cost: Double, store: Store? = nil, records: [Record] = [Record]()) {
         self.isCompilation = isCompilation
         self.isMix = isMix
         self.isGH = isGH
         self.isCollection = isCollection
+        self.isLive = isLive
         self.genre = genre
         self.releaseYear = releaseYear
         self.title = title
@@ -37,6 +39,18 @@ struct Album {
         self.cost = cost
         self.store = store
         self.records = records
+    }
+    
+    
+    /// - Description: Gets all the Tracks on an album
+    /// - Returns: An array of all Tracks on the album
+    func getTracks() -> [Track] {
+        var tracks = [Track]()
+        for record in records {
+            tracks.append(contentsOf: record.tracks)
+        }
+        
+        return tracks
     }
     
     /// - Description: Helper function counts the number of records in an array of albums

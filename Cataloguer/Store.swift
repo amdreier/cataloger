@@ -9,11 +9,8 @@ import Foundation
 
 
 /// - TODO: Add metric calculations
-class Store: Equatable {
-    static func == (lhs: Store, rhs: Store) -> Bool {
-        (lhs.name.caseInsensitiveCompare(rhs.name) == .orderedSame) && (lhs.location.caseInsensitiveCompare(rhs.location) == .orderedSame)
-    }
-    
+///     - Breakdowns of metrics by genre
+class Store: Equatable, Hashable {
     var name: String = ""
     var location: String = ""
     var timeSpentBuying: Int = 0
@@ -26,4 +23,16 @@ class Store: Equatable {
     var tripsBuying: Int = 0
     var tripsSelling: Int = 0
     var travelTime: Int = 0
+    
+    /* Calculated Metrics */
+    var pricePerRecord: Double = 0
+    var averageSellPrice: Double = 0
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self))
+    }
+    
+    static func ==(lhs: Store, rhs: Store) -> Bool {
+        (lhs.name.caseInsensitiveCompare(rhs.name) == .orderedSame) && (lhs.location.caseInsensitiveCompare(rhs.location) == .orderedSame)
+    }
 }
