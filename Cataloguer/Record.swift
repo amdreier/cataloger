@@ -25,7 +25,12 @@ class Record: Equatable, Hashable {
     
     var tracks = [Track]()      // list of all songs on the record
     
-    var uniqueTracks: UniqueTracks = UniqueTracks()
+    /// All Tracks with this filter NOT in NoFilter AND NOT in SameArtist
+    var uniqueTracksSameVersion = Set<Track>()
+    /// All Tracks with this filter NOT in NoFilter
+    var uniqueTracksSameArtists = Set<Track>()
+    /// All Tracks with this filter
+    var uniqueTracksNoFilter = Set<Track>()
     
     init(isCompilation: Bool, isMix: Bool, isGH: Bool, isCollection: Bool, isLive: Bool, genre: String, releaseYear: Int, title: String, label: String, artists: [String] = [String](), speed: Int, value: Double, cost: Double, store: Store? = nil, tracks: [Track] = [Track]()) {
         self.isCompilation = isCompilation
