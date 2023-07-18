@@ -27,21 +27,31 @@ struct UniqueTracks {
     }
     
     /* Uniqueness data structure */
-    enum Uniqueness {
+    enum Uniqueness: Int, Comparable {
         /// No track has the same title, artist, or version
-        case unique
+        case unique = 3
         /// No track has the same artist or version, but there is at least one with the same title
-        case title
+        case title = 2
         /// No track has the same version, but there is at least one with the same title and artist
-        case artist
+        case artist = 1
         /// There is at least one other track with the same title, artist, and version
-        case version
+        case version = 0
+        
+        static func <(lhs: Uniqueness, rhs: Uniqueness) -> Bool {
+            lhs.rawValue < rhs.rawValue
+        }
     }
     
     enum NewUnique {
         case newUnique(unique: [Track], title: [Track], artist: [Track])
     }
     
+    
+    var tracksByTitle: [TrackTitle: [Track]] = [:]
+    var tracksByArtist: [TrackTitleAndArtists: [Track]] = [:]
+    var tracksByVersion: [TrackVersion: [Track]] = [:]
+    
+    /*
     /*
      *  Logically ordered A⊆B⊆C
      *  To conserve memory, this is actually storing A, then B - A, then (C - A) - B
@@ -52,54 +62,126 @@ struct UniqueTracks {
      *        same artist filter, as this is implied
      *      - If a Track is a duplicate by the same artist filter, it'll still be a duplicate with no filter
      */
+    
+    
     /* Unique Tracks */
-    /// All Tracks with this filter NOT in NoFilter AND NOT in SameArtist
-    var uniqueTracksSameVersion: [TrackVersion: Track] = [:]
-    /// All Tracks with this filter NOT in NoFilter
-    var uniqueTracksSameArtists: [TrackTitleAndArtists: Track] = [:]
-    /// All Tracks with this filter
+    /// All Tracks with this filter (nothing with same title)
     var uniqueTracksNoFilter: [TrackTitle: Track] = [:]
+    /// All Tracks with this filter NOT in NoFilter (nothing with same artist, but same name)
+    var uniqueTracksSameArtists: [TrackTitleAndArtists: Track] = [:]
+    /// All Tracks with this filter NOT in NoFilter AND NOT in SameArtist (nothing with same version, but same artist and title)
+    var uniqueTracksSameVersion: [TrackVersion: Track] = [:]
     
     /* Duplicate Tracks (Dict Track string info name ) */
     /// All Tracks makred Duplicate matching all criteria
     var duplicateTracksSameVersion: [TrackVersion: [Track]] = [:]
-    /// All Tracks marked Duplicate,  Artist but not version
+    /// All Tracks marked Duplicate,  by same Artist but not same version
     var duplicateTracksSameArtists: [TrackTitleAndArtists: [Track]] = [:]
-    /// All Tracks marked Duplicate, just same version, but not same
+    /// All Tracks marked Duplicate, just same title, but not same artist or version
     var duplicateTracksNoFilter: [TrackTitle: [Track]] = [:]
     
-    /// <#Description#>
-    /// - Parameter track: <#track description#>
-    /// - Returns: <#description#>
+    */
+    /// - Description: Adds a track to the uniqueness tracker of all tracks and updates the corresponding records
+    /// - Parameter track: The track to be added to the uniqueness tracker
+    /// - Returns: The Uniqueness of the track for this Catelogue
     mutating func addTrack(track: Track) -> Uniqueness {
-        var uniqueness: Uniqueness = Uniqueness.unique
+        let trkTtl = TrackTitle.title(track.title)
+        let trkArtsTtl = TrackTitleAndArtists.titleAndArtist(title: track.title, artists: track.artists)
+        let trkVrsn = TrackVersion.version(title: track.title, artists: track.artists, releaseYear: track.releaseYear, isLive: track.isLive)
+        var uniqueness = Uniqueness.unique
         
-        let noFilter: Track? = uniqueTracksNoFilter[TrackTitle.title(track.title)]
-        let artists: Track? = uniqueTracksSameArtists[TrackTitleAndArtists.titleAndArtist(title: track.title, artists: track.artists)]
-        let version: Track? = uniqueTracksSameVersion[TrackVersion.version(title: track.title, artists: track.artists, releaseYear: track.releaseYear, isLive: track.isLive)]
+        var byTitle = tracksByTitle[trkTtl]
+        var byArtist = tracksByArtist[trkArtsTtl]
+        var byVersion = tracksByVersion[trkVrsn]
         
-        
-        /// = TODO: RECHECK LOGIC!!!! Then, add in actual functionality of adding to and removing from the correct sets, finish docs
-        if version == nil {
-            uniqueness = Uniqueness.artist
-        } else {
-            uniqueness = Uniqueness.version
-            return uniqueness
-        }
-        
-        if artists == nil {
+        if byTitle != nil {
             uniqueness = Uniqueness.title
+            if (byTitle?.count == 1) {
+                byTitle?[0].updateUniqueness(newUniqueness: uniqueness)
+            }
+            
+            byTitle?.append(track)
         } else {
-            return uniqueness
+            tracksByTitle[trkTtl] = [track]
         }
         
-        if noFilter == nil {
-            uniqueness = Uniqueness.unique
+        if byArtist != nil {
+            uniqueness = Uniqueness.artist
+            if (byArtist?.count == 1) {
+                byArtist?[0].updateUniqueness(newUniqueness: uniqueness)
+            }
+            
+            byArtist?.append(track)
         } else {
-            return uniqueness
+            tracksByArtist[trkArtsTtl] = [track]
         }
         
+        if byVersion != nil {
+            uniqueness = Uniqueness.version
+            if (byVersion?.count == 1) {
+                byVersion?[0].updateUniqueness(newUniqueness: uniqueness)
+            }
+            
+            byVersion?.append(track)
+        } else {
+            tracksByVersion[trkVrsn] = [track]
+        }
+        
+        track.updateUniqueness(newUniqueness: uniqueness)
         return uniqueness
+        /*
+        var noFilter: Track? = uniqueTracksNoFilter[trkTtl]
+        var artists: Track? = uniqueTracksSameArtists[trkArtsTtl]
+        var version: Track? = uniqueTracksSameVersion[trkVrsn]
+        
+        var noFilterDupe: [Track]? = duplicateTracksNoFilter[trkTtl]
+        var artistsDupe: [Track]? = duplicateTracksSameArtists[trkArtsTtl]
+        var versionDupe: [Track]? = duplicateTracksSameVersion[trkVrsn]
+        
+        /*
+         * Easiest to distinguish by uniqueness, checking all ways it could be each uniqueness, and acting acordingly
+         * Checking in the order allows the track to be added to the correct list, as if there's a match, there's a lower bound on uniqueness
+         */
+        
+        if versionDupe != nil {
+            versionDupe?.append(track)
+            return Uniqueness.version
+        }
+        
+        if version != nil {
+            let value = uniqueTracksSameVersion.removeValue(forKey: trkVrsn)
+            duplicateTracksSameVersion[trkVrsn] = [track, value!]
+            track.record?.uniqueTracksSameVersion.remove(track)
+            return Uniqueness.version
+        }
+        
+        if artistsDupe != nil {
+            artistsDupe?.append(track)
+            return Uniqueness.artist
+        }
+        
+        if artists != nil {
+            let value = uniqueTracksSameArtists.removeValue(forKey: trkArtsTtl)
+            duplicateTracksSameArtists[trkArtsTtl] = [track, value!]
+            uniqueTracksSameVersion[trkVrsn] = track
+            return Uniqueness.artist
+        }
+        
+        
+        if noFilter != nil {
+            
+        }
+        
+        if noFilterDupe != nil {
+            
+        }
+        
+        
+        uniqueTracksNoFilter[trkTtl] = track
+         
+        
+        return Uniqueness.unique
+        */
     }
     
     /// - TODO: implement and finish dos

@@ -7,24 +7,29 @@
 
 import Foundation
 
-struct Album: Hashable {
-    var isCompilation: Bool     // songs not originally released together
-    var isMix: Bool             // different artists
-    var isGH: Bool              // greatest hits
-    var isCollection: Bool      // box set, etc
-    var isLive: Bool            // is this is a live recording
-    var genre: String           // from standard list
-    var releaseYear: Int        // release year
-    var title: String           // Album title
-    var label: String           // release label company
-    var artists = [String]()    // all artists/band names, LastName, FirstName MiddleNames/BandName, The
-    var value: Double           // resale price USD
-    var cost: Double            // paid price USD
-    var store: Store?            // where it was bought
+class Album: Hashable {
+    static func ==(lhs: Album, rhs: Album) -> Bool {
+        lhs.isCompilation == rhs.isCompilation && lhs.isMix == rhs.isMix && lhs.isGH == rhs.isGH && lhs.isCollection == rhs.isCollection && lhs.isLive == rhs.isLive && lhs.genre == rhs.genre && lhs.releaseYear == rhs.releaseYear && lhs.title == rhs.title && lhs.label == rhs.label && lhs.artists == rhs.artists && lhs.value == rhs.value && lhs.cost == rhs.cost && lhs.uniqueness == rhs.uniqueness && lhs.store == rhs.store && lhs.records == rhs.records
+    }
+    
+    var isCompilation: Bool                 // songs not originally released together
+    var isMix: Bool                         // different artists
+    var isGH: Bool                          // greatest hits
+    var isCollection: Bool                  // box set, etc
+    var isLive: Bool                        // is this is a live recording
+    var genre: String                       // from standard list
+    var releaseYear: Int                    // release year
+    var title: String                       // Album title
+    var label: String                       // release label company
+    var artists = [String]()                // all artists/band names, LastName, FirstName MiddleNames/BandName, The
+    var value: Double                       // resale price USD
+    var cost: Double                        // paid price USD
+    var uniqueness: UniqueTracks.Uniqueness // the uniquenss of the most unique record in the album
+    var store: Store?                       // where it was bought
     
     var records = [Record]()
     
-    init(isCompilation: Bool, isMix: Bool, isGH: Bool, isCollection: Bool, isLive: Bool, genre: String, releaseYear: Int, title: String, label: String, artists: [String] = [String](), value: Double, cost: Double, store: Store? = nil, records: [Record] = [Record]()) {
+    init(isCompilation: Bool, isMix: Bool, isGH: Bool, isCollection: Bool, isLive: Bool, genre: String, releaseYear: Int, title: String, label: String, artists: [String] = [String](), value: Double, cost: Double, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, store: Store? = nil, records: [Record] = [Record]()) {
         self.isCompilation = isCompilation
         self.isMix = isMix
         self.isGH = isGH
@@ -37,8 +42,19 @@ struct Album: Hashable {
         self.artists = artists
         self.value = value
         self.cost = cost
+        self.uniqueness = uniqueness
         self.store = store
         self.records = records
+    }
+    
+    func updateUniqueness(newUniqueness: UniqueTracks.Uniqueness) {
+        if newUniqueness > self.uniqueness {
+            self.uniqueness = newUniqueness
+        }
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(ObjectIdentifier(self))
     }
     
     
