@@ -57,6 +57,15 @@ class Album: Hashable {
         hasher.combine(ObjectIdentifier(self))
     }
     
+    func recheckUniqueness() -> UniqueTracks.Uniqueness {
+        self.uniqueness = UniqueTracks.Uniqueness.version
+        for record in records {
+            self.updateUniqueness(newUniqueness: record.uniqueness)
+        }
+        
+        return self.uniqueness
+    }
+    
     
     /// - Description: Gets all the Tracks on an album
     /// - Returns: An array of all Tracks on the album

@@ -43,7 +43,8 @@ struct UniqueTracks {
     }
     
     enum NewUnique {
-        case newUnique(unique: [Track], title: [Track], artist: [Track])
+        case none
+        case newUnique(track: Track, uniqueness: Uniqueness)
     }
     
     
@@ -184,11 +185,56 @@ struct UniqueTracks {
         */
     }
     
-    /// - TODO: implement and finish dos
-    /// <#Description#>
-    /// - Parameter track: <#track description#>
-    /// - Returns: <#description#>
+    /// - Description: Removes a track from the filters
+    /// - Parameter track: Track to remove from filter
+    /// - Returns: A 3-tuple of tracks which have new uniqueness values, each slot for  the uniqueness they got, or nil if the track doesn't exist
     mutating func removeTrack(track: Track) -> NewUnique? {
-        return nil
+        let trkTtl = TrackTitle.title(track.title)
+        let trkArtsTtl = TrackTitleAndArtists.titleAndArtist(title: track.title, artists: track.artists)
+        let trkVrsn = TrackVersion.version(title: track.title, artists: track.artists, releaseYear: track.releaseYear, isLive: track.isLive)
+        
+        var byTitle = tracksByTitle[trkTtl]
+        var byArtist = tracksByArtist[trkArtsTtl]
+        var byVersion = tracksByVersion[trkVrsn]
+        
+        if byTitle == nil {
+            return nil
+        }
+        
+        // Need to update record and album if this is the most unique on the record
+        track.record?.removeTrack(track)
+        
+        var newUnique: Track?
+        var uniqueness: Uniqueness?
+        
+        let indexVersion = (byVersion?.firstIndex(of: track))!
+        byVersion?.remove(at: indexVersion)
+        // This tracks need their uniquness updated
+        if byVersion?.count == 1 {
+            newUnique = byVersion?[0]
+            uniqueness = Uniqueness.artist
+        }
+    
+        let indexArtist = (byArtist?.firstIndex(of: track))!
+        byArtist?.remove(at: indexArtist)
+        // This tracks need their uniquness updated
+        if byArtist?.count == 1 {
+            newUnique = byArtist?[0]
+            uniqueness = Uniqueness.title
+        }
+        
+        let indexTitle = (byTitle?.firstIndex(of: track))!
+        byTitle?.remove(at: indexTitle)
+        // This tracks need their uniquness updated
+        if byTitle?.count == 1 {
+            newUnique = byTitle?[0]
+            uniqueness = Uniqueness.unique
+        }
+
+        if newUnique != nil {
+            return NewUnique.newUnique(track: newUnique!, uniqueness: uniqueness!)
+        } else {
+            return NewUnique.none
+        }
     }
 }

@@ -27,13 +27,6 @@ class Record: Equatable, Hashable {
     
     var tracks = [Track]()                  // list of all songs on the record
     
-    /// All Tracks with this filter NOT in NoFilter AND NOT in SameArtist
-    var uniqueTracksSameVersion = Set<Track>()
-    /// All Tracks with this filter NOT in NoFilter
-    var uniqueTracksSameArtists = Set<Track>()
-    /// All Tracks with this filter
-    var uniqueTracksNoFilter = Set<Track>()
-    
     init(isCompilation: Bool, isMix: Bool, isGH: Bool, isCollection: Bool, isLive: Bool, genre: String, releaseYear: Int, title: String, label: String, artists: [String] = [String](), speed: Int, value: Double, cost: Double, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, album: Album, store: Store? = nil, tracks: [Track] = [Track]()) {
         self.isCompilation = isCompilation
         self.isMix = isMix
@@ -56,6 +49,27 @@ class Record: Equatable, Hashable {
     
     func hash(into hasher: inout Hasher) {
         hasher.combine(ObjectIdentifier(self))
+    }
+    
+    func removeTrack(_ track: Track) -> Bool {
+        let index = tracks.firstIndex(of: track)
+        if index != nil {
+            tracks.remove(at: index!)
+            let _ = self.recheckUniqueness()
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func recheckUniqueness() -> UniqueTracks.Uniqueness {
+        self.uniqueness = UniqueTracks.Uniqueness.version
+        for track in tracks {
+            self.updateUniqueness(newUniqueness: track.uniqueness)
+        }
+        
+        let _ = self.album.recheckUniqueness()
+        return self.uniqueness
     }
     
     func updateUniqueness(newUniqueness: UniqueTracks.Uniqueness) {

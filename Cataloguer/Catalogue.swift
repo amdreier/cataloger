@@ -22,8 +22,20 @@ struct Catalogue {
             }
         }
         
-        album.uniqueness = uniqueness
         return uniqueness
+    }
+    
+    mutating func removeAlbum(album: Album) -> Bool {
+        let index = allAlbums.firstIndex(of: album)
+        if index != nil {
+            allAlbums.remove(at: index!)
+            for track in album.getTracks() {
+                let _ = uniqueTracks.removeTrack(track: track)
+            }
+            return true
+        } else {
+            return false
+        }
     }
     
     func getAllTracks() -> [Track] {
