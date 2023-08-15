@@ -202,7 +202,7 @@ struct UniqueTracks {
         }
         
         // Need to update record and album if this is the most unique on the record
-        track.record?.removeTrack(track)
+        let _ = track.record?.removeTrack(track)
         
         var newUnique: Track?
         var uniqueness: Uniqueness?

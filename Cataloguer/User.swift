@@ -20,4 +20,19 @@ class User {
     func setUsername(username: String) {
         self.username = username
     }
+    
+    func startTrip() -> Trip {
+        let newTrip = Trip(self)
+        trips.append(newTrip)
+        return newTrip
+    }
+    
+    func tripsString() -> String {
+        var output = ""
+        for trip in trips {
+            output += trip.description + ", "
+        }
+        
+        return output
+    }
 }

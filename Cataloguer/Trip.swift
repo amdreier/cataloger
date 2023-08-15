@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Trip {
+struct Trip: CustomStringConvertible {
     var isFinished = false              // if the trip is still in progress
     var stores = [Store]()              // stores visited in ordered (with duplicates for return stops)
     
@@ -18,15 +18,24 @@ struct Trip {
     var timeSpent = [Int]()             // time spent in each store with corresponding array index
     var moneySpent = [Double]()         // money spent in each store with corresponding array index
     var moneyEarned = [Double]()        // money earned in each store with corresponding array index
-    var totalMoneySpent: Double         // total money spent at all stores
-    var totalMoneyEarned: Double        // total moeny earned at each store
+    var totalMoneySpent: Double = 0     // total money spent at all stores
+    var totalMoneyEarned: Double = 0    // total moeny earned at each store
     var totalTimeTraveled: Int = 0      // total time spent traveling for this trip
-    var numRecordsBought: Int           // total number of records bought on this trip so far
-    var numRecordsSold: Int             // total number of records sold on this trip so far
+    var numRecordsBought: Int = 0       // total number of records bought on this trip so far
+    var numRecordsSold: Int = 0         // total number of records sold on this trip so far
     
     var pricePerRecord: Double = 0      // average price per record bought
     var averageSellPrice: Double = 0    // average sell price for each record sold
     
+    var description: String {
+        String(numRecordsBought)
+    }
+    
+    var user: User
+    
+    init(_ user: User) {
+        self.user = user
+    }
     
     enum illegalArgument: Error {
         case illegalStore(message: String)

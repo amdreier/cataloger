@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// - TODO: Add and remove records from albums
+
 struct Catalogue {
     var allAlbums = [Album]()
     var uniqueTracks = UniqueTracks()
@@ -38,6 +40,16 @@ struct Catalogue {
         }
     }
     
+    mutating func addRecord(record: Record, album: Album) -> Bool {
+        let index = allAlbums.firstIndex(of: album)
+        if index != nil {
+            allAlbums[index!].addRecord(record)
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func getAllTracks() -> [Track] {
         var tracks = [Track]()
         for album in allAlbums {
@@ -45,5 +57,26 @@ struct Catalogue {
         }
         
         return tracks
+    }
+    
+    func getAllRecords() -> [Record] {
+        var records = [Record]()
+        for album in allAlbums {
+            records.append(contentsOf: album.records)
+        }
+        
+        return records
+    }
+    
+    func contains(_ album: Album) -> Bool {
+        allAlbums.contains(album)
+    }
+    
+    func contains(_ record: Record) -> Bool {
+        getAllRecords().contains(record)
+    }
+    
+    func contains(_ track: Track) -> Bool {
+        getAllTracks().contains(track)
     }
 }

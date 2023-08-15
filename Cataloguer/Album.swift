@@ -53,6 +53,11 @@ class Album: Hashable {
         }
     }
     
+    func addRecord(_ record: Record) {
+        records.append(record)
+        let _ = recheckUniqueness()
+    }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(ObjectIdentifier(self))
     }
