@@ -10,9 +10,15 @@ import Foundation
 class CataloguerModel: ObservableObject {
     @Published var user = User()
     
-    @Published var currentTrip: Trip? = nil
+    @Published var currentTrip: Trip? = Trip(User())
     
     func startTrip() {
+        endTrip()
         currentTrip = user.startTrip()
+    }
+    
+    func endTrip() {
+        currentTrip?.endTrip()
+        currentTrip = nil
     }
 }

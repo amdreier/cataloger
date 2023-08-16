@@ -15,12 +15,14 @@ struct Trip: CustomStringConvertible {
     var newAlbums = [[Album]]()         // albums bought
     var soldAlbums = [[Album]]()        // albums sold
     
+    var totalTimeSpent: Int = 0         // total time spent at all stores
     var timeSpent = [Int]()             // time spent in each store with corresponding array index
     var moneySpent = [Double]()         // money spent in each store with corresponding array index
     var moneyEarned = [Double]()        // money earned in each store with corresponding array index
     var totalMoneySpent: Double = 0     // total money spent at all stores
     var totalMoneyEarned: Double = 0    // total moeny earned at each store
     var totalTimeTraveled: Int = 0      // total time spent traveling for this trip
+    var timeTraveled = [Int]()          // time traveled from last location to location i
     var numRecordsBought: Int = 0       // total number of records bought on this trip so far
     var numRecordsSold: Int = 0         // total number of records sold on this trip so far
     
@@ -57,7 +59,11 @@ struct Trip: CustomStringConvertible {
         self.soldAlbums.append(albumsSold)
         self.moneySpent.append(moneySpent)
         self.moneyEarned.append(moneyEarned)
+        self.totalMoneySpent += moneySpent
+        self.totalMoneyEarned += moneyEarned
         self.totalTimeTraveled += timeTraveled
+        self.timeTraveled.append(timeTraveled)
+        self.totalTimeSpent += timeSpent
         self.timeSpent.append(timeSpent)
         self.numRecordsBought += Album.recordCount(albumsBought)
         self.numRecordsSold += Album.recordCount(albumsSold)
@@ -67,9 +73,25 @@ struct Trip: CustomStringConvertible {
     
     
     /// - Description: Ends the Trip, updates User catalogue, unique tracks, and wishlist, updates Store metrics
-    /// - TODO: Finish method in line with description
     mutating func endTrip() {
         self.isFinished = true
+        var i = 0
+        for store in stores {
+            store.statistics.updateStatistics(timeSpent: timeSpent[i], recordsBought: Album.recordCount(newAlbums[i]), recordsSold: Album.recordCount(soldAlbums[i]), totalSpent: moneySpent[i], totalEarned: moneyEarned[i], isTrip: true, travelTime: timeTraveled[i])
+            i += 1
+        }
+        
+        user.statistics.updateStatistics(timeSpent: totalTimeSpent, recordsBought: numRecordsBought, recordsSold: numRecordsSold, totalSpent: totalMoneySpent, totalEarned: totalMoneyEarned, isTrip: true, travelTime: totalTimeTraveled)
+        for albums in newAlbums {
+            for album in albums {
+                user.catalogue.addAlbum(album: album)
+            }
+        }
+        for albums in soldAlbums {
+            for album in albums {
+                user.catalogue.removeAlbum(album: album)
+            }
+        }
     }
     
     /// - Description: Adds a bought album to the list for the corresponding index

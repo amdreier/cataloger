@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import Foundation
 
 struct ContentView: View {
     
@@ -18,19 +19,34 @@ struct ContentView: View {
     private var items: FetchedResults<Item>
     @ObservedObject var model = CataloguerModel()
     var body: some View {
-        VStack {
-            Button {
-                model.startTrip()
-            } label: {
-                Text("Start Trip")
+        NavigationView {
+            ZStack {
+                LinearGradient(colors: [.blue, .white], startPoint: .bottomLeading, endPoint: .topTrailing).edgesIgnoringSafeArea(.all)
+                VStack(spacing: 15) {
+                    Spacer().frame(maxHeight: 25)
+                    Grid {
+                        GridRow {
+                            Text("Trips")
+                            Text("Records")
+                            Text("PPR")
+                            Text("ASP")
+                        }
+                        
+                        GridRow {
+                            Text("\(model.user.statistics.totalTrips)")
+                            Text("\(model.user.catalogue.getNumRecords())")
+                            Text("$\(String(round(model.user.statistics.pricePerRecord * 100) / 100.0))")
+                            Text("$\(String(round(model.user.statistics.averageSellPrice * 100) / 100.0))")
+                        }
+                    }
+                    NavigationLink(destination: TripView(), label: {Text("Start Trip")})
+                        .simultaneousGesture(TapGesture().onEnded {
+                        model.startTrip()
+                    })
+                    Spacer()
+                }
             }
-            Button {
-                
-            } label: {
-                Text("Show trips")
-            }
-            Text(model.user.tripsString())
-        }
+        }.environmentObject(model)
 
 //        NavigationView {
 //            List {
@@ -56,48 +72,48 @@ struct ContentView: View {
 //            Text("Select an item")
 //        }
     }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
+//    private func addItem() {
+//        withAnimation {
+//            let newItem = Item(context: viewContext)
+//            newItem.timestamp = Date()
+//
+//            do {
+//                try viewContext.save()
+//            } catch {
+//                // Replace this implementation with code to handle the error appropriately.
+//                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//                let nsError = error as NSError
+//                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+//            }
+//        }
+//    }
+//
+//    private func deleteItems(offsets: IndexSet) {
+//        withAnimation {
+//            offsets.map { items[$0] }.forEach(viewContext.delete)
+//
+//            do {
+//                try viewContext.save()
+//            } catch {
+//                // Replace this implementation with code to handle the error appropriately.
+//                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+//                let nsError = error as NSError
+//                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+//            }
+//        }
+//    }
 }
+//
+//private let itemFormatter: DateFormatter = {
+//    let formatter = DateFormatter()
+//    formatter.dateStyle = .short
+//    formatter.timeStyle = .medium
+//    return formatter
+//}()
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CataloguerModel())
     }
 }

@@ -13,7 +13,16 @@ struct Catalogue {
     var allAlbums = [Album]()
     var uniqueTracks = UniqueTracks()
     
-    mutating func addAlbum(album: inout Album) -> UniqueTracks.Uniqueness {
+    func getNumRecords() -> Int {
+        var count: Int = 0
+        for album in allAlbums {
+            count += album.records.count
+        }
+        
+        return count
+    }
+    
+    mutating func addAlbum(album: Album) -> UniqueTracks.Uniqueness {
         allAlbums.append(album)
         var uniqueness = UniqueTracks.Uniqueness.version
         for track in album.getTracks() {
