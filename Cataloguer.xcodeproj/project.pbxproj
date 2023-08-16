@@ -27,6 +27,8 @@
 		FA9A43ED2A8AB50000F56182 /* CataloguerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9A43EC2A8AB50000F56182 /* CataloguerModel.swift */; };
 		FA9A43EF2A8BE50E00F56182 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9A43EE2A8BE50E00F56182 /* Statistics.swift */; };
 		FA9A43F12A8C1E2B00F56182 /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9A43F02A8C1E2B00F56182 /* TripView.swift */; };
+		FABCDBCB2A8D239800E8A974 /* NewStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABCDBCA2A8D239800E8A974 /* NewStoreView.swift */; };
+		FAF40ED32A8C9195001C4F4C /* StoreSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF40ED22A8C9195001C4F4C /* StoreSelectView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		FA9A43EC2A8AB50000F56182 /* CataloguerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CataloguerModel.swift; sourceTree = "<group>"; };
 		FA9A43EE2A8BE50E00F56182 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		FA9A43F02A8C1E2B00F56182 /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
+		FABCDBCA2A8D239800E8A974 /* NewStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreView.swift; sourceTree = "<group>"; };
+		FAF40ED22A8C9195001C4F4C /* StoreSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSelectView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +137,8 @@
 				FA8FE2D52A5C627B005824D6 /* Trip.swift */,
 				FA8FE29D2A5A481C005824D6 /* ContentView.swift */,
 				FA9A43F02A8C1E2B00F56182 /* TripView.swift */,
+				FAF40ED22A8C9195001C4F4C /* StoreSelectView.swift */,
+				FABCDBCA2A8D239800E8A974 /* NewStoreView.swift */,
 				FA9A43EC2A8AB50000F56182 /* CataloguerModel.swift */,
 				FA8FE29F2A5A481F005824D6 /* Assets.xcassets */,
 				FA8FE2A42A5A481F005824D6 /* Persistence.swift */,
@@ -306,9 +312,11 @@
 				FA8FE29E2A5A481C005824D6 /* ContentView.swift in Sources */,
 				FA8FE2D82A60541E005824D6 /* UniqueTracks.swift in Sources */,
 				FA8FE2D22A5C4D5C005824D6 /* Track.swift in Sources */,
+				FAF40ED32A8C9195001C4F4C /* StoreSelectView.swift in Sources */,
 				FA8FE2CE2A5A498D005824D6 /* Record.swift in Sources */,
 				FA8FE2D42A5C6173005824D6 /* User.swift in Sources */,
 				FA8FE2A82A5A481F005824D6 /* Cataloguer.xcdatamodeld in Sources */,
+				FABCDBCB2A8D239800E8A974 /* NewStoreView.swift in Sources */,
 				FA8FE29C2A5A481C005824D6 /* CataloguerApp.swift in Sources */,
 				FA9A43ED2A8AB50000F56182 /* CataloguerModel.swift in Sources */,
 				FA8FE2CC2A5A493F005824D6 /* Album.swift in Sources */,

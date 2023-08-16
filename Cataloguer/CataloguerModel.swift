@@ -9,8 +9,16 @@ import Foundation
 
 class CataloguerModel: ObservableObject {
     @Published var user = User()
-    
     @Published var currentTrip: Trip? = Trip(User())
+    @Published var stores = [Store]()
+    
+    var testStore = Store()
+    
+    init() {
+        testStore.name = "testStore"
+        testStore.location = "location"
+        stores.append(testStore)
+    }
     
     func startTrip() {
         endTrip()
@@ -20,5 +28,9 @@ class CataloguerModel: ObservableObject {
     func endTrip() {
         currentTrip?.endTrip()
         currentTrip = nil
+    }
+    
+    func addStore(store: Store) {
+        stores.append(store)
     }
 }

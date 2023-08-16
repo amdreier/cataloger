@@ -38,7 +38,7 @@ struct ContentView: View {
                             Text("$\(String(round(model.user.statistics.pricePerRecord * 100) / 100.0))")
                             Text("$\(String(round(model.user.statistics.averageSellPrice * 100) / 100.0))")
                         }
-                    }
+                    }.foregroundColor(.green)
                     NavigationLink(destination: TripView(), label: {Text("Start Trip")})
                         .simultaneousGesture(TapGesture().onEnded {
                         model.startTrip()

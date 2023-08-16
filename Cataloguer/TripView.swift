@@ -18,11 +18,6 @@ struct TripView: View {
 //        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
 //        animation: .default)
     @EnvironmentObject var model: CataloguerModel
-    var testStore = Store()
-    init() {
-        testStore.name = "store1"
-        testStore.location = "location1"
-    }
     
     var body: some View {
         NavigationView {
@@ -34,7 +29,11 @@ struct TripView: View {
                             NavigationLink {
                                 Text(stop.location)
                             } label: {
-                                Text(stop.name)
+                                HStack {
+                                    Text(stop.name).padding().foregroundColor(.white)
+                                    Spacer()
+                                    Image(systemName: "arrow.right")
+                                }.border(.red, width: 2).background(.blue).padding([.top], 2).padding([.leading, .trailing], 10)
                             }
                         }
                     }
@@ -52,26 +51,25 @@ struct TripView: View {
                     //                }
                     
                     
-                    Button {
-                        model.currentTrip?.addStore(store: testStore)
-                    } label: {
+                    NavigationLink(destination: StoreSelectView(), label: {
                         Text("Add Stop").foregroundColor(.white)
-                    }
+                    })
+                        
                     Spacer()
                 }
             }
+            .navigationBarItems(leading: Button(action : {
+                model.endTrip()
+                self.mode.wrappedValue.dismiss()
+            }) {
+                HStack{
+                    //                Image(systemName: "arrow.left")
+                    Text("End Trip").foregroundColor(.white).bold(true)
+                }
+            })
         }
-        
+        .environmentObject(model)
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Button(action : {
-            model.endTrip()
-            self.mode.wrappedValue.dismiss()
-        }){
-            HStack{
-                //                Image(systemName: "arrow.left")
-                Text("End Trip").foregroundColor(.white).bold(true)
-            }
-        })
     }
 
     
