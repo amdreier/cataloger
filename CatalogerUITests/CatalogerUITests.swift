@@ -1,13 +1,13 @@
 //
-//  CataloguerUITests.swift
-//  CataloguerUITests
+//  CatalogerUITests.swift
+//  CatalogerUITests
 //
 //  Created by Alex Dreier on 7/8/23.
 //
 
 import XCTest
 
-final class CataloguerUITests: XCTestCase {
+final class CatalogerUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

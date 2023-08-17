@@ -1,6 +1,6 @@
 //
 //  Trip.swift
-//  Cataloguer
+//  Cataloger
 //
 //  Created by Alex Dreier on 7/10/23.
 //
@@ -72,7 +72,7 @@ struct Trip: CustomStringConvertible {
     }
     
     
-    /// - Description: Ends the Trip, updates User catalogue, unique tracks, and wishlist, updates Store metrics
+    /// - Description: Ends the Trip, updates User catalog, unique tracks, and wishlist, updates Store metrics
     mutating func endTrip() {
         self.isFinished = true
         var i = 0
@@ -84,12 +84,12 @@ struct Trip: CustomStringConvertible {
         user.statistics.updateStatistics(timeSpent: totalTimeSpent, recordsBought: numRecordsBought, recordsSold: numRecordsSold, totalSpent: totalMoneySpent, totalEarned: totalMoneyEarned, isTrip: true, travelTime: totalTimeTraveled)
         for albums in newAlbums {
             for album in albums {
-                user.catalogue.addAlbum(album: album)
+                user.catalog.addAlbum(album: album)
             }
         }
         for albums in soldAlbums {
             for album in albums {
-                user.catalogue.removeAlbum(album: album)
+                user.catalog.removeAlbum(album: album)
             }
         }
     }

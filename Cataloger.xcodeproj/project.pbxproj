@@ -13,9 +13,9 @@
 		FA8FE2A32A5A481F005824D6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8FE2A22A5A481F005824D6 /* Preview Assets.xcassets */; };
 		FA8FE2A52A5A481F005824D6 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2A42A5A481F005824D6 /* Persistence.swift */; };
 		FA8FE2A82A5A481F005824D6 /* Cataloger.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2A62A5A481F005824D6 /* Cataloger.xcdatamodeld */; };
-		FA8FE2B32A5A4820005824D6 /* CataloguerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2B22A5A4820005824D6 /* CataloguerTests.swift */; };
-		FA8FE2BD2A5A4820005824D6 /* CataloguerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2BC2A5A4820005824D6 /* CataloguerUITests.swift */; };
-		FA8FE2BF2A5A4820005824D6 /* CataloguerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2BE2A5A4820005824D6 /* CataloguerUITestsLaunchTests.swift */; };
+		FA8FE2B32A5A4820005824D6 /* CatalogerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2B22A5A4820005824D6 /* CatalogerTests.swift */; };
+		FA8FE2BD2A5A4820005824D6 /* CatalogerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2BC2A5A4820005824D6 /* CatalogerUITests.swift */; };
+		FA8FE2BF2A5A4820005824D6 /* CatalogerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2BE2A5A4820005824D6 /* CatalogerUITestsLaunchTests.swift */; };
 		FA8FE2CC2A5A493F005824D6 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2CB2A5A493F005824D6 /* Album.swift */; };
 		FA8FE2CE2A5A498D005824D6 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2CD2A5A498D005824D6 /* Record.swift */; };
 		FA8FE2D02A5A53A8005824D6 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2CF2A5A53A8005824D6 /* Store.swift */; };
@@ -59,10 +59,10 @@
 		FA8FE2A72A5A481F005824D6 /* Cataloguer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Cataloguer.xcdatamodel; sourceTree = "<group>"; };
 		FA8FE2A92A5A481F005824D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FA8FE2AE2A5A4820005824D6 /* CatalogerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatalogerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA8FE2B22A5A4820005824D6 /* CataloguerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CataloguerTests.swift; sourceTree = "<group>"; };
+		FA8FE2B22A5A4820005824D6 /* CatalogerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogerTests.swift; sourceTree = "<group>"; };
 		FA8FE2B82A5A4820005824D6 /* CatalogerUCatalogerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatalogerUCatalogerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA8FE2BC2A5A4820005824D6 /* CataloguerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CataloguerUITests.swift; sourceTree = "<group>"; };
-		FA8FE2BE2A5A4820005824D6 /* CataloguerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CataloguerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FA8FE2BC2A5A4820005824D6 /* CatalogerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogerUITests.swift; sourceTree = "<group>"; };
+		FA8FE2BE2A5A4820005824D6 /* CatalogerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		FA8FE2CB2A5A493F005824D6 /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		FA8FE2CD2A5A498D005824D6 /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		FA8FE2CF2A5A53A8005824D6 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
@@ -163,7 +163,7 @@
 		FA8FE2B12A5A4820005824D6 /* CatalogerTests */ = {
 			isa = PBXGroup;
 			children = (
-				FA8FE2B22A5A4820005824D6 /* CataloguerTests.swift */,
+				FA8FE2B22A5A4820005824D6 /* CatalogerTests.swift */,
 			);
 			path = CatalogerTests;
 			sourceTree = "<group>";
@@ -171,8 +171,8 @@
 		FA8FE2BB2A5A4820005824D6 /* CatalogerUITests */ = {
 			isa = PBXGroup;
 			children = (
-				FA8FE2BC2A5A4820005824D6 /* CataloguerUITests.swift */,
-				FA8FE2BE2A5A4820005824D6 /* CataloguerUITestsLaunchTests.swift */,
+				FA8FE2BC2A5A4820005824D6 /* CatalogerUITests.swift */,
+				FA8FE2BE2A5A4820005824D6 /* CatalogerUITestsLaunchTests.swift */,
 			);
 			path = CatalogerUITests;
 			sourceTree = "<group>";
@@ -332,7 +332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA8FE2B32A5A4820005824D6 /* CataloguerTests.swift in Sources */,
+				FA8FE2B32A5A4820005824D6 /* CatalogerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,8 +340,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA8FE2BD2A5A4820005824D6 /* CataloguerUITests.swift in Sources */,
-				FA8FE2BF2A5A4820005824D6 /* CataloguerUITestsLaunchTests.swift in Sources */,
+				FA8FE2BD2A5A4820005824D6 /* CatalogerUITests.swift in Sources */,
+				FA8FE2BF2A5A4820005824D6 /* CatalogerUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,7 +482,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Cataloguer/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Cataloger/Preview Content\"";
 				DEVELOPMENT_TEAM = 2PAXP94GA7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -511,7 +511,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"Cataloguer/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Cataloger/Preview Content\"";
 				DEVELOPMENT_TEAM = 2PAXP94GA7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

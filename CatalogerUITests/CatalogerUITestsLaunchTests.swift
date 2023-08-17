@@ -1,13 +1,13 @@
 //
-//  CataloguerUITestsLaunchTests.swift
-//  CataloguerUITests
+//  CatalogerUITestsLaunchTests.swift
+//  CatalogerUITests
 //
 //  Created by Alex Dreier on 7/8/23.
 //
 
 import XCTest
 
-final class CataloguerUITestsLaunchTests: XCTestCase {
+final class CatalogerUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

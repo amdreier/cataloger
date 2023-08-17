@@ -1,14 +1,14 @@
 //
-//  CataloguerTests.swift
-//  CataloguerTests
+//  CatalogerTests.swift
+//  CatalogerTests
 //
 //  Created by Alex Dreier on 7/8/23.
 //
 
 import XCTest
-@testable import Cataloguer
+@testable import Cataloger
 
-final class CataloguerTests: XCTestCase {
+final class CatalogerTests: XCTestCase {
     var user = User()
 
     override func setUpWithError() throws {
@@ -31,11 +31,11 @@ final class CataloguerTests: XCTestCase {
         let track1 = Track(title: "swingsong1", releaseYear: 1955, genre: "Swing", isLive: false)
         record1.tracks.append(track1)
         album1.records.append(record1)
-        let uniqueness1 = user.catalogue.addAlbum(album: &album1)
+        let uniqueness1 = user.catalog.addAlbum(album: album1)
         XCTAssertEqual(UniqueTracks.Uniqueness.unique, uniqueness1)
-        XCTAssert(user.catalogue.contains(album1))
-        XCTAssert(user.catalogue.contains(record1))
-        XCTAssert(user.catalogue.contains(track1))
+        XCTAssert(user.catalog.contains(album1))
+        XCTAssert(user.catalog.contains(record1))
+        XCTAssert(user.catalog.contains(track1))
     }
     
     func testStartTrips() throws {

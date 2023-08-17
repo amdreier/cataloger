@@ -1,6 +1,6 @@
 //
-//  CataloguerModel.swift
-//  Cataloguer
+//  CatalogerModel.swift
+//  Cataloger
 //
 //  Created by Alex Dreier on 8/14/23.
 //

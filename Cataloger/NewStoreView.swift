@@ -1,6 +1,6 @@
 //
 //  NewStoreView.swift
-//  Cataloguer
+//  Cataloger
 //
 //  Created by Alex Dreier on 8/16/23.
 //

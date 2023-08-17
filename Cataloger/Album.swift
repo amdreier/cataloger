@@ -1,6 +1,6 @@
 //
 //  Album.swift
-//  Cataloguer
+//  Cataloger
 //
 //  Created by Alex Dreier on 7/8/23.
 //

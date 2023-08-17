@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  Cataloguer
+//  Cataloger
 //
 //  Created by Alex Dreier on 7/8/23.
 //
@@ -34,7 +34,7 @@ struct ContentView: View {
                         
                         GridRow {
                             Text("\(model.user.statistics.totalTrips)")
-                            Text("\(model.user.catalogue.getNumRecords())")
+                            Text("\(model.user.catalog.getNumRecords())")
                             Text("$\(String(round(model.user.statistics.pricePerRecord * 100) / 100.0))")
                             Text("$\(String(round(model.user.statistics.averageSellPrice * 100) / 100.0))")
                         }

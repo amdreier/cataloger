@@ -1,6 +1,6 @@
 //
 //  Persistence.swift
-//  Cataloguer
+//  Cataloger
 //
 //  Created by Alex Dreier on 7/8/23.
 //
@@ -31,7 +31,7 @@ struct PersistenceController {
     let container: NSPersistentCloudKitContainer
 
     init(inMemory: Bool = false) {
-        container = NSPersistentCloudKitContainer(name: "Cataloguer")
+        container = NSPersistentCloudKitContainer(name: "Cataloger")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }

@@ -1,6 +1,6 @@
 //
-//  Catalogue.swift
-//  Cataloguer
+//  Cataloge.swift
+//  Cataloger
 //
 //  Created by Alex Dreier on 7/13/23.
 //
