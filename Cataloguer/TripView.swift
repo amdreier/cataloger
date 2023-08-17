@@ -58,7 +58,7 @@ struct TripView: View {
                     Spacer()
                 }
             }
-            .navigationBarItems(leading: Button(action : {
+            .navigationBarItems(trailing: Button(action : {
                 model.endTrip()
                 self.mode.wrappedValue.dismiss()
             }) {

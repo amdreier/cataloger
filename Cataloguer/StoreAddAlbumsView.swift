@@ -1,5 +1,5 @@
 //
-//  StoreSelectView.swift
+//  StoreAddAlbumView.swift
 //  Cataloguer
 //
 //  Created by Alex Dreier on 8/16/23.
@@ -8,7 +8,7 @@
 import SwiftUI
 import Foundation
 
-struct StoreSelectView: View {
+struct StoreAddAlbumsView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     @EnvironmentObject var model: CataloguerModel
@@ -16,23 +16,19 @@ struct StoreSelectView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                LinearGradient(colors: [.mint, .teal], startPoint: .bottomLeading, endPoint: .topTrailing).edgesIgnoringSafeArea(.all)
+                LinearGradient(colors: [.orange, .teal], startPoint: .bottomLeading, endPoint: .topTrailing).edgesIgnoringSafeArea(.all)
                 VStack {
-                    ForEach(model.stores, id: \.self) { stop in
-                        NavigationLink {
-                            StoreAddAlbumsView()
+                    ForEach(model.getNewAlbumList(), id: \.self) { album in
+                        Button {
+
                         } label: {
-                            HStack {
-                                Text(stop.name).padding().foregroundColor(.white)
-                                Spacer()
-                                Image(systemName: "arrow.right").padding().foregroundColor(.white)
-                            }.border(.red, width: 2).background(.blue).padding([.top], 2).padding([.leading, .trailing], 10)
+                            Text(album.title)
                         }
                     }
-                    NavigationLink {
-                        NewStoreView()
+                    Button {
+                        
                     } label: {
-                        Text("+ Add New Store")
+                        Text("+ Add Album")
                     }
                     Spacer()
                 }
@@ -42,17 +38,16 @@ struct StoreSelectView: View {
                 self.mode.wrappedValue.dismiss()
             }){
                 HStack{
-                    Text("Finish Stop").foregroundColor(.white).bold(true)
+                    Text("Leave Store").foregroundColor(.white).bold(true)
                 }
             })
-            
         }
         .environmentObject(model)
         .navigationBarBackButtonHidden(true)
     }
 }
-    
-struct StoreSelectView_Previews: PreviewProvider {
+
+struct StoreAddAlbumsView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CataloguerModel())
     }

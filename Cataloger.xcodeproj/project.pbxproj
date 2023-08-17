@@ -28,6 +28,7 @@
 		FA9A43EF2A8BE50E00F56182 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9A43EE2A8BE50E00F56182 /* Statistics.swift */; };
 		FA9A43F12A8C1E2B00F56182 /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9A43F02A8C1E2B00F56182 /* TripView.swift */; };
 		FABCDBCB2A8D239800E8A974 /* NewStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABCDBCA2A8D239800E8A974 /* NewStoreView.swift */; };
+		FABCDBCD2A8D424600E8A974 /* StoreAddAlbumsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABCDBCC2A8D424600E8A974 /* StoreAddAlbumsView.swift */; };
 		FAF40ED32A8C9195001C4F4C /* StoreSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF40ED22A8C9195001C4F4C /* StoreSelectView.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +75,7 @@
 		FA9A43EE2A8BE50E00F56182 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		FA9A43F02A8C1E2B00F56182 /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
 		FABCDBCA2A8D239800E8A974 /* NewStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreView.swift; sourceTree = "<group>"; };
+		FABCDBCC2A8D424600E8A974 /* StoreAddAlbumsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreAddAlbumsView.swift; sourceTree = "<group>"; };
 		FAF40ED22A8C9195001C4F4C /* StoreSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreSelectView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,6 +139,7 @@
 				FA8FE2D52A5C627B005824D6 /* Trip.swift */,
 				FA8FE29D2A5A481C005824D6 /* ContentView.swift */,
 				FA9A43F02A8C1E2B00F56182 /* TripView.swift */,
+				FABCDBCC2A8D424600E8A974 /* StoreAddAlbumsView.swift */,
 				FAF40ED22A8C9195001C4F4C /* StoreSelectView.swift */,
 				FABCDBCA2A8D239800E8A974 /* NewStoreView.swift */,
 				FA9A43EC2A8AB50000F56182 /* CataloguerModel.swift */,
@@ -253,7 +256,7 @@
 					};
 				};
 			};
-			buildConfigurationList = FA8FE2932A5A481C005824D6 /* Build configuration list for PBXProject "Cataloguer" */;
+			buildConfigurationList = FA8FE2932A5A481C005824D6 /* Build configuration list for PBXProject "Cataloger" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -310,6 +313,7 @@
 				FA9A43F12A8C1E2B00F56182 /* TripView.swift in Sources */,
 				FA8FE2A52A5A481F005824D6 /* Persistence.swift in Sources */,
 				FA8FE29E2A5A481C005824D6 /* ContentView.swift in Sources */,
+				FABCDBCD2A8D424600E8A974 /* StoreAddAlbumsView.swift in Sources */,
 				FA8FE2D82A60541E005824D6 /* UniqueTracks.swift in Sources */,
 				FA8FE2D22A5C4D5C005824D6 /* Track.swift in Sources */,
 				FAF40ED32A8C9195001C4F4C /* StoreSelectView.swift in Sources */,
@@ -608,7 +612,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FA8FE2932A5A481C005824D6 /* Build configuration list for PBXProject "Cataloguer" */ = {
+		FA8FE2932A5A481C005824D6 /* Build configuration list for PBXProject "Cataloger" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FA8FE2C02A5A4820005824D6 /* Debug */,
