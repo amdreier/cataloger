@@ -11,7 +11,7 @@ import Foundation
 struct NewStoreView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
-    @EnvironmentObject var model: CataloguerModel
+    @EnvironmentObject var model: CatalogerModel
     
     var body: some View {
         NavigationView {
@@ -24,6 +24,6 @@ struct NewStoreView: View {
 
 struct NewStoreView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CataloguerModel())
+        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
     }
 }

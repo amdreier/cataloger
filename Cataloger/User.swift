@@ -12,7 +12,7 @@ import Foundation
 /// - TODO: Figure out storing/adding/removing unique tracks with multiple filiters
 class User: ObservableObject {
     @Published var username: String = ""
-    @Published var catalogue: Catalogue = Catalogue()
+    @Published var catalogue: Catalog = Catalog()
     @Published var albumWishlist = [Album]()
     @Published var trackWishlist = [Track]()
     @Published var trips = [Trip]()

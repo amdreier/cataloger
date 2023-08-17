@@ -17,7 +17,7 @@ struct TripView: View {
 //    @FetchRequest(
 //        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
 //        animation: .default)
-    @EnvironmentObject var model: CataloguerModel
+    @EnvironmentObject var model: CatalogerModel
     
     var body: some View {
         NavigationView {
@@ -75,7 +75,7 @@ struct TripView: View {
     
     struct TripView_Previews: PreviewProvider {
         static var previews: some View {
-            ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CataloguerModel())
+            ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
         }
     }
 }

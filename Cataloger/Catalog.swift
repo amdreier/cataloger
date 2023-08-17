@@ -9,7 +9,7 @@ import Foundation
 
 /// - TODO: Add and remove records from albums
 
-struct Catalogue {
+struct Catalog {
     var allAlbums = [Album]()
     var uniqueTracks = UniqueTracks()
     

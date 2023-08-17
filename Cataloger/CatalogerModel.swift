@@ -7,7 +7,7 @@
 
 import Foundation
 
-class CataloguerModel: ObservableObject {
+class CatalogerModel: ObservableObject {
     @Published var user = User()
     @Published var currentTrip: Trip? = Trip(User())
     @Published var stores = [Store]()
