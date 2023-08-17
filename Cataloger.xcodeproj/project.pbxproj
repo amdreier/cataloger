@@ -38,14 +38,14 @@
 			containerPortal = FA8FE2902A5A481C005824D6 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FA8FE2972A5A481C005824D6;
-			remoteInfo = Cataloguer;
+			remoteInfo = Cataloger;
 		};
 		FA8FE2B92A5A4820005824D6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = FA8FE2902A5A481C005824D6 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FA8FE2972A5A481C005824D6;
-			remoteInfo = Cataloguer;
+			remoteInfo = Cataloger;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -56,8 +56,8 @@
 		FA8FE29F2A5A481F005824D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA8FE2A22A5A481F005824D6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FA8FE2A42A5A481F005824D6 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		FA8FE2A72A5A481F005824D6 /* Cataloguer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Cataloguer.xcdatamodel; sourceTree = "<group>"; };
-		FA8FE2A92A5A481F005824D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA8FE2A72A5A481F005824D6 /* Cataloger.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Cataloger.xcdatamodel; sourceTree = "<group>"; };
+		FA8FE2A92A5A481F005824D6 /* Cataloger.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; name = Cataloger.xcdatamodel; path = Cataloger.xcdatamodeld/Cataloger.xcdatamodel; sourceTree = "<group>"; };
 		FA8FE2AE2A5A4820005824D6 /* CatalogerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatalogerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA8FE2B22A5A4820005824D6 /* CatalogerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogerTests.swift; sourceTree = "<group>"; };
 		FA8FE2B82A5A4820005824D6 /* CatalogerUCatalogerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CatalogerUCatalogerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -145,7 +145,7 @@
 				FA9A43EC2A8AB50000F56182 /* CatalogerModel.swift */,
 				FA8FE29F2A5A481F005824D6 /* Assets.xcassets */,
 				FA8FE2A42A5A481F005824D6 /* Persistence.swift */,
-				FA8FE2A92A5A481F005824D6 /* Info.plist */,
+				FA8FE2A92A5A481F005824D6 /* Cataloger.xcdatamodel */,
 				FA8FE2A62A5A481F005824D6 /* Cataloger.xcdatamodeld */,
 				FA8FE2A12A5A481F005824D6 /* Preview Content */,
 			);
@@ -193,7 +193,7 @@
 			dependencies = (
 			);
 			name = Cataloger;
-			productName = Cataloguer;
+			productName = Cataloger;
 			productReference = FA8FE2982A5A481C005824D6 /* Cataloger.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -211,7 +211,7 @@
 				FA8FE2B02A5A4820005824D6 /* PBXTargetDependency */,
 			);
 			name = CatalogerTests;
-			productName = CataloguerTests;
+			productName = CatalogerTests;
 			productReference = FA8FE2AE2A5A4820005824D6 /* CatalogerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
@@ -229,7 +229,7 @@
 				FA8FE2BA2A5A4820005824D6 /* PBXTargetDependency */,
 			);
 			name = CatalogerUCatalogerTests;
-			productName = CataloguerUITests;
+			productName = CatalogerUITests;
 			productReference = FA8FE2B82A5A4820005824D6 /* CatalogerUCatalogerTests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
@@ -544,7 +544,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = amdreier.CataloguerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = amdreier.CatalogerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -564,7 +564,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = amdreier.CataloguerTests;
+				PRODUCT_BUNDLE_IDENTIFIER = amdreier.CatalogerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
@@ -582,12 +582,12 @@
 				DEVELOPMENT_TEAM = 2PAXP94GA7;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = amdreier.CataloguerUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = amdreier.CatalogerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Cataloguer;
+				TEST_TARGET_NAME = Cataloger;
 			};
 			name = Debug;
 		};
@@ -600,12 +600,12 @@
 				DEVELOPMENT_TEAM = 2PAXP94GA7;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = amdreier.CataloguerUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = amdreier.CatalogerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Cataloguer;
+				TEST_TARGET_NAME = Cataloger;
 			};
 			name = Release;
 		};
@@ -654,9 +654,9 @@
 		FA8FE2A62A5A481F005824D6 /* Cataloger.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				FA8FE2A72A5A481F005824D6 /* Cataloguer.xcdatamodel */,
+				FA8FE2A72A5A481F005824D6 /* Cataloger.xcdatamodel */,
 			);
-			currentVersion = FA8FE2A72A5A481F005824D6 /* Cataloguer.xcdatamodel */;
+			currentVersion = FA8FE2A72A5A481F005824D6 /* Cataloger.xcdatamodel */;
 			path = Cataloger.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
