@@ -33,6 +33,8 @@ class Statistics {
         self.tripsBuying += recordsBought > 0 ? 1 : 0
         self.tripsSelling += recordsSold > 0 ? 1 : 0
         self.travelTime += travelTime
+        
+        calculateCalcMetrics()
     }
     
     func calculateCalcMetrics() {

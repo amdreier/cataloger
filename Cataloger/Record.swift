@@ -27,7 +27,7 @@ class Record: Equatable, Hashable {
     
     var tracks = [Track]()                  // list of all songs on the record
     
-    init(isCompilation: Bool, isMix: Bool, isGH: Bool, isCollection: Bool, isLive: Bool, genre: String, releaseYear: Int, title: String, label: String, artists: [String] = [String](), speed: Int, value: Double, cost: Double, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, album: Album, store: Store? = nil, tracks: [Track] = [Track]()) {
+    init(isCompilation: Bool = false, isMix: Bool = false, isGH: Bool = false, isCollection: Bool = false, isLive: Bool = false, genre: String = "N/A", releaseYear: Int = -1, title: String = "N/A", label: String = "N/A", artists: [String] = [String](), speed: Int = 33, value: Double = 0, cost: Double = 0, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, album: Album, store: Store? = nil, tracks: [Track] = [Track]()) {
         self.isCompilation = isCompilation
         self.isMix = isMix
         self.isGH = isGH

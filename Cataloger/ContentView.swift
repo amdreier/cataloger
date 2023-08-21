@@ -17,6 +17,13 @@ struct ContentView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
         animation: .default)
     private var items: FetchedResults<Item>
+    
+    let formatter = NumberFormatter()
+    
+    init() {
+        formatter.numberStyle = .currency
+    }
+    
     @ObservedObject var model = CatalogerModel()
     var body: some View {
         NavigationView {
@@ -35,8 +42,8 @@ struct ContentView: View {
                         GridRow {
                             Text("\(model.user.statistics.totalTrips)")
                             Text("\(model.user.catalog.getNumRecords())")
-                            Text("$\(String(round(model.user.statistics.pricePerRecord * 100) / 100.0))")
-                            Text("$\(String(round(model.user.statistics.averageSellPrice * 100) / 100.0))")
+                            Text(formatter.string(from: model.user.statistics.pricePerRecord as NSNumber) ?? "Err")
+                            Text(formatter.string(from: model.user.statistics.averageSellPrice as NSNumber) ?? "Err")
                         }
                     }.foregroundColor(.green)
                     NavigationLink(destination: TripView(), label: {Text("Start Trip")})
