@@ -77,7 +77,7 @@ struct TripView: View {
     
     struct TripView_Previews: PreviewProvider {
         static var previews: some View {
-            ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
+            TripView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
         }
     }
 }

@@ -18,7 +18,7 @@ class Album: Hashable {
     var isCollection: Bool                  // box set, etc
     var isLive: Bool                        // is this is a live recording
     var genre: String                       // from standard list
-    var releaseYear: Int                    // release year
+    var releaseYear: Int?                   // release year
     var title: String                       // Album title
     var label: String                       // release label company
     var artists = [String]()                // all artists/band names, LastName, FirstName MiddleNames/BandName, The
@@ -29,7 +29,7 @@ class Album: Hashable {
     
     var records = [Record]()
     
-    init(isCompilation: Bool = false, isMix: Bool = false, isGH: Bool = false, isCollection: Bool = false, isLive: Bool = false, genre: String = "N/A", releaseYear: Int = -1, title: String = "N/A", label: String = "N/A", artists: [String] = [String](), value: Double = 0, cost: Double = 0, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, store: Store? = nil, records: [Record] = [Record]()) {
+    init(isCompilation: Bool = false, isMix: Bool = false, isGH: Bool = false, isCollection: Bool = false, isLive: Bool = false, genre: String = "N/A", releaseYear: Int? = nil, title: String = "N/A", label: String = "N/A", artists: [String] = [String](), value: Double = 0, cost: Double = 0, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, store: Store? = nil, records: [Record] = [Record]()) {
         self.isCompilation = isCompilation
         self.isMix = isMix
         self.isGH = isGH

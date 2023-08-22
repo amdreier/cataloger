@@ -47,6 +47,6 @@ struct EditStopAlbumsView: View {
 
 struct EditStopAlbumsView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
+        EditStopAlbumsView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
     }
 }

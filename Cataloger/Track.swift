@@ -18,13 +18,13 @@ class Track: Hashable {
     
     var title: String                       // track/song title
     var artists = [String]()                // all artists/band names, LastName, FirstName MiddleNames/BandName, The
-    var releaseYear: Int                    // original release year of track
+    var releaseYear: Int?                   // original release year of track
     var genre: String                       // from standard list
     var isLive: Bool                        // is this track from a live recording
     var uniqueness: UniqueTracks.Uniqueness // uniqueness of the most unique track on the record
     var record: Record?                     // record this track is on
     
-    init(title: String, artists: [String] = [String](), releaseYear: Int, genre: String, isLive: Bool, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, record: Record? = nil) {
+    init(title: String, artists: [String] = [String](), releaseYear: Int? = nil, genre: String = "", isLive: Bool = false, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, record: Record? = nil) {
         self.title = title
         self.artists = artists
         self.releaseYear = releaseYear

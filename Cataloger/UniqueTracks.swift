@@ -23,7 +23,7 @@ struct UniqueTracks {
         case titleAndArtist(title: String, artists: [String])
     }
     enum TrackVersion: Equatable, Hashable {
-        case version(title: String, artists: [String], releaseYear: Int, isLive: Bool)
+        case version(title: String, artists: [String], releaseYear: Int?, isLive: Bool)
     }
     
     /* Uniqueness data structure */
