@@ -7,25 +7,27 @@
 
 import Foundation
 
-class Record: Equatable, Hashable {
-    var isCompilation: Bool                 // songs not originally released together
-    var isMix: Bool                         // different artists
-    var isGH: Bool                          // greatest hits
-    var isCollection: Bool                  // box set, etc
-    var isLive: Bool                        // is this a live recording
-    var genre: String                       // from standard list
-    var releaseYear: Int?                   // release year
-    var title: String                       // record title
-    var label: String                       // release label company
-    var artists = [String]()                // all artists/band names, LastName, FirstName MiddleNames/BandName, The
-    var speed: Int                          // 33, 45, or 78
-    var value: Double                       // resale price USD
-    var cost: Double                        // paid price USD
-    var uniqueness: UniqueTracks.Uniqueness // unqiueness of this record
-    var album: Album?                       // album for this record on this catelogue
-    var store: Store?                       // where it was bought
+class Record: Equatable, Hashable, ObservableObject {
+    @Published var isCompilation: Bool                 // songs not originally released together
+    @Published var isMix: Bool                         // different artists
+    @Published var isGH: Bool                          // greatest hits
+    @Published var isCollection: Bool                  // box set, etc
+    @Published var isLive: Bool                        // is this a live recording
+    @Published var genre: String                       // from standard list
+    @Published var releaseYear: Int?                   // release year
+    @Published var title: String                       // record title
+    @Published var label: String                       // release label company
+    @Published var artists = [String]()                // all artists/band names, LastName, FirstName MiddleNames/BandName, The
+    @Published var speed: Int                          // 33, 45, or 78
+    @Published var value: Double                       // resale price USD
+    @Published var cost: Double                        // paid price USD
+    @Published var uniqueness: UniqueTracks.Uniqueness // unqiueness of this record
+    @Published var album: Album?                       // album for this record on this catelogue
+    @Published var store: Store?                       // where it was bought
     
-    var tracks = [Track]()                  // list of all songs on the record
+    @Published var trackManualMode: Bool = false
+    
+    @Published var tracks = [Track]()                  // list of all songs on the record
     
     init(isCompilation: Bool = false, isMix: Bool = false, isGH: Bool = false, isCollection: Bool = false, isLive: Bool = false, genre: String = "", releaseYear: Int? = nil, title: String = "", label: String = "", artists: [String] = [String](), speed: Int = 33, value: Double = 0, cost: Double = 0, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, album: Album? = nil, store: Store? = nil, tracks: [Track] = [Track]()) {
         self.isCompilation = isCompilation
