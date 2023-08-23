@@ -17,19 +17,18 @@ struct EditStopAlbumsView: View {
         NavigationView {
             ZStack {
                 LinearGradient(colors: [.orange, .teal], startPoint: .bottomLeading, endPoint: .topTrailing).edgesIgnoringSafeArea(.all)
-                VStack {
-                    ForEach(model.newAlbums, id: \.self) { album in
-                        Text(album.title)
+                ScrollView {
+                    VStack {
+                        ForEach(model.newAlbums, id: \.self) { album in
+                            Text(album.title)
+                        }
+                        NavigationLink {
+                            AddStoreAlbumView()
+                        } label: {
+                            Text("+ Album").frame(maxWidth: .infinity, alignment: .center)
+                        }
                     }
-                    NavigationLink {
-                        AddStoreAlbumView()
-                    } label: {
-                        Text("+ Add Album")
-                    }/*.simultaneousGesture(TapGesture().onEnded {
-                        model.testFunc()
-                    })*/
-                    Spacer()
-                }
+                }.scrollContentBackground(.hidden)
             }
             .navigationBarItems(trailing: Button(action: {
                 

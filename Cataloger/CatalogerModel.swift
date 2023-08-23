@@ -17,26 +17,6 @@ class CatalogerModel: ObservableObject {
     @Published var soldAlbums = [Album]()
 //    @Published var editingAlbum: Album? = nil
     
-    /*
-        Need to add other data for adding stores to trips
-     */
-    
-    var testStore = Store()
-    var testStore2 = Store()
-    var testAlbum = Album(isCompilation: false, isMix: false, isGH: false, isCollection: false, isLive: false, genre: "Swing", releaseYear: 1955, title: "SwingSong", label: "Label", value: 5, cost: 2)
-    
-    init() {
-        testAlbum.records = [Record(isCompilation: false, isMix: false, isGH: false, isCollection: false, isLive: false, genre: "Swing", releaseYear: 1995, title: "record1", label: "Label", speed: 33, value: 5, cost: 2, album: testAlbum)]
-        
-        testStore.name = "Store1"
-        testStore.location = "location1"
-        stores.append(testStore)
-        
-        testStore2.name = "Store2"
-        testStore2.location = "location2"
-        stores.append(testStore2)
-    }
-    
     func startTrip() {
         endTrip()
         stop = 0
@@ -44,6 +24,15 @@ class CatalogerModel: ObservableObject {
     }
     
     func endTrip() {
+        if currentTrip == nil {
+            return
+        }
+        
+        if currentTrip!.stops.isEmpty {
+            user.trips = user.trips.dropLast(1)
+            return
+        }
+        
         currentTrip?.endTrip()
         currentTrip = nil
     }
@@ -62,11 +51,7 @@ class CatalogerModel: ObservableObject {
             currentTrip?.addStop(store: selectedStore!) // add additional needed data
         }
     }
-    
-    func testFunc() {
-        newAlbums.append(testAlbum)
-    }
-    
+
     func selectStore(store: Store) {
         selectedStore = store
     }

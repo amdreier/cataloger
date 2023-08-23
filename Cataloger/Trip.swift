@@ -47,6 +47,10 @@ struct Trip: CustomStringConvertible {
     var numRecordsBought: Int = 0       // total number of records bought on this trip so far
     var numRecordsSold: Int = 0         // total number of records sold on this trip so far
     
+    var totalValueSold: Double = 0
+    var totalCostSold: Double = 0
+    var totalValueAdded: Double = 0
+    
     var pricePerRecord: Double = 0      // average price per record bought
     var averageSellPrice: Double = 0    // average sell price for each record sold
     
@@ -77,19 +81,27 @@ struct Trip: CustomStringConvertible {
     mutating func addStop(store: Store, albumsBought: [Album] = [], albumsSold: [Album] = [], timeTraveled: Int = 0, timeSpent: Int = 0) {
         var moneySpent: Double = 0
         var moneyEarned: Double = 0
+        
+        var valueAdded: Double = 0
+        var costSold: Double = 0
+        
             
         for album in albumsBought {
             moneySpent += album.cost
+            valueAdded += album.value
         }
         
         for album in albumsSold {
             moneyEarned += album.value
+            costSold += album.cost
         }
         
         let stop = Stop(store: store, newAlbums: albumsBought, soldAlbums: albumsSold, timeSpent: timeSpent, moneySpent: moneySpent, moneyEarned: moneyEarned, timeTraveled: timeTraveled)
         self.stops.append(stop)
         self.totalMoneySpent += moneySpent
         self.totalMoneyEarned += moneyEarned
+        self.totalValueAdded += valueAdded
+        self.totalCostSold += costSold
         self.totalTimeTraveled += timeTraveled
         self.totalTimeSpent += timeSpent
         self.numRecordsBought += Album.recordCount(albumsBought)
@@ -106,7 +118,7 @@ struct Trip: CustomStringConvertible {
             stop.store.statistics.updateStatistics(timeSpent: stop.timeSpent, recordsBought: Album.recordCount(stop.newAlbums), recordsSold: Album.recordCount(stop.soldAlbums), totalSpent: stop.moneySpent, totalEarned: stop.moneyEarned, isTrip: true, travelTime: stop.timeTraveled)
         }
         
-        user.statistics.updateStatistics(timeSpent: totalTimeSpent, recordsBought: numRecordsBought, recordsSold: numRecordsSold, totalSpent: totalMoneySpent, totalEarned: totalMoneyEarned, isTrip: true, travelTime: totalTimeTraveled)
+        user.statistics.updateStatistics(timeSpent: totalTimeSpent, recordsBought: numRecordsBought, recordsSold: numRecordsSold, totalSpent: totalMoneySpent, totalEarned: totalMoneyEarned, isTrip: true, travelTime: totalTimeTraveled, costSold: totalCostSold, valueAdded: totalValueAdded, valueSold: totalValueSold)
         for stop in stops {
             for album in stop.newAlbums {
                 user.catalog.addAlbum(album: album)

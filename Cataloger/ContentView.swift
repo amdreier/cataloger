@@ -18,11 +18,13 @@ struct ContentView: View {
         animation: .default)
     private var items: FetchedResults<Item>
     
-    let formatter = NumberFormatter()
-    
-    init() {
+    let currencyFormatter = {
+        var formatter = NumberFormatter()
         formatter.numberStyle = .currency
-    }
+        
+        return formatter
+    }()
+    
     
     @ObservedObject var model = CatalogerModel()
     var body: some View {
@@ -37,13 +39,17 @@ struct ContentView: View {
                             Text("Records")
                             Text("PPR")
                             Text("ASP")
+                            Text("Cost")
+                            Text("Value")
                         }
                         
                         GridRow {
                             Text("\(model.user.statistics.totalTrips)")
                             Text("\(model.user.catalog.getNumRecords())")
-                            Text(formatter.string(from: model.user.statistics.pricePerRecord as NSNumber) ?? "Err")
-                            Text(formatter.string(from: model.user.statistics.averageSellPrice as NSNumber) ?? "Err")
+                            Text(currencyFormatter.string(from: model.user.statistics.pricePerRecord as NSNumber) ?? "Err")
+                            Text(currencyFormatter.string(from: model.user.statistics.averageSellPrice as NSNumber) ?? "Err")
+                            Text(currencyFormatter.string(from: model.user.statistics.totalCost as NSNumber) ?? "Err")
+                            Text(currencyFormatter.string(from: model.user.statistics.totalValue as NSNumber) ?? "Err")
                         }
                     }.foregroundColor(.green)
                     NavigationLink(destination: TripView(), label: {Text("Start Trip")})

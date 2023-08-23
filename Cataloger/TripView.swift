@@ -23,42 +23,44 @@ struct TripView: View {
         NavigationView {
             ZStack {
                 LinearGradient(colors: [.indigo, .teal], startPoint: .bottomLeading, endPoint: .topTrailing).edgesIgnoringSafeArea(.all)
-                VStack {
-                    if (model.currentTrip != nil) {
-                        ForEach(model.currentTrip!.stops, id: \.self) { stop in
-                            NavigationLink {
-                                ForEach(stop.newAlbums, id: \.self) { album in
-                                    Text(album.title)
+                ScrollView {
+                    VStack {
+                        if (model.currentTrip != nil) {
+                            ForEach(model.currentTrip!.stops, id: \.self) { stop in
+                                NavigationLink {
+                                    List {
+                                        ForEach(stop.newAlbums, id: \.self) { album in
+                                            Text(album.title)
+                                        }
+                                    }
+                                } label: {
+                                    HStack {
+                                        Text(stop.store.name).padding().foregroundColor(.white)
+                                        Spacer()
+                                        Image(systemName: "arrow.right").foregroundColor(.white).padding()
+                                    }.border(.red, width: 2).background(.blue).padding([.top], 2).padding([.leading, .trailing], 10)
                                 }
-                            } label: {
-                                HStack {
-                                    Text(stop.store.name).padding().foregroundColor(.white)
-                                    Spacer()
-                                    Image(systemName: "arrow.right").foregroundColor(.white).padding()
-                                }.border(.red, width: 2).background(.blue).padding([.top], 2).padding([.leading, .trailing], 10)
                             }
                         }
-                    }
-                    //                    .onDelete(perform: deleteItems)
-                    
-                    //                .toolbar {
-                    //                    ToolbarItem(placement: .navigationBarTrailing) {
-                    //                        EditButton()
-                    //                    }
-                    //                    ToolbarItem {
-                    //                        Button(action: addItem) {
-                    //                            Label("Add Item", systemImage: "plus")
-                    //                        }
-                    //                    }
-                    //                }
-                    
-                    
-                    NavigationLink(destination: StopCreateView(), label: {
-                        Text("+ Stop").foregroundColor(.white)
-                    })
+                        //                    .onDelete(perform: deleteItems)
                         
-                    Spacer()
-                }
+                        //                .toolbar {
+                        //                    ToolbarItem(placement: .navigationBarTrailing) {
+                        //                        EditButton()
+                        //                    }
+                        //                    ToolbarItem {
+                        //                        Button(action: addItem) {
+                        //                            Label("Add Item", systemImage: "plus")
+                        //                        }
+                        //                    }
+                        //                }
+                        
+                        
+                        NavigationLink(destination: StopCreateView(), label: {
+                            Text("+ Stop").foregroundColor(.black).frame(maxWidth: .infinity, alignment: .center)
+                        })
+                    }
+                }.scrollContentBackground(.hidden)
             }
             .navigationBarItems(trailing: Button(action : {
                 model.endTrip()

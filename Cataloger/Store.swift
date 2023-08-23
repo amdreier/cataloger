@@ -15,6 +15,11 @@ class Store: Equatable, Hashable {
     var location: String = ""
     var statistics = Statistics()
     
+    init(name: String, location: String) {
+        self.name = name
+        self.location = location
+    }
+    
     func hash(into hasher: inout Hasher) {
         hasher.combine(ObjectIdentifier(self))
     }

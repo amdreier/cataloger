@@ -13,13 +13,40 @@ struct NewStoreView: View {
     
     @EnvironmentObject var model: CatalogerModel
     
+    @State var storeName = ""
+    @State var storeLocation = ""
+    
     var body: some View {
         NavigationView {
-            Text("test")
+            ZStack {
+                List {
+                    HStack {
+                        Text("Name: ")
+                        TextField(text: $storeName, prompt: Text("Name")){}
+                    }
+                    .disableAutocorrection(true)
+                    HStack {
+                        Text("Location: ")
+                        TextField(text: $storeLocation, prompt: Text("Location")){}
+                    }
+                    .disableAutocorrection(true)
+                }
+            }
+            .navigationBarItems(trailing: Button(action: {
+                if storeName != "" {
+                    model.stores.append(Store(name: storeName, location: storeLocation))
+                }
+                
+                self.mode.wrappedValue.dismiss()
+            }){
+                HStack{
+                    Text("Create Store").foregroundColor(.blue).bold(true)
+                }
+            })
         }
+        .environmentObject(model)
+        .navigationBarBackButtonHidden(true)
     }
-    
-    
 }
 
 struct NewStoreView_Previews: PreviewProvider {

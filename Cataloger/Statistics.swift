@@ -17,13 +17,15 @@ class Statistics {
     var tripsBuying: Int = 0
     var tripsSelling: Int = 0
     var travelTime: Int = 0
+    var totalCost: Double = 0
+    var totalValue: Double = 0
     
     /* Calculated Metrics */
     var totalRecords: Int = 0
     var pricePerRecord: Double = 0
     var averageSellPrice: Double = 0
     
-    func updateStatistics(timeSpent: Int, recordsBought: Int, recordsSold: Int, totalSpent: Double, totalEarned: Double, isTrip: Bool, travelTime: Int) {
+    func updateStatistics(timeSpent: Int, recordsBought: Int, recordsSold: Int, totalSpent: Double, totalEarned: Double, isTrip: Bool, travelTime: Int, costSold: Double = 0, valueAdded: Double = 0, valueSold: Double = 0) {
         self.timeSpent += timeSpent
         self.recordsBought += recordsBought
         self.recordsSold += recordsSold
@@ -33,6 +35,12 @@ class Statistics {
         self.tripsBuying += recordsBought > 0 ? 1 : 0
         self.tripsSelling += recordsSold > 0 ? 1 : 0
         self.travelTime += travelTime
+        
+        self.totalCost -= costSold
+        self.totalCost += totalSpent
+        
+        self.totalValue += valueAdded
+        self.totalValue -= valueSold
         
         calculateCalcMetrics()
     }
