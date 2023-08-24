@@ -56,9 +56,9 @@ class CatalogerModel: ObservableObject {
         selectedStore = store
     }
     
-    func addStop() {
+    func addStop(timeSpent: Int, timeTraveled: Int) {
         if selectedStore != nil {
-            currentTrip?.addStop(store: selectedStore!, albumsBought: newAlbums, albumsSold: soldAlbums) // need to add other data to func
+            currentTrip?.addStop(store: selectedStore!, albumsBought: newAlbums, albumsSold: soldAlbums, timeTraveled: timeTraveled, timeSpent: timeSpent) // need to add other data to func
         }
         
         resetStore()

@@ -35,21 +35,25 @@ struct ContentView: View {
                     Spacer().frame(maxHeight: 25)
                     Grid {
                         GridRow {
-                            Text("Trips")
-                            Text("Records")
-                            Text("PPR")
-                            Text("ASP")
-                            Text("Cost")
-                            Text("Value")
+                            Text("Trips:")
+                            Text("Records:")
+                            Text("Time:")
+                            Text("PPR:")
+                            Text("ASP:")
+                            Text("Cost:")
+                            Text("Value:")
+                            
                         }
                         
                         GridRow {
                             Text("\(model.user.statistics.totalTrips)")
                             Text("\(model.user.catalog.getNumRecords())")
+                            Text("\(model.user.statistics.timeSpent) mins")
                             Text(currencyFormatter.string(from: model.user.statistics.pricePerRecord as NSNumber) ?? "Err")
                             Text(currencyFormatter.string(from: model.user.statistics.averageSellPrice as NSNumber) ?? "Err")
                             Text(currencyFormatter.string(from: model.user.statistics.totalCost as NSNumber) ?? "Err")
                             Text(currencyFormatter.string(from: model.user.statistics.totalValue as NSNumber) ?? "Err")
+                            
                         }
                     }.foregroundColor(.green)
                     NavigationLink(destination: TripView(), label: {Text("Start Trip")})
