@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 // Need to deel with no filter case of same track name but different song, user manual verification?
 /* Unique Tracks Filtering
@@ -14,16 +15,36 @@ import Foundation
  *  - Artists
  *  - Version (Year + Live)
 */
-struct UniqueTracks {
+class UniqueTracks: NSManagedObject {
     /* Dictionary Key data structures */
-    enum TrackTitle: Equatable, Hashable {
-        case title(_ title: String)
+    class TrackTitle: NSManagedObject {
+        var title: String = ""
+        
+        init(_ title: String) {
+            self.title = title
+        }
     }
-    enum TrackTitleAndArtists: Equatable, Hashable {
-        case titleAndArtist(title: String, artists: [String])
+    class TrackTitleAndArtists: NSManagedObject {
+        var title: String = ""
+        var artists: [String] = []
+        
+        init(title: String, artists: [String]) {
+            self.title = title
+            self.artists = artists
+        }
     }
-    enum TrackVersion: Equatable, Hashable {
-        case version(title: String, artists: [String], releaseYear: Int?, isLive: Bool)
+    class TrackVersion: NSManagedObject {
+        var title: String = ""
+        var artists: [String] = []
+        var releaseYear: Int? = nil
+        var isLive: Bool = false
+        
+        init(title: String, artists: [String], releaseYear: Int? = nil, isLive: Bool) {
+            self.title = title
+            self.artists = artists
+            self.releaseYear = releaseYear
+            self.isLive = isLive
+        }
     }
     
     /* Uniqueness data structure */
@@ -85,10 +106,10 @@ struct UniqueTracks {
     /// - Description: Adds a track to the uniqueness tracker of all tracks and updates the corresponding records
     /// - Parameter track: The track to be added to the uniqueness tracker
     /// - Returns: The Uniqueness of the track for this Catelogue
-    mutating func addTrack(track: Track) -> Uniqueness {
-        let trkTtl = TrackTitle.title(track.title)
-        let trkArtsTtl = TrackTitleAndArtists.titleAndArtist(title: track.title, artists: track.artists)
-        let trkVrsn = TrackVersion.version(title: track.title, artists: track.artists, releaseYear: track.releaseYear, isLive: track.isLive)
+    func addTrack(track: Track) -> Uniqueness {
+        let trkTtl = TrackTitle(track.title)
+        let trkArtsTtl = TrackTitleAndArtists(title: track.title, artists: track.artists)
+        let trkVrsn = TrackVersion(title: track.title, artists: track.artists, releaseYear: track.releaseYear, isLive: track.isLive)
         var uniqueness = Uniqueness.unique
         
         var byTitle = tracksByTitle[trkTtl]
@@ -188,10 +209,10 @@ struct UniqueTracks {
     /// - Description: Removes a track from the filters
     /// - Parameter track: Track to remove from filter
     /// - Returns: A 3-tuple of tracks which have new uniqueness values, each slot for  the uniqueness they got, or nil if the track doesn't exist
-    mutating func removeTrack(track: Track) -> NewUnique? {
-        let trkTtl = TrackTitle.title(track.title)
-        let trkArtsTtl = TrackTitleAndArtists.titleAndArtist(title: track.title, artists: track.artists)
-        let trkVrsn = TrackVersion.version(title: track.title, artists: track.artists, releaseYear: track.releaseYear, isLive: track.isLive)
+    func removeTrack(track: Track) -> NewUnique? {
+        let trkTtl = TrackTitle(track.title)
+        let trkArtsTtl = TrackTitleAndArtists(title: track.title, artists: track.artists)
+        let trkVrsn = TrackVersion(title: track.title, artists: track.artists, releaseYear: track.releaseYear, isLive: track.isLive)
         
         var byTitle = tracksByTitle[trkTtl]
         var byArtist = tracksByArtist[trkArtsTtl]

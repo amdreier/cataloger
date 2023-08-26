@@ -6,30 +6,33 @@
 //
 
 import Foundation
+import CoreData
 
-class Album: Hashable {
+class Album: NSManagedObject {
     static func ==(lhs: Album, rhs: Album) -> Bool {
         lhs.isCompilation == rhs.isCompilation && lhs.isMix == rhs.isMix && lhs.isGH == rhs.isGH && lhs.isCollection == rhs.isCollection && lhs.isLive == rhs.isLive && lhs.genre == rhs.genre && lhs.releaseYear == rhs.releaseYear && lhs.title == rhs.title && lhs.label == rhs.label && lhs.artists == rhs.artists && lhs.value == rhs.value && lhs.cost == rhs.cost && lhs.uniqueness == rhs.uniqueness && lhs.store == rhs.store && lhs.records == rhs.records
     }
     
-    var isCompilation: Bool                 // songs not originally released together
-    var isMix: Bool                         // different artists
-    var isGH: Bool                          // greatest hits
-    var isCollection: Bool                  // box set, etc
-    var isLive: Bool                        // is this is a live recording
-    var genre: String                       // from standard list
-    var releaseYear: Int?                   // release year
-    var title: String                       // Album title
-    var label: String                       // release label company
-    var artists = [String]()                // all artists/band names, LastName, FirstName MiddleNames/BandName, The
-    var value: Double                       // resale price USD
-    var cost: Double                        // paid price USD
-    var uniqueness: UniqueTracks.Uniqueness // the uniquenss of the most unique record in the album
-    var store: Store?                       // where it was bought
+//    var isCompilation: Bool = false                 // songs not originally released together
+//    var isMix: Bool = false                         // different artists
+//    var isGH: Bool = false                          // greatest hits
+//    var isCollection: Bool = false                  // box set, etc
+//    var isLive: Bool = false                        // is this is a live recording
+//    var genre: String = ""                       // from standard list
+//    var releaseYear: Int?                   // release year
+//    var title: String = ""                       // Album title
+//    var label: String = ""                       // release label company
+//    var artists = [String]()                // all artists/band names, LastName, FirstName MiddleNames/BandName, The
+//    var value: Double = 0                       // resale price USD
+//    var cost: Double = 0                       // paid price USD
+//    var uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique // the uniquenss of the most unique record in the album
+//    var store: Store?                       // where it was bought
     
-    var records = [Record]()
+//    var records = [Record]()
     
     init(isCompilation: Bool = false, isMix: Bool = false, isGH: Bool = false, isCollection: Bool = false, isLive: Bool = false, genre: String = "N/A", releaseYear: Int? = nil, title: String = "N/A", label: String = "N/A", artists: [String] = [String](), value: Double = 0, cost: Double = 0, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, store: Store? = nil, records: [Record] = [Record]()) {
+        super.init()
+        
         self.isCompilation = isCompilation
         self.isMix = isMix
         self.isGH = isGH
@@ -56,10 +59,6 @@ class Album: Hashable {
     func addRecord(_ record: Record) {
         records.append(record)
         let _ = recheckUniqueness()
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(ObjectIdentifier(self))
     }
     
     func recheckUniqueness() -> UniqueTracks.Uniqueness {

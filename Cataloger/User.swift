@@ -6,18 +6,21 @@
 //
 
 import Foundation
+import CoreData
 
 
 
 /// - TODO: Figure out storing/adding/removing unique tracks with multiple filiters
-class User: ObservableObject {
-    @Published var username: String = ""
-    @Published var catalog: Catalog = Catalog()
-    @Published var albumWishlist = [Album]()
-    @Published var trackWishlist = [Track]()
-    @Published var trips = [Trip]()
+class User: NSManagedObject {
+//    @Published var username: String = ""
+//    @Published var catalog: Catalog = Catalog()
+//    @Published var albumWishlist = [Album]()
+//    @Published var trackWishlist = [Track]()
+//    @Published var trips = [Trip]()
     
-    @Published var statistics = Statistics()
+    
+    
+//    @Published var statistics = Statistics()
     
     func setUsername(username: String) {
         self.username = username

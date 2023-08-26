@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import CoreData
 
 /// - TODO: Add and remove records from albums
 
-struct Catalog {
+class Catalog: NSManagedObject {
     var allAlbums = [Album]()
-    var uniqueTracks = UniqueTracks()
+//    var uniqueTracks = UniqueTracks()
     
     func getNumRecords() -> Int {
         var count: Int = 0
@@ -22,7 +23,7 @@ struct Catalog {
         return count
     }
     
-    mutating func addAlbum(album: Album) -> UniqueTracks.Uniqueness {
+    func addAlbum(album: Album) -> UniqueTracks.Uniqueness {
         allAlbums.append(album)
         var uniqueness = UniqueTracks.Uniqueness.version
         for track in album.getTracks() {
@@ -36,7 +37,7 @@ struct Catalog {
         return uniqueness
     }
     
-    mutating func removeAlbum(album: Album) -> Bool {
+    func removeAlbum(album: Album) -> Bool {
         let index = allAlbums.firstIndex(of: album)
         if index != nil {
             allAlbums.remove(at: index!)
@@ -49,7 +50,7 @@ struct Catalog {
         }
     }
     
-    mutating func addRecord(record: Record, album: Album) -> Bool {
+    func addRecord(record: Record, album: Album) -> Bool {
         let index = allAlbums.firstIndex(of: album)
         if index != nil {
             allAlbums[index!].addRecord(record)

@@ -6,22 +6,21 @@
 //
 
 import Foundation
+import CoreData
 
 
 /// - TODO: Add metric calculations
 ///     - Breakdowns of metrics by genre
-class Store: Equatable, Hashable {
-    var name: String = ""
-    var location: String = ""
-    var statistics = Statistics()
+class Store: NSManagedObject {
+//    var name: String = ""
+//    var location: String = ""
+//    var statistics = Statistics()
     
     init(name: String, location: String) {
+        super.init()
+        
         self.name = name
         self.location = location
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(ObjectIdentifier(self))
     }
     
     static func ==(lhs: Store, rhs: Store) -> Bool {

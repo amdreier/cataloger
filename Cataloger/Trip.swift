@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import CoreData
 
-struct Trip: CustomStringConvertible {
-    struct Stop: Hashable {
+class Trip: NSManagedObject {
+    class Stop: NSManagedObject {
         var store: Store
         var newAlbums = [Album]()
         var soldAlbums = [Album]()
@@ -29,38 +30,36 @@ struct Trip: CustomStringConvertible {
         }
     }
     
-    var isFinished = false              // if the trip is still in progress
-    var stops = [Stop]()              // stores visited in ordered (with duplicates for return stops)
+//    var isFinished = false              // if the trip is still in progress
+//    var stops = [Stop]()              // stores visited in ordered (with duplicates for return stops)
     
     // Need to handle buying or selling only some records in an album
 //    var newAlbums = [[Album]]()         // albums bought
 //    var soldAlbums = [[Album]]()        // albums sold
     
-    var totalTimeSpent: Int = 0         // total time spent at all stores
+//    var totalTimeSpent: Int = 0         // total time spent at all stores
 //    var timeSpent = [Int]()             // time spent in each store with corresponding array index
 //    var moneySpent = [Double]()         // money spent in each store with corresponding array index
 //    var moneyEarned = [Double]()        // money earned in each store with corresponding array index
-    var totalMoneySpent: Double = 0     // total money spent at all stores
-    var totalMoneyEarned: Double = 0    // total moeny earned at each store
-    var totalTimeTraveled: Int = 0      // total time spent traveling for this trip
+//    var totalMoneySpent: Double = 0     // total money spent at all stores
+//    var totalMoneyEarned: Double = 0    // total moeny earned at each store
+//    var totalTimeTraveled: Int = 0      // total time spent traveling for this trip
 //    var timeTraveled = [Int]()          // time traveled from last location to location i
-    var numRecordsBought: Int = 0       // total number of records bought on this trip so far
-    var numRecordsSold: Int = 0         // total number of records sold on this trip so far
+//    var numRecordsBought: Int = 0       // total number of records bought on this trip so far
+//    var numRecordsSold: Int = 0         // total number of records sold on this trip so far
     
-    var totalValueSold: Double = 0
-    var totalCostSold: Double = 0
-    var totalValueAdded: Double = 0
+//    var totalValueSold: Double = 0
+//    var totalCostSold: Double = 0
+//    var totalValueAdded: Double = 0
     
-    var pricePerRecord: Double = 0      // average price per record bought
-    var averageSellPrice: Double = 0    // average sell price for each record sold
+//    var pricePerRecord: Double = 0      // average price per record bought
+//    var averageSellPrice: Double = 0    // average sell price for each record sold
     
-    var description: String {
-        String(numRecordsBought)
-    }
-    
-    var user: User
+//    var user: User = User()
     
     init(_ user: User) {
+        super.init()
+        
         self.user = user
     }
     
@@ -78,7 +77,7 @@ struct Trip: CustomStringConvertible {
     ///   - moneyEarned: How much money has been earned at this stop so far (can be changed later)
     ///   - timeTraveled: How long it took to travel to this stop so far (can be changed later)
     ///   - timeSpent: How much time has been spent at this stop so far (can be changed later)
-    mutating func addStop(store: Store, albumsBought: [Album] = [], albumsSold: [Album] = [], timeTraveled: Int = 0, timeSpent: Int = 0) {
+    func addStop(store: Store, albumsBought: [Album] = [], albumsSold: [Album] = [], timeTraveled: Int = 0, timeSpent: Int = 0) {
         var moneySpent: Double = 0
         var moneyEarned: Double = 0
         
@@ -112,7 +111,7 @@ struct Trip: CustomStringConvertible {
     
     
     /// - Description: Ends the Trip, updates User catalog, unique tracks, and wishlist, updates Store metrics
-    mutating func endTrip() {
+    func endTrip() {
         self.isFinished = true
         for stop in stops {
             stop.store.statistics.updateStatistics(timeSpent: stop.timeSpent, recordsBought: Album.recordCount(stop.newAlbums), recordsSold: Album.recordCount(stop.soldAlbums), totalSpent: stop.moneySpent, totalEarned: stop.moneyEarned, isTrip: true, travelTime: stop.timeTraveled)
@@ -136,7 +135,7 @@ struct Trip: CustomStringConvertible {
     ///   - stop: Which stop/store in the Trip to add the Album
     ///   - album: The Album to add to the stop
     /// - Throws: illegalStore exception if stop index out of bounds
-    mutating func addBoughtAlbum(stop: Int, album: Album) throws {
+    func addBoughtAlbum(stop: Int, album: Album) throws {
         if stop >= stops.count || stop < 0 {
             throw illegalArgument.illegalStore(message: "Stop outside of Stops range when adding bought album: \(stop)")
         }
@@ -154,7 +153,7 @@ struct Trip: CustomStringConvertible {
     ///   - stop: Which stop/store in the Trip to add the Album
     ///   - album: The Album to add to the stop
     /// - Throws: illegalStore exception if stop index out of bounds
-    mutating func addSoldAlbum(stop: Int, album: Album, value: Double) throws {
+    func addSoldAlbum(stop: Int, album: Album, value: Double) throws {
         if stop >= stops.count || stop < 0 {
             throw illegalArgument.illegalStore(message: "Stop outside of Stops range when adding sold album: \(stop)")
         }
@@ -173,7 +172,7 @@ struct Trip: CustomStringConvertible {
     ///   - stop: Index of stop to remove from
     ///   - album: Album index to remove
     /// - Throws: illegalStore exception if stop index out of bounds and illegalAlbum if album index out of bounds
-    mutating func removeBoughtAlbum(stop: Int, album: Int) throws {
+    func removeBoughtAlbum(stop: Int, album: Int) throws {
         if stop >= stops.count || stop < 0 {
             throw illegalArgument.illegalStore(message: "Stop outside of Stops range when removing bought album: \(stop)")
         }
@@ -196,7 +195,7 @@ struct Trip: CustomStringConvertible {
     ///   - stop: Index of stop to remove from
     ///   - album: Album index to remove
     /// - Throws: illegalStore exception if stop index out of bounds and illegalAlbum if album index out of bounds
-    mutating func removeSoldAlbum(stop: Int, album: Int, value: Double) throws {
+    func removeSoldAlbum(stop: Int, album: Int, value: Double) throws {
         if stop >= stops.count || stop < 0 {
             throw illegalArgument.illegalStore(message: "Stop outside of Stops range when removing bought album: \(stop)")
         }
@@ -215,7 +214,7 @@ struct Trip: CustomStringConvertible {
     }
     
     /// - Description: Updates the averages for price of records bought and sold
-    mutating func updateAverages() {
+    func updateAverages() {
         self.pricePerRecord = self.numRecordsBought == 0 ? 0 : (Double (self.totalMoneySpent)) / (Double (self.numRecordsBought))
         self.averageSellPrice = self.numRecordsSold == 0 ? 0 : (Double (self.totalMoneyEarned)) / (Double (self.numRecordsSold))
     }
@@ -225,7 +224,7 @@ struct Trip: CustomStringConvertible {
     ///   - stop: Stop index to set
     ///   - newValue: New timeSpent value
     /// - Throws: illegalStore exception if stop index out of bounds
-    mutating func setTimeSpent(stop: Int, newValue: Int) throws {
+    func setTimeSpent(stop: Int, newValue: Int) throws {
         if stop >= stops.count || stop < 0 {
             throw illegalArgument.illegalStore(message: "Stop outside of Stops range when editing timeSpent: \(stop)")
         }
@@ -238,7 +237,7 @@ struct Trip: CustomStringConvertible {
     ///   - stop: Stop index to set
     ///   - newValue: New moneySpent value
     /// - Throws: illegalStore exception if stop index out of bounds
-    mutating func setMoneySpent(stop: Int, newValue: Double) throws {
+    func setMoneySpent(stop: Int, newValue: Double) throws {
         if stop >= stops.count || stop < 0 {
             throw illegalArgument.illegalStore(message: "Stop outside of Stops range when editing moneySpent: \(stop)")
         }
@@ -255,7 +254,7 @@ struct Trip: CustomStringConvertible {
     ///   - stop: Stop index to set
     ///   - newValue: New moneyEarned value
     /// - Throws: illegalStore exception if stop index out of bounds
-    mutating func setMoneyEarned(stop: Int, newValue: Double) throws {
+    func setMoneyEarned(stop: Int, newValue: Double) throws {
         if stop >= stops.count || stop < 0 {
             throw illegalArgument.illegalStore(message: "Stop outside of Stops range when editing moneyEarned: \(stop)")
         }
@@ -269,7 +268,7 @@ struct Trip: CustomStringConvertible {
     
     /// - Description: Sets totalTimeTraveled
     /// - Parameter newValue: Value to give to TotalTimeTraveled
-    mutating func setTotalTimeTraveled(newValue: Int) {
+    func setTotalTimeTraveled(newValue: Int) {
         self.totalTimeTraveled = newValue
     }
 }

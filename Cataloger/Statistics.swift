@@ -6,24 +6,25 @@
 //
 
 import Foundation
+import CoreData
 
-class Statistics {
-    var timeSpent: Int = 0
-    var recordsBought: Int = 0
-    var recordsSold: Int = 0
-    var totalSpent: Double = 0
-    var totalEarned: Double = 0
-    var totalTrips: Int = 0
-    var tripsBuying: Int = 0
-    var tripsSelling: Int = 0
-    var travelTime: Int = 0
-    var totalCost: Double = 0
-    var totalValue: Double = 0
+class Statistics: NSManagedObject {
+//    var timeSpent: Int = 0
+//    var recordsBought: Int = 0
+//    var recordsSold: Int = 0
+//    var totalSpent: Double = 0
+//    var totalEarned: Double = 0
+//    var totalTrips: Int = 0
+//    var tripsBuying: Int = 0
+//    var tripsSelling: Int = 0
+//    var travelTime: Int = 0
+//    var totalCost: Double = 0
+//    var totalValue: Double = 0
     
     /* Calculated Metrics */
-    var totalRecords: Int = 0
-    var pricePerRecord: Double = 0
-    var averageSellPrice: Double = 0
+//    var totalRecords: Int = 0
+//    var pricePerRecord: Double = 0
+//    var averageSellPrice: Double = 0
     
     func updateStatistics(timeSpent: Int, recordsBought: Int, recordsSold: Int, totalSpent: Double, totalEarned: Double, isTrip: Bool, travelTime: Int, costSold: Double = 0, valueAdded: Double = 0, valueSold: Double = 0) {
         self.timeSpent += timeSpent

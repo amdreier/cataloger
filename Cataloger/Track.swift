@@ -6,25 +6,24 @@
 //
 
 import Foundation
+import CoreData
 
-class Track: Hashable {
+class Track: NSManagedObject {
     static func ==(lhs: Track, rhs: Track) -> Bool {
         lhs.title == rhs.title && lhs.artists == rhs.artists && lhs.releaseYear == rhs.releaseYear && lhs.genre == rhs.genre && lhs.isLive == rhs.isLive && lhs.uniqueness == rhs.uniqueness && lhs.record == rhs.record
     }
     
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(ObjectIdentifier(self))
-    }
-    
-    var title: String                       // track/song title
-    var artists = [String]()                // all artists/band names, LastName, FirstName MiddleNames/BandName, The
-    var releaseYear: Int?                   // original release year of track
-    var genre: String                       // from standard list
-    var isLive: Bool                        // is this track from a live recording
-    var uniqueness: UniqueTracks.Uniqueness // uniqueness of the most unique track on the record
-    var record: Record?                     // record this track is on
+//    var title: String = ""                       // track/song title
+//    var artists = [String]()                // all artists/band names, LastName, FirstName MiddleNames/BandName, The
+//    var releaseYear: Int?                   // original release year of track
+//    var genre: String = ""                       // from standard list
+//    var isLive: Bool = false                        // is this track from a live recording
+//    var uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique // uniqueness of the most unique track on the record
+//    var record: Record?                     // record this track is on
     
     init(title: String, artists: [String] = [String](), releaseYear: Int? = nil, genre: String = "", isLive: Bool = false, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, record: Record? = nil) {
+        super.init()
+        
         self.title = title
         self.artists = artists
         self.releaseYear = releaseYear

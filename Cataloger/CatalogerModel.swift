@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import CoreData
 
-class CatalogerModel: ObservableObject {
-    @Published var user = User()
+class CatalogerModel: NSManagedObject {
+//    @Published var user = User()
     @Published var currentTrip: Trip? = nil
-    @Published var stores = [Store]()
+//    @Published var stores = [Store]()
     @Published var selectedStore: Store? = nil
     @Published var stop: Int = 0
     @Published var newAlbums = [Album]()

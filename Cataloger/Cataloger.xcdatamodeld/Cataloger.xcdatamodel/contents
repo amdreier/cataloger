@@ -1,6 +1,158 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21754" systemVersion="22G74" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Album" representedClassName="Album" syncable="YES">
+        <attribute name="artistsDat" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <attribute name="costDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="genreDat" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="isCollectionDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isCompilationDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isGHDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isLiveDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isMixDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="labelDat" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="releaseYearDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="titleDat" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="uniquenessDat" optional="YES" attributeType="Integer 64" defaultValueString="4" usesScalarValueType="YES"/>
+        <attribute name="valueDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="catalogDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Catalog" inverseName="allAlbumsDat" inverseEntity="Catalog"/>
+        <relationship name="recordsDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Record" inverseName="albumDat" inverseEntity="Record"/>
+        <relationship name="stopNewAlbumsDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stop" inverseName="newAlbumsDat" inverseEntity="Stop"/>
+        <relationship name="stopSoldAlbumsDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stop" inverseName="soldAlbumsDat" inverseEntity="Stop"/>
+        <relationship name="storeDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Store" inverseName="albumDat" inverseEntity="Store"/>
+        <relationship name="userWishlistDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="albumWishlistDat" inverseEntity="User"/>
+    </entity>
+    <entity name="Catalog" representedClassName="Catalog" syncable="YES">
+        <relationship name="allAlbumsDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Album" inverseName="catalogDat" inverseEntity="Album"/>
+        <relationship name="uniqueTracksDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UniqueTracks" inverseName="catalog" inverseEntity="UniqueTracks"/>
+        <relationship name="userDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="catalogDat" inverseEntity="User"/>
+    </entity>
+    <entity name="CatalogerModel" representedClassName="CatalogerModel" syncable="YES">
+        <relationship name="storesDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Store" inverseName="catalogerModelData" inverseEntity="Store"/>
+        <relationship name="userDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="catalogerModelDat" inverseEntity="User"/>
+    </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
+        <attribute name="attribute" optional="YES"/>
+        <attribute name="attribute1" optional="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="Record" representedClassName="Record" syncable="YES">
+        <attribute name="artistsDat" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <attribute name="costDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="genreDat" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="isCollectionDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isCompilationDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isGHDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isLiveDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isMixDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="labelDat" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="releaseYearDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="speedDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="titleDat" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="uniquenessDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="valueDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="albumDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Album" inverseName="recordsDat" inverseEntity="Album"/>
+        <relationship name="storeDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Store" inverseName="recordsDat" inverseEntity="Store"/>
+        <relationship name="tracksDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Track" inverseName="recordDat" inverseEntity="Track"/>
+    </entity>
+    <entity name="Statistics" representedClassName="Statistics" syncable="YES">
+        <attribute name="averageSellPriceDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="pricePerRecordDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="recordsBoughtDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="recordsSoldDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="timeSpentDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="totalCostDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="totalEarnedDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="totalRecordsDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="totalSpentDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="totalTripsDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="totalValueDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="travelTimeDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tripsBuyingDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="tripsSellingDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="storeDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Store" inverseName="statisticsDat" inverseEntity="Store"/>
+        <relationship name="userDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="statisticsDat" inverseEntity="User"/>
+    </entity>
+    <entity name="Stop" representedClassName="Stop" syncable="YES">
+        <attribute name="moneyEarnedDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="moneySpentDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="timeSpentDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="timeTraveledDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="newAlbumsDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Album" inverseName="stopNewAlbumsDat" inverseEntity="Album"/>
+        <relationship name="soldAlbumsDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Album" inverseName="stopSoldAlbumsDat" inverseEntity="Album"/>
+        <relationship name="storeDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Store" inverseName="stopDat" inverseEntity="Store"/>
+        <relationship name="tripDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Trip" inverseName="stopsDat" inverseEntity="Trip"/>
+    </entity>
+    <entity name="Store" representedClassName="Store" syncable="YES">
+        <attribute name="locationDat" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="nameDat" optional="YES" attributeType="String" defaultValueString=""/>
+        <relationship name="albumDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Album" inverseName="storeDat" inverseEntity="Album"/>
+        <relationship name="catalogerModelData" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CatalogerModel" inverseName="storesDat" inverseEntity="CatalogerModel"/>
+        <relationship name="recordsDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Record" inverseName="storeDat" inverseEntity="Record"/>
+        <relationship name="statisticsDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Statistics" inverseName="storeDat" inverseEntity="Statistics"/>
+        <relationship name="stopDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Stop" inverseName="storeDat" inverseEntity="Stop"/>
+    </entity>
+    <entity name="Track" representedClassName="Track" syncable="YES">
+        <attribute name="artistsDat" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <attribute name="genreDat" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="isLiveDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="releaseYearDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="titleDat" optional="YES" attributeType="String" defaultValueString=""/>
+        <attribute name="uniquenessDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="recordDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Record" inverseName="tracksDat" inverseEntity="Record"/>
+        <relationship name="trackTitleAndArtistsDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrackTitleAndArtists" inverseName="tracksDat" inverseEntity="TrackTitleAndArtists"/>
+        <relationship name="trackTitleDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrackTitle" inverseName="tracks" inverseEntity="TrackTitle"/>
+        <relationship name="trackVersionDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TrackVersion" inverseName="tracksDat" inverseEntity="TrackVersion"/>
+        <relationship name="userWishlistDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="trackWishlistDat" inverseEntity="User"/>
+    </entity>
+    <entity name="TrackTitle" representedClassName="TrackTitle" syncable="YES">
+        <attribute name="titleDat" optional="YES" attributeType="String" defaultValueString=""/>
+        <relationship name="tracks" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Track" inverseName="trackTitleDat" inverseEntity="Track"/>
+        <relationship name="uniqueTracksDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UniqueTracks" inverseName="trackTitleDat" inverseEntity="UniqueTracks"/>
+    </entity>
+    <entity name="TrackTitleAndArtists" representedClassName="TrackTitleAndArtists" syncable="YES" codeGenerationType="class">
+        <attribute name="artistsDat" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <attribute name="titleDat" optional="YES" attributeType="String" defaultValueString=""/>
+        <relationship name="tracksDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Track" inverseName="trackTitleAndArtistsDat" inverseEntity="Track"/>
+        <relationship name="uniqueTracksDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UniqueTracks" inverseName="trackTitleAndArtistsDat" inverseEntity="UniqueTracks"/>
+    </entity>
+    <entity name="TrackVersion" representedClassName="TrackVersion" syncable="YES" codeGenerationType="class">
+        <attribute name="artistsDat" optional="YES" attributeType="Transformable" customClassName="[String]"/>
+        <attribute name="isLiveDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="releaseYearDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="titleDat" optional="YES" attributeType="String" defaultValueString=""/>
+        <relationship name="tracksDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Track" inverseName="trackVersionDat" inverseEntity="Track"/>
+        <relationship name="uniqueTracksDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UniqueTracks" inverseName="trackVersionDat" inverseEntity="UniqueTracks"/>
+    </entity>
+    <entity name="Trip" representedClassName="Trip" syncable="YES">
+        <attribute name="averageSellPriceDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="dataDat" optional="YES" attributeType="Date" defaultDateTimeInterval="694242000" usesScalarValueType="NO"/>
+        <attribute name="isFinishedDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="numRecordsBoughtDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="numRecordsSoldDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="pricePerRecordDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="totalCostSoldDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="totalMoneyEarnedDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="totalMoneySpentDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="totalTimeSpentDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="totalTimeTraveledDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="totalValueAddedDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="totalValueSoldDat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="stopsDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Stop" inverseName="tripDat" inverseEntity="Stop"/>
+        <relationship name="userDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="tripsDat" inverseEntity="User"/>
+    </entity>
+    <entity name="UniqueTracks" representedClassName="UniqueTracks" syncable="YES">
+        <relationship name="catalog" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Catalog" inverseName="uniqueTracksDat" inverseEntity="Catalog"/>
+        <relationship name="trackTitleAndArtistsDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrackTitleAndArtists" inverseName="uniqueTracksDat" inverseEntity="TrackTitleAndArtists"/>
+        <relationship name="trackTitleDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrackTitle" inverseName="uniqueTracksDat" inverseEntity="TrackTitle"/>
+        <relationship name="trackVersionDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrackVersion" inverseName="uniqueTracksDat" inverseEntity="TrackVersion"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="usernameDat" optional="YES" attributeType="String" defaultValueString=""/>
+        <relationship name="albumWishlistDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Album" inverseName="userWishlistDat" inverseEntity="Album"/>
+        <relationship name="catalogDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Catalog" inverseName="userDat" inverseEntity="Catalog"/>
+        <relationship name="catalogerModelDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CatalogerModel" inverseName="userDat" inverseEntity="CatalogerModel"/>
+        <relationship name="statisticsDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Statistics" inverseName="userDat" inverseEntity="Statistics"/>
+        <relationship name="trackWishlistDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Track" inverseName="userWishlistDat" inverseEntity="Track"/>
+        <relationship name="tripsDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Trip" inverseName="userDat" inverseEntity="Trip"/>
     </entity>
 </model>
