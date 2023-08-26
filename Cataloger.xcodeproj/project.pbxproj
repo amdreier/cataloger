@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		FA2EA58F2A95A24100492CB7 /* AddStoreAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2EA58E2A95A24100492CB7 /* AddStoreAlbumView.swift */; };
 		FA8FE29C2A5A481C005824D6 /* CatalogerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE29B2A5A481C005824D6 /* CatalogerApp.swift */; };
 		FA8FE29E2A5A481C005824D6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE29D2A5A481C005824D6 /* ContentView.swift */; };
 		FA8FE2A02A5A481F005824D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8FE29F2A5A481F005824D6 /* Assets.xcassets */; };
@@ -28,6 +27,7 @@
 		FA9A43ED2A8AB50000F56182 /* CatalogerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9A43EC2A8AB50000F56182 /* CatalogerModel.swift */; };
 		FA9A43EF2A8BE50E00F56182 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9A43EE2A8BE50E00F56182 /* Statistics.swift */; };
 		FA9A43F12A8C1E2B00F56182 /* TripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9A43F02A8C1E2B00F56182 /* TripView.swift */; };
+		FAAF2E0F2A99BE8600673C90 /* AddStoreAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAF2E0E2A99BE8600673C90 /* AddStoreAlbumView.swift */; };
 		FABB05FA2A9542A50048D0E8 /* AddRecordTrackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABB05F92A9542A50048D0E8 /* AddRecordTrackView.swift */; };
 		FABCDBCB2A8D239800E8A974 /* NewStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABCDBCA2A8D239800E8A974 /* NewStoreView.swift */; };
 		FABCDBCD2A8D424600E8A974 /* EditStopAlbumsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABCDBCC2A8D424600E8A974 /* EditStopAlbumsView.swift */; };
@@ -52,7 +52,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		FA2EA58E2A95A24100492CB7 /* AddStoreAlbumView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddStoreAlbumView.swift; path = ../../../../../../.Trash/AddStoreAlbumView.swift; sourceTree = "<group>"; };
 		FA8FE2982A5A481C005824D6 /* Cataloger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cataloger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA8FE29B2A5A481C005824D6 /* CatalogerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogerApp.swift; sourceTree = "<group>"; };
 		FA8FE29D2A5A481C005824D6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -77,6 +76,7 @@
 		FA9A43EC2A8AB50000F56182 /* CatalogerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatalogerModel.swift; sourceTree = "<group>"; };
 		FA9A43EE2A8BE50E00F56182 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		FA9A43F02A8C1E2B00F56182 /* TripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripView.swift; sourceTree = "<group>"; };
+		FAAF2E0E2A99BE8600673C90 /* AddStoreAlbumView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddStoreAlbumView.swift; sourceTree = "<group>"; };
 		FABB05F92A9542A50048D0E8 /* AddRecordTrackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecordTrackView.swift; sourceTree = "<group>"; };
 		FABCDBCA2A8D239800E8A974 /* NewStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStoreView.swift; sourceTree = "<group>"; };
 		FABCDBCC2A8D424600E8A974 /* EditStopAlbumsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStopAlbumsView.swift; sourceTree = "<group>"; };
@@ -139,11 +139,11 @@
 				FA8FE2D32A5C6173005824D6 /* User.swift */,
 				FA9A43EE2A8BE50E00F56182 /* Statistics.swift */,
 				FA8FE2D92A605B33005824D6 /* Catalog.swift */,
+				FAAF2E0E2A99BE8600673C90 /* AddStoreAlbumView.swift */,
 				FA8FE2D72A60541E005824D6 /* UniqueTracks.swift */,
 				FA8FE2D52A5C627B005824D6 /* Trip.swift */,
 				FA8FE29D2A5A481C005824D6 /* ContentView.swift */,
 				FA9A43F02A8C1E2B00F56182 /* TripView.swift */,
-				FA2EA58E2A95A24100492CB7 /* AddStoreAlbumView.swift */,
 				FABCDBCC2A8D424600E8A974 /* EditStopAlbumsView.swift */,
 				FABB05F92A9542A50048D0E8 /* AddRecordTrackView.swift */,
 				FAF40ED22A8C9195001C4F4C /* StopCreateView.swift */,
@@ -317,7 +317,7 @@
 				FA8FE2D62A5C627B005824D6 /* Trip.swift in Sources */,
 				FA8FE2D02A5A53A8005824D6 /* Store.swift in Sources */,
 				FA9A43F12A8C1E2B00F56182 /* TripView.swift in Sources */,
-				FA2EA58F2A95A24100492CB7 /* AddStoreAlbumView.swift in Sources */,
+				FAAF2E0F2A99BE8600673C90 /* AddStoreAlbumView.swift in Sources */,
 				FA8FE2A52A5A481F005824D6 /* Persistence.swift in Sources */,
 				FA8FE29E2A5A481C005824D6 /* ContentView.swift in Sources */,
 				FABCDBCD2A8D424600E8A974 /* EditStopAlbumsView.swift in Sources */,
