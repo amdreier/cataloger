@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+@objc(CatalogerModel)
 class CatalogerModel: NSManagedObject {
 //    @Published var user = User()
     @Published var currentTrip: Trip? = nil
@@ -17,6 +18,14 @@ class CatalogerModel: NSManagedObject {
     @Published var newAlbums = [Album]()
     @Published var soldAlbums = [Album]()
 //    @Published var editingAlbum: Album? = nil
+    
+    let context: NSManagedObjectContext? = nil
+    
+    init(context: NSManagedObjectContext) {
+        super.init(entity: NSEntityDescription(), insertInto: context)
+        
+        self.context = context
+    }
     
     func startTrip() {
         endTrip()
@@ -30,7 +39,7 @@ class CatalogerModel: NSManagedObject {
         }
         
         if currentTrip!.stops.isEmpty {
-            user.trips = user.trips.dropLast(1)
+            user.tripsDat = NSSet(array: user.trips.dropLast(1))
             return
         }
         
@@ -39,11 +48,11 @@ class CatalogerModel: NSManagedObject {
     }
     
     func addStore(store: Store) {
-        stores.append(store)
+        addToStoresDat(store)
     }
     
     func addBoughtAlbumToStop(isCompilation: Bool, isMix: Bool, isGH: Bool, isCollection: Bool, isLive: Bool, genre: String, releaseYear: Int?, title: String, label: String, artists: [String], value: Double, cost: Double, records: [Record]) {
-        newAlbums.append(Album(isCompilation: isCompilation, isMix: isMix, isGH: isGH, isCollection: isCollection, isLive: isLive, genre: genre, releaseYear: releaseYear, title: title, label: label, artists: artists, value: value, cost: cost, records: records))
+        newAlbums.append(Album(context: context!, isCompilation: isCompilation, isMix: isMix, isGH: isGH, isCollection: isCollection, isLive: isLive, genre: genre, releaseYear: releaseYear, title: title, label: label, artists: artists, value: value, cost: cost, records: records))
     }
     
     

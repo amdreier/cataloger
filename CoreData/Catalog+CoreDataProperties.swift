@@ -17,14 +17,14 @@ extension Catalog {
     }
 
     @NSManaged public var allAlbumsDat: NSSet?
-    @NSManaged public var uniqueTracksDat: UniqueTracks?
+    @NSManaged public var uniqueTracks: UniqueTracks?
     @NSManaged public var userDat: User?
     
     
     
-    public var uniqueTracks: UniqueTracks {
-        uniqueTracksDat ?? UniqueTracks()
-    }
+//    public var uniqueTracks: UniqueTracks {
+//        uniqueTracksDat ?? UniqueTracks(context: )
+//    }
 }
 
 // MARK: Generated accessors for allAlbumsDat

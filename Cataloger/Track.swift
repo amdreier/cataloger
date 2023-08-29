@@ -21,16 +21,16 @@ class Track: NSManagedObject {
 //    var uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique // uniqueness of the most unique track on the record
 //    var record: Record?                     // record this track is on
     
-    init(title: String, artists: [String] = [String](), releaseYear: Int? = nil, genre: String = "", isLive: Bool = false, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, record: Record? = nil) {
-        super.init()
+    init(context: NSManagedObjectContext, title: String, artists: [String] = [String](), releaseYear: Int? = nil, genre: String = "", isLive: Bool = false, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, record: Record? = nil) {
+        super.init(entity: NSEntityDescription(), insertInto: context)
         
-        self.title = title
-        self.artists = artists
-        self.releaseYear = releaseYear
-        self.genre = genre
-        self.isLive = isLive
-        self.uniqueness = uniqueness
-        self.record = record
+        self.titleDat = title
+        self.artistsDat = artists
+        self.releaseYearDat = releaseYear == nil ? -1 : Int64(releaseYear!)
+        self.genreDat = genre
+        self.isLiveDat = isLive
+        self.uniquenessDat = Int64(uniqueness.rawValue)
+        self.recordDat = record
     }
     
     static func artistsStr(artists: [String]) -> String {
@@ -50,7 +50,7 @@ class Track: NSManagedObject {
     
     func updateUniqueness(newUniqueness: UniqueTracks.Uniqueness) {
         if newUniqueness > self.uniqueness {
-            self.uniqueness = newUniqueness
+            self.uniquenessDat = Int64(newUniqueness.rawValue)
             record?.updateUniqueness(newUniqueness: newUniqueness)
         }
     }

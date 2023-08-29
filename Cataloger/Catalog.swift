@@ -14,6 +14,9 @@ class Catalog: NSManagedObject {
     var allAlbums = [Album]()
 //    var uniqueTracks = UniqueTracks()
     
+    
+
+    
     func getNumRecords() -> Int {
         var count: Int = 0
         for album in allAlbums {
@@ -27,7 +30,7 @@ class Catalog: NSManagedObject {
         allAlbums.append(album)
         var uniqueness = UniqueTracks.Uniqueness.version
         for track in album.getTracks() {
-            let trackUniqueness = uniqueTracks.addTrack(track: track)
+            let trackUniqueness = uniqueTracks?.addTrack(track: track) ?? UniqueTracks.Uniqueness.unique
             
             if (trackUniqueness > uniqueness) {
                 uniqueness = trackUniqueness
@@ -42,7 +45,7 @@ class Catalog: NSManagedObject {
         if index != nil {
             allAlbums.remove(at: index!)
             for track in album.getTracks() {
-                let _ = uniqueTracks.removeTrack(track: track)
+                let _ = uniqueTracks?.removeTrack(track: track)
             }
             return true
         } else {

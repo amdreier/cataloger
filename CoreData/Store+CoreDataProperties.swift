@@ -22,7 +22,7 @@ extension Store {
     @NSManaged public var catalogerModelData: CatalogerModel?
     @NSManaged public var recordsDat: Record?
     @NSManaged public var statisticsDat: Statistics?
-    @NSManaged public var stop: Stop?
+    @NSManaged public var stop: Trip.Stop?
     
     public var name: String {
         nameDat ?? ""
@@ -33,7 +33,7 @@ extension Store {
     }
     
     public var statistics: Statistics {
-        statisticsDat ?? Statistics()
+        statisticsDat ?? Statistics(context: NSManagedObjectContext())
     }
 }
 

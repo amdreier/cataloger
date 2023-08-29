@@ -16,19 +16,30 @@ import CoreData
  *  - Version (Year + Live)
 */
 class UniqueTracks: NSManagedObject {
+    let context: NSManagedObjectContext? = nil
+    
+    init(context: NSManagedObjectContext) {
+        super.init(entity: NSEntityDescription(), insertInto: context)
+        self.context = context
+    }
+    
+    
     /* Dictionary Key data structures */
     class TrackTitle: NSManagedObject {
         var title: String = ""
         
-        init(_ title: String) {
-            self.title = title
+        init(context: NSManagedObjectContext, _ title: String) {
+            super.init(entity: NSEntityDescription(), insertInto: context)
+            self.titleDat = title
         }
     }
     class TrackTitleAndArtists: NSManagedObject {
         var title: String = ""
         var artists: [String] = []
         
-        init(title: String, artists: [String]) {
+        init(context: NSManagedObjectContext, title: String, artists: [String]) {
+            super.init(entity: NSEntityDescription(), insertInto: context)
+            
             self.title = title
             self.artists = artists
         }
@@ -39,7 +50,9 @@ class UniqueTracks: NSManagedObject {
         var releaseYear: Int? = nil
         var isLive: Bool = false
         
-        init(title: String, artists: [String], releaseYear: Int? = nil, isLive: Bool) {
+        init(context: NSManagedObjectContext, title: String, artists: [String], releaseYear: Int? = nil, isLive: Bool) {
+            super.init(entity: NSEntityDescription(), insertInto: context)
+            
             self.title = title
             self.artists = artists
             self.releaseYear = releaseYear
@@ -107,9 +120,9 @@ class UniqueTracks: NSManagedObject {
     /// - Parameter track: The track to be added to the uniqueness tracker
     /// - Returns: The Uniqueness of the track for this Catelogue
     func addTrack(track: Track) -> Uniqueness {
-        let trkTtl = TrackTitle(track.title)
-        let trkArtsTtl = TrackTitleAndArtists(title: track.title, artists: track.artists)
-        let trkVrsn = TrackVersion(title: track.title, artists: track.artists, releaseYear: track.releaseYear, isLive: track.isLive)
+        let trkTtl = TrackTitle(context: context!, track.title)
+        let trkArtsTtl = TrackTitleAndArtists(context: context!, title: track.title, artists: track.artists)
+        let trkVrsn = TrackVersion(context: context!, title: track.title, artists: track.artists, releaseYear: track.releaseYear, isLive: track.isLive)
         var uniqueness = Uniqueness.unique
         
         var byTitle = tracksByTitle[trkTtl]
@@ -210,9 +223,9 @@ class UniqueTracks: NSManagedObject {
     /// - Parameter track: Track to remove from filter
     /// - Returns: A 3-tuple of tracks which have new uniqueness values, each slot for  the uniqueness they got, or nil if the track doesn't exist
     func removeTrack(track: Track) -> NewUnique? {
-        let trkTtl = TrackTitle(track.title)
-        let trkArtsTtl = TrackTitleAndArtists(title: track.title, artists: track.artists)
-        let trkVrsn = TrackVersion(title: track.title, artists: track.artists, releaseYear: track.releaseYear, isLive: track.isLive)
+        let trkTtl = TrackTitle(context: context!, track.title)
+        let trkArtsTtl = TrackTitleAndArtists(context: context!, title: track.title, artists: track.artists)
+        let trkVrsn = TrackVersion(context: context!, title: track.title, artists: track.artists, releaseYear: track.releaseYear, isLive: track.isLive)
         
         var byTitle = tracksByTitle[trkTtl]
         var byArtist = tracksByArtist[trkArtsTtl]

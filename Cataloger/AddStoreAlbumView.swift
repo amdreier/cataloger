@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Foundation
+import CoreData
 
 enum FocusedElm {
     case text
@@ -16,12 +17,13 @@ enum FocusedElm {
 // TODO: show total value
 struct AddStoreAlbumView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    @Environment(\.managedObjectContext) private var viewContext
     
     @EnvironmentObject var model: CatalogerModel
     
     @FocusState var focusedElm: FocusedElm?
     
-    @StateObject var formData = FormData()
+    @StateObject var formData: FormData
     
     @State var newArtistName = ""
     
@@ -45,7 +47,13 @@ struct AddStoreAlbumView: View {
         
         @Published var releaseYearStr: String = ""
         
-        var album = Album()
+        var context: NSManagedObjectContext
+        var album: Album
+        
+        init(context: NSManagedObjectContext) {
+            self.context = context
+            self.album = Album(context: context)
+        }
     }
     
     struct RecordDetailsView: View {
@@ -58,6 +66,8 @@ struct AddStoreAlbumView: View {
         @State var newTrackTitle: String = ""
         @State var newArtistName: String = ""
         
+        let context: NSManagedObjectContext
+        
         let numberFormatter: NumberFormatter
         let currencyFormatter: NumberFormatter
         let intFormatter: NumberFormatter
@@ -68,7 +78,7 @@ struct AddStoreAlbumView: View {
                     Group {
                         HStack {
                             Text("Cost: ")
-                            TextField("Cost", value: $record.cost, formatter: currencyFormatter){}.keyboardType(.decimalPad)
+                            TextField("Cost", value: $record.costDat, formatter: currencyFormatter){}.keyboardType(.decimalPad)
                                 .focused($focusedElm, equals: .numbers)
                         }.onSubmit {
                             if formData.manualMode {
@@ -87,7 +97,7 @@ struct AddStoreAlbumView: View {
                         })
                         HStack {
                             Text("Value: ")
-                            TextField("Value", value: $record.value, formatter: currencyFormatter){}.keyboardType(.decimalPad)
+                            TextField("Value", value: $record.valueDat, formatter: currencyFormatter){}.keyboardType(.decimalPad)
                                 .focused($focusedElm, equals: .numbers)
                         }.onSubmit {
                             if formData.manualMode {
@@ -108,34 +118,34 @@ struct AddStoreAlbumView: View {
                     Group {
                         HStack {
                             Text("Title: ")
-                            TextField(text: $record.title, prompt: Text("Title")){}
+                            TextField(text: Binding($record.titleDat)!, prompt: Text("Title")){}
                         }
                         .focused($focusedElm, equals: .text)
                         .disableAutocorrection(true)
                         HStack {
                             Text("Speed: ")
-                            TextField("Speed", value: $record.speed, formatter: intFormatter){}.keyboardType(.decimalPad)
+                            TextField("Speed", value: $record.speedDat, formatter: intFormatter){}.keyboardType(.decimalPad)
                         }.focused($focusedElm, equals: .numbers)
                         HStack {
                             Text("Genre: ")
-                            TextField(text: $record.genre, prompt: Text("Genre")){}
+                            TextField(text: Binding($record.genreDat)!, prompt: Text("Genre")){}
                                 .focused($focusedElm, equals: .text)
                         }.disableAutocorrection(true)
-                        Toggle(isOn: $record.isCompilation, label: {Text("Compilation: ")})
-                        Toggle(isOn: $record.isMix, label: {Text("Mix: ")})
-                        Toggle(isOn: $record.isGH, label: {Text("Greatest Hits: ")})
-                        Toggle(isOn: $record.isCollection, label: {Text("Collection: ")})
-                        Toggle(isOn: $record.isLive, label: {Text("Live: ")})
+                        Toggle(isOn: $record.isCompilationDat, label: {Text("Compilation: ")})
+                        Toggle(isOn: $record.isMixDat, label: {Text("Mix: ")})
+                        Toggle(isOn: $record.isGHDat, label: {Text("Greatest Hits: ")})
+                        Toggle(isOn: $record.isCollectionDat, label: {Text("Collection: ")})
+                        Toggle(isOn: $record.isLiveDat, label: {Text("Live: ")})
                     }
                 }
-                Toggle(isOn: $record.trackManualMode, label: {Text("Manual Track Entry: ")})
+                Toggle(isOn: $record.isManualModeDat, label: {Text("Manual Track Entry: ")})
                 Section(header: Text("Tracks:").foregroundColor(.brown)) {
                     VStack {
                         ForEach(record.tracks, id: \.self) {track in
                             Text(track.title).frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
-                    if record.trackManualMode {
+                    if record.isManualMode {
                         NavigationLink {
                             AddRecordTrackView(releaseYearStr: ((record.isCompilation || record.isGH || record.isMix) ? "" : formData.releaseYearStr), artists: (record.isMix ? [] : record.artists), genre: record.genre, isLive: record.isLive, isMix: record.isMix, record: record)
                         } label: {
@@ -149,12 +159,12 @@ struct AddStoreAlbumView: View {
                         }.disableAutocorrection(true)
                             .onSubmit {
                                 if newTrackTitle != "" {
-                                    record.tracks.append(Track(title: newTrackTitle, artists: record.artists, releaseYear: record.releaseYear, genre: record.genre, isLive: record.isLive, record: record))
+                                    record.addToTracksDat(Track(context: context, title: newTrackTitle, artists: record.artists, releaseYear: record.releaseYear, genre: record.genre, isLive: record.isLive, record: record))
                                     newTrackTitle = ""
                                 }
                             }.onChange(of: focusedElm, perform: { _ in
                                 if newTrackTitle != "" {
-                                    record.tracks.append(Track(title: newTrackTitle, artists: record.artists, releaseYear: record.releaseYear, genre: record.genre, isLive: record.isLive, record: record))
+                                    record.addToTracksDat(Track(context: context, title: newTrackTitle, artists: record.artists, releaseYear: record.releaseYear, genre: record.genre, isLive: record.isLive, record: record))
                                     newTrackTitle = ""
                                 }
                             })
@@ -178,7 +188,7 @@ struct AddStoreAlbumView: View {
                             .onSubmit {
                                 if !formData.manualMode{
                                     if newArtistName != "" && !formData.artists.contains(newArtistName) {
-                                        record.artists.append(newArtistName)
+                                        record.artistsDat?.append(newArtistName)
                                         newArtistName = ""
                                     }
                                 }
@@ -189,7 +199,7 @@ struct AddStoreAlbumView: View {
                             }.onChange(of: focusedElm, perform: { _ in
                                 if !formData.manualMode{
                                     if newArtistName != "" && !formData.artists.contains(newArtistName) {
-                                        record.artists.append(newArtistName)
+                                        record.artistsDat?.append(newArtistName)
                                         newArtistName = ""
                                     }
                                 }
@@ -239,7 +249,7 @@ struct AddStoreAlbumView: View {
                                 if !formData.manualMode {
                                     var i = 0
                                     for record in formData.records {
-                                        record.record.title = "\(formData.title), Disk \(i + 1)"
+                                        record.record.titleDat = "\(formData.title), Disk \(i + 1)"
                                         i += 1
                                     }
                                 }
@@ -247,7 +257,7 @@ struct AddStoreAlbumView: View {
                                 if !formData.manualMode {
                                     var i = 0
                                     for record in formData.records {
-                                        record.record.title = "\(formData.title), Disk \(i + 1)"
+                                        record.record.titleDat = "\(formData.title), Disk \(i + 1)"
                                         i += 1
                                     }
                                 }
@@ -259,7 +269,7 @@ struct AddStoreAlbumView: View {
                                 if formData.numRecords >= 1 {
                                     for i in 0...(formData.numRecords - 1) {
                                         if i > (formData.records.count - 1) {
-                                            formData.records.append(RecordDetailsView(record: Record(title: "\(formData.title), Disk \(i + 1)"), formData: formData, numberFormatter: numberFormatter, currencyFormatter: currencyFormatter, intFormatter: intFormatter))
+                                            formData.records.append(RecordDetailsView(record: Record(context: viewContext, title: "\(formData.title), Disk \(i + 1)"), formData: formData, context: viewContext, numberFormatter: numberFormatter, currencyFormatter: currencyFormatter, intFormatter: intFormatter))
                                         }
                                     }
                                 }
@@ -268,8 +278,8 @@ struct AddStoreAlbumView: View {
                                     let avgCost = formData.numRecords == 0 ? 0 : formData.cost / Double(formData.numRecords)
                                     let avgValue = formData.numRecords == 0 ? 0 : formData.value / Double(formData.numRecords)
                                     for view in formData.records {
-                                        view.record.cost = avgCost
-                                        view.record.value = avgValue
+                                        view.record.costDat = avgCost
+                                        view.record.valueDat = avgValue
                                     }
                                 }
                             }
@@ -278,7 +288,7 @@ struct AddStoreAlbumView: View {
                                 if formData.numRecords >= 1 {
                                     for i in 0...(formData.numRecords - 1) {
                                         if i > (formData.records.count - 1) {
-                                            formData.records.append(RecordDetailsView(record: Record(title: "\(formData.title), Disk \(i + 1)"), formData: formData, numberFormatter: numberFormatter, currencyFormatter: currencyFormatter, intFormatter: intFormatter))
+                                            formData.records.append(RecordDetailsView(record: Record(context: viewContext, title: "\(formData.title), Disk \(i + 1)"), formData: formData, context: viewContext, numberFormatter: numberFormatter, currencyFormatter: currencyFormatter, intFormatter: intFormatter))
                                         }
                                     }
                                 }
@@ -287,8 +297,8 @@ struct AddStoreAlbumView: View {
                                     let avgCost = formData.numRecords == 0 ? 0 : formData.cost / Double(formData.numRecords)
                                     let avgValue = formData.numRecords == 0 ? 0 : formData.value / Double(formData.numRecords)
                                     for view in formData.records {
-                                        view.record.cost = avgCost
-                                        view.record.value = avgValue
+                                        view.record.costDat = avgCost
+                                        view.record.valueDat = avgValue
                                     }
                                 }
                             })
@@ -332,13 +342,13 @@ struct AddStoreAlbumView: View {
                                         .onSubmit {
                                             if !formData.manualMode {
                                                 for record in formData.records {
-                                                    record.record.speed = formData.speed
+                                                    record.record.speedDat = Int64(formData.speed)
                                                 }
                                             }
                                         }.onChange(of: focusedElm, perform: { _ in
                                             if !formData.manualMode {
                                                 for record in formData.records {
-                                                    record.record.speed = formData.speed
+                                                    record.record.speedDat = Int64(formData.speed)
                                                 }
                                             }
                                         })
@@ -351,13 +361,13 @@ struct AddStoreAlbumView: View {
                                 .onSubmit {
                                     if !formData.manualMode {
                                         for record in formData.records {
-                                            record.record.genre = formData.genre
+                                            record.record.genreDat = formData.genre
                                         }
                                     }
                                 }.onChange(of: focusedElm, perform: { _ in
                                     if !formData.manualMode {
                                         for record in formData.records {
-                                            record.record.genre = formData.genre
+                                            record.record.genreDat = formData.genre
                                         }
                                     }
                                 })
@@ -368,13 +378,13 @@ struct AddStoreAlbumView: View {
                                 .onSubmit {
                                     if !formData.manualMode {
                                         for record in formData.records {
-                                            record.record.releaseYear = (formData.releaseYearStr == "" ? nil : Int(formData.releaseYearStr))
+                                            record.record.releaseYearDat = (formData.releaseYearStr == "" ? -1 : Int64(Int(formData.releaseYearStr)!))
                                         }
                                     }
                                 }.onChange(of: focusedElm, perform: { _ in
                                     if !formData.manualMode {
                                         for record in formData.records {
-                                            record.record.releaseYear = (formData.releaseYearStr == "" ? nil : Int(formData.releaseYearStr))
+                                            record.record.releaseYearDat = (formData.releaseYearStr == "" ? -1 : Int64(Int(formData.releaseYearStr)!))
                                         }
                                     }
                                 })
@@ -386,13 +396,13 @@ struct AddStoreAlbumView: View {
                                 .onSubmit {
                                     if !formData.manualMode {
                                         for record in formData.records {
-                                            record.record.label = formData.label
+                                            record.record.labelDat = formData.label
                                         }
                                     }
                                 }.onChange(of: focusedElm, perform: { _ in
                                     if !formData.manualMode {
                                         for record in formData.records {
-                                            record.record.label = formData.label
+                                            record.record.labelDat = formData.label
                                         }
                                     }
                                 })
@@ -405,7 +415,7 @@ struct AddStoreAlbumView: View {
                                 if !formData.manualMode {
                                     let avgCost = formData.numRecords == 0 ? 0 : newVal / Double(formData.numRecords)
                                     for view in formData.records {
-                                        view.record.cost = avgCost
+                                        view.record.costDat = avgCost
                                     }
                                 }
                             }
@@ -417,7 +427,7 @@ struct AddStoreAlbumView: View {
                                 if !formData.manualMode {
                                     let avgValue = formData.numRecords == 0 ? 0 : newVal / Double(formData.numRecords)
                                     for view in formData.records {
-                                        view.record.value = avgValue
+                                        view.record.valueDat = avgValue
                                     }
                                 }
                             }
@@ -425,35 +435,35 @@ struct AddStoreAlbumView: View {
                                 Toggle(isOn: $formData.isCompilation, label: {Text("Compilation: ")}).onChange(of: formData.isCompilation) {newValue in
                                     if !formData.manualMode {
                                         for record in formData.records {
-                                            record.record.isCompilation = newValue
+                                            record.record.isCompilationDat = newValue
                                         }
                                     }
                                 }
                                 Toggle(isOn: $formData.isMix, label: {Text("Mix: ")}).onChange(of: formData.isMix) {newValue in
                                     if !formData.manualMode {
                                         for record in formData.records {
-                                            record.record.isMix = newValue
+                                            record.record.isMixDat = newValue
                                         }
                                     }
                                 }
                                 Toggle(isOn: $formData.isGH, label: {Text("Greatest Hits: ")}).onChange(of: formData.isGH) {newValue in
                                     if !formData.manualMode {
                                         for record in formData.records {
-                                            record.record.isGH = newValue
+                                            record.record.isGHDat = newValue
                                         }
                                     }
                                 }
                                 Toggle(isOn: $formData.isCollection, label: {Text("Collection: ")}).onChange(of: formData.isCollection) {newValue in
                                     if !formData.manualMode {
                                         for record in formData.records {
-                                            record.record.isCollection = newValue
+                                            record.record.isCollectionDat = newValue
                                         }
                                     }
                                 }
                                 Toggle(isOn: $formData.isLive, label: {Text("Live: ")}).onChange(of: formData.isLive) {newValue in
                                     if !formData.manualMode {
                                         for record in formData.records {
-                                            record.record.isLive = newValue
+                                            record.record.isLiveDat = newValue
                                         }
                                     }
                                 }
@@ -484,7 +494,7 @@ struct AddStoreAlbumView: View {
                                         
                                         if !formData.isMix {
                                             for view in formData.records {
-                                                view.record.artists = Array(Set(view.record.artists + formData.artists))
+                                                view.record.artistsDat = Array(Set(view.record.artists + formData.artists))
                                             }
                                         }
                                     }.onChange(of: focusedElm, perform: { _ in
@@ -497,7 +507,7 @@ struct AddStoreAlbumView: View {
                                         
                                         if !formData.isMix {
                                             for view in formData.records {
-                                                view.record.artists = Array(Set(view.record.artists + formData.artists))
+                                                view.record.artistsDat = Array(Set(view.record.artists + formData.artists))
                                             }
                                         }
                                     })
@@ -546,9 +556,9 @@ struct AddStoreAlbumView: View {
         .navigationBarBackButtonHidden(true)
     }
 }
-
-struct AddStoreAlbumView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddStoreAlbumView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
-    }
-}
+//
+//struct AddStoreAlbumView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddStoreAlbumView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
+//    }
+//}

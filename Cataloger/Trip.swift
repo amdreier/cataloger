@@ -9,8 +9,10 @@ import Foundation
 import CoreData
 
 class Trip: NSManagedObject {
+    let context: NSManagedObjectContext? = nil
+    
     class Stop: NSManagedObject {
-        var store: Store
+        var store: Store? = nil
         var newAlbums = [Album]()
         var soldAlbums = [Album]()
         
@@ -19,7 +21,9 @@ class Trip: NSManagedObject {
         var moneyEarned: Double = 0
         var timeTraveled: Int = 0
         
-        init(store: Store, newAlbums: [Album] = [Album](), soldAlbums: [Album] = [Album](), timeSpent: Int, moneySpent: Double, moneyEarned: Double, timeTraveled: Int) {
+        init(context: NSManagedObjectContext, store: Store, newAlbums: [Album] = [Album](), soldAlbums: [Album] = [Album](), timeSpent: Int, moneySpent: Double, moneyEarned: Double, timeTraveled: Int) {
+            super.init(entity: NSEntityDescription(), insertInto: context)
+            
             self.store = store
             self.newAlbums = newAlbums
             self.soldAlbums = soldAlbums
@@ -57,10 +61,11 @@ class Trip: NSManagedObject {
     
 //    var user: User = User()
     
-    init(_ user: User) {
-        super.init()
+    init(context: NSManagedObjectContext, _ user: User) {
+        super.init(entity: NSEntityDescription(), insertInto: context)
         
-        self.user = user
+        self.context = context
+        self.userDat = user
     }
     
     enum illegalArgument: Error {
@@ -95,16 +100,16 @@ class Trip: NSManagedObject {
             costSold += album.cost
         }
         
-        let stop = Stop(store: store, newAlbums: albumsBought, soldAlbums: albumsSold, timeSpent: timeSpent, moneySpent: moneySpent, moneyEarned: moneyEarned, timeTraveled: timeTraveled)
-        self.stops.append(stop)
-        self.totalMoneySpent += moneySpent
-        self.totalMoneyEarned += moneyEarned
-        self.totalValueAdded += valueAdded
-        self.totalCostSold += costSold
-        self.totalTimeTraveled += timeTraveled
-        self.totalTimeSpent += timeSpent
-        self.numRecordsBought += Album.recordCount(albumsBought)
-        self.numRecordsSold += Album.recordCount(albumsSold)
+        let stop = Stop(context: context!, store: store, newAlbums: albumsBought, soldAlbums: albumsSold, timeSpent: timeSpent, moneySpent: moneySpent, moneyEarned: moneyEarned, timeTraveled: timeTraveled)
+        addToStopsDat(stop)
+        self.totalMoneySpentDat += moneySpent
+        self.totalMoneyEarnedDat += moneyEarned
+        self.totalValueAddedDat += valueAdded
+        self.totalCostSoldDat += costSold
+        self.totalTimeTraveledDat += Int64(timeTraveled)
+        self.totalTimeSpentDat += Int64(timeSpent)
+        self.numRecordsBoughtDat += Int64(Album.recordCount(albumsBought))
+        self.numRecordsSoldDat += Int64(Album.recordCount(albumsSold))
         
         updateAverages()
     }
@@ -112,9 +117,9 @@ class Trip: NSManagedObject {
     
     /// - Description: Ends the Trip, updates User catalog, unique tracks, and wishlist, updates Store metrics
     func endTrip() {
-        self.isFinished = true
+        self.isFinishedDat = true
         for stop in stops {
-            stop.store.statistics.updateStatistics(timeSpent: stop.timeSpent, recordsBought: Album.recordCount(stop.newAlbums), recordsSold: Album.recordCount(stop.soldAlbums), totalSpent: stop.moneySpent, totalEarned: stop.moneyEarned, isTrip: true, travelTime: stop.timeTraveled)
+            stop.store!.statistics.updateStatistics(timeSpent: stop.timeSpent, recordsBought: Album.recordCount(stop.newAlbums), recordsSold: Album.recordCount(stop.soldAlbums), totalSpent: stop.moneySpent, totalEarned: stop.moneyEarned, isTrip: true, travelTime: stop.timeTraveled)
         }
         
         user.statistics.updateStatistics(timeSpent: totalTimeSpent, recordsBought: numRecordsBought, recordsSold: numRecordsSold, totalSpent: totalMoneySpent, totalEarned: totalMoneyEarned, isTrip: true, travelTime: totalTimeTraveled, costSold: totalCostSold, valueAdded: totalValueAdded, valueSold: totalValueSold)
@@ -140,10 +145,10 @@ class Trip: NSManagedObject {
             throw illegalArgument.illegalStore(message: "Stop outside of Stops range when adding bought album: \(stop)")
         }
         
-        self.stops[stop].newAlbums.append(album)
-        self.numRecordsBought += album.records.count
-        self.stops[stop].moneySpent += album.cost
-        self.totalMoneySpent += album.cost
+        self.stops[stop].addToNewAlbumsDat(album)
+        self.numRecordsBoughtDat += Int64(album.records.count)
+        self.stops[stop].moneySpentDat += album.cost
+        self.totalMoneySpentDat += album.cost
         
         updateAverages()
     }
@@ -158,10 +163,10 @@ class Trip: NSManagedObject {
             throw illegalArgument.illegalStore(message: "Stop outside of Stops range when adding sold album: \(stop)")
         }
         
-        self.stops[stop].soldAlbums.append(album)
-        self.numRecordsSold += album.records.count
-        self.stops[stop].moneyEarned += value
-        self.totalMoneyEarned += value
+        self.stops[stop].addToSoldAlbumsDat(album)
+        self.numRecordsSoldDat += Int64(album.records.count)
+        self.stops[stop].moneyEarnedDat += value
+        self.totalMoneyEarnedDat += value
         
         updateAverages()
     }
@@ -172,22 +177,25 @@ class Trip: NSManagedObject {
     ///   - stop: Index of stop to remove from
     ///   - album: Album index to remove
     /// - Throws: illegalStore exception if stop index out of bounds and illegalAlbum if album index out of bounds
-    func removeBoughtAlbum(stop: Int, album: Int) throws {
+    func removeBoughtAlbum(stop: Int, album: Album) throws {
         if stop >= stops.count || stop < 0 {
             throw illegalArgument.illegalStore(message: "Stop outside of Stops range when removing bought album: \(stop)")
         }
+//
+//        if album >= stops[stop].newAlbums.count || album < 0 {
+//            throw illegalArgument.illegalAlbum(message: "Album outside of Album range when removing bought album: \(album)")
+//        }
         
-        if album >= stops[stop].newAlbums.count || album < 0 {
-            throw illegalArgument.illegalAlbum(message: "Album outside of Album range when removing bought album: \(album)")
+        if stops[stop].newAlbums.contains(album) {
+            
+            stops[stop].removeFromNewAlbumsDat(album)
+            
+            self.numRecordsBoughtDat -= Int64(album.records.count)
+            self.stops[stop].moneySpentDat -= album.cost
+            self.totalMoneySpentDat -= album.cost
+            
+            updateAverages()
         }
-        
-        let tempAlbum = stops[stop].newAlbums.remove(at: album)
-        
-        self.numRecordsBought -= tempAlbum.records.count
-        self.stops[stop].moneySpent -= tempAlbum.cost
-        self.totalMoneySpent -= tempAlbum.cost
-        
-        updateAverages()
     }
     
     /// - Description: Removes sold album from specified store and at specified index
@@ -195,28 +203,31 @@ class Trip: NSManagedObject {
     ///   - stop: Index of stop to remove from
     ///   - album: Album index to remove
     /// - Throws: illegalStore exception if stop index out of bounds and illegalAlbum if album index out of bounds
-    func removeSoldAlbum(stop: Int, album: Int, value: Double) throws {
+    func removeSoldAlbum(stop: Int, album: Album, value: Double) throws {
         if stop >= stops.count || stop < 0 {
             throw illegalArgument.illegalStore(message: "Stop outside of Stops range when removing bought album: \(stop)")
         }
         
-        if album >= stops[stop].soldAlbums.count || album < 0 {
-            throw illegalArgument.illegalAlbum(message: "Album outside of Album range when removing bought album: \(album)")
+//        if album >= stops[stop].soldAlbums.count || album < 0 {
+//            throw illegalArgument.illegalAlbum(message: "Album outside of Album range when removing bought album: \(album)")
+//        }
+        
+        if stops[stop].soldAlbums.contains(album) {
+            
+            stops[stop].removeFromSoldAlbumsDat(album)
+            
+            self.numRecordsSoldDat -= Int64(album.records.count)
+            self.stops[stop].moneyEarnedDat -= value
+            self.totalMoneyEarnedDat -= value
+            
+            updateAverages()
         }
-        
-        let tempAlbum = stops[stop].soldAlbums.remove(at: album)
-        
-        self.numRecordsSold -= tempAlbum.records.count
-        self.stops[stop].moneyEarned -= value
-        self.totalMoneyEarned -= value
-        
-        updateAverages()
     }
     
     /// - Description: Updates the averages for price of records bought and sold
     func updateAverages() {
-        self.pricePerRecord = self.numRecordsBought == 0 ? 0 : (Double (self.totalMoneySpent)) / (Double (self.numRecordsBought))
-        self.averageSellPrice = self.numRecordsSold == 0 ? 0 : (Double (self.totalMoneyEarned)) / (Double (self.numRecordsSold))
+        self.pricePerRecordDat = self.numRecordsBought == 0 ? 0 : (Double (self.totalMoneySpent)) / (Double (self.numRecordsBought))
+        self.averageSellPriceDat = self.numRecordsSold == 0 ? 0 : (Double (self.totalMoneyEarned)) / (Double (self.numRecordsSold))
     }
     
     /// - Description: Sets timeSpent for a stop
@@ -242,9 +253,9 @@ class Trip: NSManagedObject {
             throw illegalArgument.illegalStore(message: "Stop outside of Stops range when editing moneySpent: \(stop)")
         }
         
-        self.totalMoneySpent -= stops[stop].moneySpent
-        self.stops[stop].moneySpent = newValue
-        self.totalMoneySpent += stops[stop].moneySpent
+        self.totalMoneySpentDat -= stops[stop].moneySpent
+        self.stops[stop].moneySpentDat = newValue
+        self.totalMoneySpentDat += stops[stop].moneySpent
         
         updateAverages()
     }
@@ -259,9 +270,9 @@ class Trip: NSManagedObject {
             throw illegalArgument.illegalStore(message: "Stop outside of Stops range when editing moneyEarned: \(stop)")
         }
         
-        self.totalMoneyEarned -= stops[stop].moneyEarned
-        self.stops[stop].moneyEarned = newValue
-        self.totalMoneyEarned += stops[stop].moneyEarned
+        self.totalMoneyEarnedDat -= stops[stop].moneyEarned
+        self.stops[stop].moneyEarnedDat = newValue
+        self.totalMoneyEarnedDat += stops[stop].moneyEarned
         
         updateAverages()
     }
@@ -269,6 +280,6 @@ class Trip: NSManagedObject {
     /// - Description: Sets totalTimeTraveled
     /// - Parameter newValue: Value to give to TotalTimeTraveled
     func setTotalTimeTraveled(newValue: Int) {
-        self.totalTimeTraveled = newValue
+        self.totalTimeTraveledDat = Int64(newValue)
     }
 }

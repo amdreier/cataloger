@@ -10,6 +10,7 @@ import Foundation
 
 struct AddRecordTrackView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var model: CatalogerModel
     
     @State var title: String = ""
@@ -69,7 +70,7 @@ struct AddRecordTrackView: View {
                                             }
                                             
                                             if isMix {
-                                                record.artists = Array(Set(artists + record.artists)).sorted()
+                                                record.artistsDat = Array(Set(artists + record.artists)).sorted()
                                             }
                                         }.onChange(of: focusedElm, perform: { _ in
                                             if newArtistName != "" && !artists.contains(newArtistName) {
@@ -78,7 +79,7 @@ struct AddRecordTrackView: View {
                                             }
                                             
                                             if isMix {
-                                                record.artists = Array(Set(artists + record.artists)).sorted()
+                                                record.artistsDat = Array(Set(artists + record.artists)).sorted()
                                             }
                                         })
                                 }
@@ -98,7 +99,7 @@ struct AddRecordTrackView: View {
             }
             .navigationBarItems(trailing: Button(action: {
                 if title != "" {
-                    record.tracks.append(Track(title: title, artists: artists, releaseYear: (releaseYearStr == "" ? nil : Int(releaseYearStr)), genre: genre, isLive: isLive))
+                    record.addToTracksDat(Track(context: viewContext, title: title, artists: artists, releaseYear: (releaseYearStr == "" ? nil : Int(releaseYearStr)), genre: genre, isLive: isLive))
                 }
                 self.mode.wrappedValue.dismiss()
             }){
@@ -112,8 +113,8 @@ struct AddRecordTrackView: View {
     }
 }
 
-struct AddRecordTrackView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddRecordTrackView(releaseYearStr: "", artists: ["Luis"], genre: "", isLive: false, isMix: true, record: Record()).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
-    }
-}
+//struct AddRecordTrackView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AddRecordTrackView(releaseYearStr: "", artists: ["Luis"], genre: "", isLive: false, isMix: true, record: Record(context: <#NSManagedObjectContext#>)).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
+//    }
+//}

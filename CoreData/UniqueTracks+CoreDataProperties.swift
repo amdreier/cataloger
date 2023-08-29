@@ -27,10 +27,10 @@ extension UniqueTracks {
 extension UniqueTracks {
 
     @objc(addTrackTitleAndArtistsDatObject:)
-    @NSManaged public func addToTrackTitleAndArtistsDat(_ value: TrackTitleAndArtist)
+    @NSManaged public func addToTrackTitleAndArtistsDat(_ value: TrackTitleAndArtists)
 
     @objc(removeTrackTitleAndArtistsDatObject:)
-    @NSManaged public func removeFromTrackTitleAndArtistsDat(_ value: TrackTitleAndArtist)
+    @NSManaged public func removeFromTrackTitleAndArtistsDat(_ value: TrackTitleAndArtists)
 
     @objc(addTrackTitleAndArtistsDat:)
     @NSManaged public func addToTrackTitleAndArtistsDat(_ values: NSSet)

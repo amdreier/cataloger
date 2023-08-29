@@ -10,6 +10,7 @@ import Foundation
 
 struct StopCreateView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    @Environment(\.managedObjectContext) private var viewContext
     
     @EnvironmentObject var model: CatalogerModel
     
@@ -105,8 +106,8 @@ struct StopCreateView: View {
     }
 }
     
-struct StopCreateView_Previews: PreviewProvider {
-    static var previews: some View {
-        StopCreateView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
-    }
-}
+//struct StopCreateView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        StopCreateView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
+//    }
+//}

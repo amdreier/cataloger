@@ -10,6 +10,7 @@ import Foundation
 
 struct NewStoreView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    @Environment(\.managedObjectContext) private var viewContext
     
     @EnvironmentObject var model: CatalogerModel
     
@@ -34,7 +35,7 @@ struct NewStoreView: View {
             }
             .navigationBarItems(trailing: Button(action: {
                 if storeName != "" {
-                    model.stores.append(Store(name: storeName, location: storeLocation))
+                    model.addStore(store: Store(context: viewContext, name: storeName, location: storeLocation))
                 }
                 
                 self.mode.wrappedValue.dismiss()
@@ -49,8 +50,8 @@ struct NewStoreView: View {
     }
 }
 
-struct NewStoreView_Previews: PreviewProvider {
-    static var previews: some View {
-        NewStoreView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
-    }
-}
+//struct NewStoreView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NewStoreView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
+//    }
+//}

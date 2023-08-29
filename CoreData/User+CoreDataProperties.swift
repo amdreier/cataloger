@@ -29,7 +29,7 @@ extension User {
     }
     
     public var catalog: Catalog {
-        catalogDat ?? Catalog()
+        catalogDat ?? Catalog(context: NSManagedObjectContext())
     }
     
     public var albumWishlist: [Album] {
@@ -57,7 +57,7 @@ extension User {
     }
     
     public var statistics: Statistics {
-        statisticsDat ?? Statistics()
+        statisticsDat ?? Statistics(context: context)
     }
 }
 

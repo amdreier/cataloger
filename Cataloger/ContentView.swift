@@ -12,11 +12,11 @@ import Foundation
 struct ContentView: View {
     
     @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
+    
+//    @FetchRequest(
+//        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
+//        animation: .default)
+//    private var items: FetchedResults<Item>
     
     let currencyFormatter = {
         var formatter = NumberFormatter()
@@ -26,7 +26,9 @@ struct ContentView: View {
     }()
     
     
-    @ObservedObject var model = CatalogerModel()
+    
+    @EnvironmentObject var model: CatalogerModel
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -131,6 +133,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
+        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)//.environmentObject(CatalogerModel(context: PersistenceController.preview.container))
     }
 }

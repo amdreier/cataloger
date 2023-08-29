@@ -22,13 +22,20 @@ class User: NSManagedObject {
     
 //    @Published var statistics = Statistics()
     
+    let context: NSManagedObjectContext = NSManagedObjectContext()
+    
+    init(context: NSManagedObjectContext) {
+        super.init(entity: NSEntityDescription(), insertInto: context)
+        self.context = context
+    }
+    
     func setUsername(username: String) {
-        self.username = username
+        self.usernameDat = username
     }
     
     func startTrip() -> Trip {
-        let newTrip = Trip(self)
-        trips.append(newTrip)
+        let newTrip = Trip(context: context, self)
+        addToTripsDat(newTrip)
         return newTrip
     }
     

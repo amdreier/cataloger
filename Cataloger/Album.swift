@@ -30,39 +30,39 @@ class Album: NSManagedObject {
     
 //    var records = [Record]()
     
-    init(isCompilation: Bool = false, isMix: Bool = false, isGH: Bool = false, isCollection: Bool = false, isLive: Bool = false, genre: String = "N/A", releaseYear: Int? = nil, title: String = "N/A", label: String = "N/A", artists: [String] = [String](), value: Double = 0, cost: Double = 0, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, store: Store? = nil, records: [Record] = [Record]()) {
-        super.init()
+    init(context: NSManagedObjectContext, isCompilation: Bool = false, isMix: Bool = false, isGH: Bool = false, isCollection: Bool = false, isLive: Bool = false, genre: String = "N/A", releaseYear: Int? = nil, title: String = "N/A", label: String = "N/A", artists: [String] = [String](), value: Double = 0, cost: Double = 0, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, store: Store? = nil, records: [Record] = [Record]()) {
+        super.init(entity: NSEntityDescription(), insertInto: context)
         
-        self.isCompilation = isCompilation
-        self.isMix = isMix
-        self.isGH = isGH
-        self.isCollection = isCollection
-        self.isLive = isLive
-        self.genre = genre
-        self.releaseYear = releaseYear
-        self.title = title
-        self.label = label
-        self.artists = artists
-        self.value = value
-        self.cost = cost
-        self.uniqueness = uniqueness
-        self.store = store
-        self.records = records
+        self.isCompilationDat = isCompilation
+        self.isMixDat = isMix
+        self.isGHDat = isGH
+        self.isCollectionDat = isCollection
+        self.isLiveDat = isLive
+        self.genreDat = genre
+        self.releaseYearDat = releaseYear == nil ? -1 : Int64(releaseYear!)
+        self.titleDat = title
+        self.labelDat = label
+        self.artistsDat = artists
+        self.valueDat = value
+        self.costDat = cost
+        self.uniquenessDat = Int64(uniqueness.rawValue)
+        self.storeDat = store
+        self.recordsDat = NSSet(array: records)
     }
     
     func updateUniqueness(newUniqueness: UniqueTracks.Uniqueness) {
         if newUniqueness > self.uniqueness {
-            self.uniqueness = newUniqueness
+            self.uniquenessDat = Int64(newUniqueness.rawValue)
         }
     }
     
     func addRecord(_ record: Record) {
-        records.append(record)
+        addToRecordsDat(record)
         let _ = recheckUniqueness()
     }
     
     func recheckUniqueness() -> UniqueTracks.Uniqueness {
-        self.uniqueness = UniqueTracks.Uniqueness.version
+        self.uniquenessDat = Int64(UniqueTracks.Uniqueness.version.rawValue)
         for record in records {
             self.updateUniqueness(newUniqueness: record.uniqueness)
         }

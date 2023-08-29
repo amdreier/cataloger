@@ -10,6 +10,7 @@ import Foundation
 
 struct EditStopAlbumsView: View {
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    @Environment(\.managedObjectContext) private var viewContext
     
     @EnvironmentObject var model: CatalogerModel
     
@@ -23,7 +24,7 @@ struct EditStopAlbumsView: View {
                             Text(album.title)
                         }
                         NavigationLink {
-                            AddStoreAlbumView()
+                            AddStoreAlbumView(formData: AddStoreAlbumView.FormData(context: viewContext))
                         } label: {
                             Text("+ Album").frame(maxWidth: .infinity, alignment: .center)
                         }
@@ -46,6 +47,6 @@ struct EditStopAlbumsView: View {
 
 struct EditStopAlbumsView_Previews: PreviewProvider {
     static var previews: some View {
-        EditStopAlbumsView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
+        EditStopAlbumsView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
     }
 }

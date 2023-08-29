@@ -11,6 +11,7 @@
 		FA05C7262A99B42E00E80EE7 /* TrackTitle+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA05C71F2A99B42E00E80EE7 /* TrackTitle+CoreDataProperties.swift */; };
 		FA05C7282A99B42E00E80EE7 /* TrackTitleAndArtist+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA05C7212A99B42E00E80EE7 /* TrackTitleAndArtist+CoreDataProperties.swift */; };
 		FA59AD072A99C6D2008785ED /* AddStoreAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA59AD062A99C6D2008785ED /* AddStoreAlbumView.swift */; };
+		FA59AD082A9D901E008785ED /* CatalogerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2B22A5A4820005824D6 /* CatalogerTests.swift */; };
 		FA71B92E2A9812A0002F58B1 /* CatalogerModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71B91A2A9812A0002F58B1 /* CatalogerModel+CoreDataProperties.swift */; };
 		FA71B9302A9812A0002F58B1 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71B91C2A9812A0002F58B1 /* User+CoreDataProperties.swift */; };
 		FA71B9322A9812A0002F58B1 /* Track+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71B91E2A9812A0002F58B1 /* Track+CoreDataProperties.swift */; };
@@ -26,8 +27,6 @@
 		FA8FE2A02A5A481F005824D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8FE29F2A5A481F005824D6 /* Assets.xcassets */; };
 		FA8FE2A32A5A481F005824D6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA8FE2A22A5A481F005824D6 /* Preview Assets.xcassets */; };
 		FA8FE2A52A5A481F005824D6 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2A42A5A481F005824D6 /* Persistence.swift */; };
-		FA8FE2A82A5A481F005824D6 /* Cataloger.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2A62A5A481F005824D6 /* Cataloger.xcdatamodeld */; };
-		FA8FE2B32A5A4820005824D6 /* CatalogerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2B22A5A4820005824D6 /* CatalogerTests.swift */; };
 		FA8FE2BD2A5A4820005824D6 /* CatalogerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2BC2A5A4820005824D6 /* CatalogerUITests.swift */; };
 		FA8FE2BF2A5A4820005824D6 /* CatalogerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2BE2A5A4820005824D6 /* CatalogerUITestsLaunchTests.swift */; };
 		FA8FE2CC2A5A493F005824D6 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2CB2A5A493F005824D6 /* Album.swift */; };
@@ -173,6 +172,7 @@
 		FA8FE29A2A5A481C005824D6 /* Cataloger */ = {
 			isa = PBXGroup;
 			children = (
+				FA9A43EC2A8AB50000F56182 /* CatalogerModel.swift */,
 				FA8FE29B2A5A481C005824D6 /* CatalogerApp.swift */,
 				FA8FE2CB2A5A493F005824D6 /* Album.swift */,
 				FA8FE2CD2A5A498D005824D6 /* Record.swift */,
@@ -190,7 +190,6 @@
 				FABB05F92A9542A50048D0E8 /* AddRecordTrackView.swift */,
 				FAF40ED22A8C9195001C4F4C /* StopCreateView.swift */,
 				FABCDBCA2A8D239800E8A974 /* NewStoreView.swift */,
-				FA9A43EC2A8AB50000F56182 /* CatalogerModel.swift */,
 				FA8FE29F2A5A481F005824D6 /* Assets.xcassets */,
 				FA8FE2A42A5A481F005824D6 /* Persistence.swift */,
 				FA8FE2A92A5A481F005824D6 /* Cataloger.xcdatamodel */,
@@ -382,7 +381,6 @@
 				FABB05FA2A9542A50048D0E8 /* AddRecordTrackView.swift in Sources */,
 				FA8FE2D42A5C6173005824D6 /* User.swift in Sources */,
 				FAAC0FFF2A99A6B40072148C /* Stop+CoreDataProperties.swift in Sources */,
-				FA8FE2A82A5A481F005824D6 /* Cataloger.xcdatamodeld in Sources */,
 				FABCDBCB2A8D239800E8A974 /* NewStoreView.swift in Sources */,
 				FA8FE29C2A5A481C005824D6 /* CatalogerApp.swift in Sources */,
 				FA59AD072A99C6D2008785ED /* AddStoreAlbumView.swift in Sources */,
@@ -396,7 +394,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA8FE2B32A5A4820005824D6 /* CatalogerTests.swift in Sources */,
+				FA59AD082A9D901E008785ED /* CatalogerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

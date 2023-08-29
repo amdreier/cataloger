@@ -23,7 +23,7 @@
     </entity>
     <entity name="Catalog" representedClassName="Catalog" syncable="YES">
         <relationship name="allAlbumsDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Album" inverseName="catalogDat" inverseEntity="Album"/>
-        <relationship name="uniqueTracksDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UniqueTracks" inverseName="catalog" inverseEntity="UniqueTracks"/>
+        <relationship name="uniqueTracks" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="UniqueTracks" inverseName="catalog" inverseEntity="UniqueTracks"/>
         <relationship name="userDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="catalogDat" inverseEntity="User"/>
     </entity>
     <entity name="CatalogerModel" representedClassName="CatalogerModel" syncable="YES">
@@ -31,8 +31,6 @@
         <relationship name="userDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="catalogerModelDat" inverseEntity="User"/>
     </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="attribute" optional="YES"/>
-        <attribute name="attribute1" optional="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="Record" representedClassName="Record" syncable="YES">
@@ -43,6 +41,7 @@
         <attribute name="isCompilationDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="isGHDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="isLiveDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isManualModeDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="isMixDat" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="labelDat" optional="YES" attributeType="String" defaultValueString=""/>
         <attribute name="releaseYearDat" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
@@ -141,7 +140,7 @@
         <relationship name="userDat" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="tripsDat" inverseEntity="User"/>
     </entity>
     <entity name="UniqueTracks" representedClassName="UniqueTracks" syncable="YES">
-        <relationship name="catalog" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Catalog" inverseName="uniqueTracksDat" inverseEntity="Catalog"/>
+        <relationship name="catalog" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Catalog" inverseName="uniqueTracks" inverseEntity="Catalog"/>
         <relationship name="trackTitleAndArtistsDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrackTitleAndArtists" inverseName="uniqueTracksDat" inverseEntity="TrackTitleAndArtists"/>
         <relationship name="trackTitleDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrackTitle" inverseName="uniqueTracksDat" inverseEntity="TrackTitle"/>
         <relationship name="trackVersionDat" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="TrackVersion" inverseName="uniqueTracksDat" inverseEntity="TrackVersion"/>

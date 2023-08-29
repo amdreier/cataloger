@@ -16,11 +16,11 @@ class Store: NSManagedObject {
 //    var location: String = ""
 //    var statistics = Statistics()
     
-    init(name: String, location: String) {
-        super.init()
+    init(context: NSManagedObjectContext, name: String, location: String) {
+        super.init(entity: NSEntityDescription(), insertInto: context)
         
-        self.name = name
-        self.location = location
+        self.nameDat = name
+        self.locationDat = location
     }
     
     static func ==(lhs: Store, rhs: Store) -> Bool {

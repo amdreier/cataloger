@@ -33,6 +33,11 @@ extension Record {
     @NSManaged public var albumDat: Album?
     @NSManaged public var storeDat: Store?
     @NSManaged public var tracksDat: NSSet?
+    @NSManaged public var isManualModeDat: Bool
+    
+    public var isManualMode: Bool {
+        isManualModeDat ?? false
+    }
     
     public var isCompilation: Bool {
         isCompilationDat ?? false

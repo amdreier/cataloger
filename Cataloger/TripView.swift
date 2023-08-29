@@ -13,6 +13,7 @@ struct TripView: View {
     //@Environment(\.managedObjectContext) private var viewContext
 
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
+    @Environment(\.managedObjectContext) private var viewContext
     
 //    @FetchRequest(
 //        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
@@ -35,7 +36,7 @@ struct TripView: View {
                                     }
                                 } label: {
                                     HStack {
-                                        Text(stop.store.name).padding().foregroundColor(.white)
+                                        Text(stop.store?.name ?? "").padding().foregroundColor(.white)
                                         Spacer()
                                         Image(systemName: "arrow.right").foregroundColor(.white).padding()
                                     }.border(.red, width: 2).background(.blue).padding([.top], 2).padding([.leading, .trailing], 10)
@@ -77,9 +78,9 @@ struct TripView: View {
     }
 
     
-    struct TripView_Previews: PreviewProvider {
-        static var previews: some View {
-            TripView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
-        }
-    }
+//    struct TripView_Previews: PreviewProvider {
+//        static var previews: some View {
+//            TripView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext).environmentObject(CatalogerModel())
+//        }
+//    }
 }

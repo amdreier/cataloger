@@ -26,45 +26,40 @@ class Record: NSManagedObject {
 //    @Published var album: Album?                       // album for this record on this catelogue
 //    @Published var store: Store?                       // where it was bought
     
-    @Published var trackManualMode: Bool = false
+//    @Published var trackManualMode: Bool = false
     
 //    @Published var tracks = [Track]()                  // list of all songs on the record
     
-    init(isCompilation: Bool = false, isMix: Bool = false, isGH: Bool = false, isCollection: Bool = false, isLive: Bool = false, genre: String = "", releaseYear: Int? = nil, title: String = "", label: String = "", artists: [String] = [String](), speed: Int = 33, value: Double = 0, cost: Double = 0, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, album: Album? = nil, store: Store? = nil, tracks: [Track] = [Track]()) {
-        super.init()
+    init(context: NSManagedObjectContext, isCompilation: Bool = false, isMix: Bool = false, isGH: Bool = false, isCollection: Bool = false, isLive: Bool = false, genre: String = "", releaseYear: Int? = nil, title: String = "", label: String = "", artists: [String] = [String](), speed: Int = 33, value: Double = 0, cost: Double = 0, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, album: Album? = nil, store: Store? = nil, tracks: [Track] = [Track]()) {
+        super.init(entity: NSEntityDescription(), insertInto: context)
         
-        self.isCompilation = isCompilation
-        self.isMix = isMix
-        self.isGH = isGH
-        self.isCollection = isCollection
-        self.isLive = isLive
-        self.genre = genre
-        self.releaseYear = releaseYear
-        self.title = title
-        self.label = label
-        self.artists = artists
-        self.speed = speed
-        self.value = value
-        self.cost = cost
-        self.uniqueness = uniqueness
-        self.album = album
-        self.store = store
-        self.tracks = tracks
+        self.isCompilationDat = isCompilation
+        self.isMixDat = isMix
+        self.isGHDat = isGH
+        self.isCollectionDat = isCollection
+        self.isLiveDat = isLive
+        self.genreDat = genre
+        self.releaseYearDat = releaseYear == nil ? -1 : Int64(releaseYear!)
+        self.titleDat = title
+        self.labelDat = label
+        self.artistsDat = artists
+        self.speedDat = Int64(speed)
+        self.valueDat = value
+        self.costDat = cost
+        self.uniquenessDat = Int64(uniqueness.rawValue)
+        self.albumDat = album
+        self.storeDat = store
+        self.tracksDat = NSSet(array: tracks)
     }
     
     func removeTrack(_ track: Track) -> Bool {
-        let index = tracks.firstIndex(of: track)
-        if index != nil {
-            tracks.remove(at: index!)
-            let _ = self.recheckUniqueness()
-            return true
-        } else {
-            return false
-        }
+        removeFromTracksDat(track)
+        
+        return tracks.contains(track)
     }
     
     func recheckUniqueness() -> UniqueTracks.Uniqueness {
-        self.uniqueness = UniqueTracks.Uniqueness.version
+        self.uniquenessDat = Int64(UniqueTracks.Uniqueness.version.rawValue)
         for track in tracks {
             self.updateUniqueness(newUniqueness: track.uniqueness)
         }
@@ -75,7 +70,7 @@ class Record: NSManagedObject {
     
     func updateUniqueness(newUniqueness: UniqueTracks.Uniqueness) {
         if newUniqueness > self.uniqueness {
-            self.uniqueness = newUniqueness
+            self.uniquenessDat = Int64(newUniqueness.rawValue)
             album?.updateUniqueness(newUniqueness: newUniqueness)
         }
     }

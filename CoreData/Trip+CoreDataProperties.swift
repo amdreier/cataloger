@@ -16,7 +16,7 @@ extension Trip {
         return NSFetchRequest<Trip>(entityName: "Trip")
     }
 
-    @NSManaged public var dataDat: Date?
+    @NSManaged public var dateDat: Date?
     @NSManaged public var isFinishedDat: Bool
     @NSManaged public var totalTimeSpentDat: Int64
     @NSManaged public var totalMoneySpentDat: Double
@@ -32,6 +32,10 @@ extension Trip {
     @NSManaged public var userDat: User?
     @NSManaged public var stopsDat: NSSet?
     
+    public var date: Date {
+        dateDat ?? Date()
+    }
+    
     public var isFinished: Bool {
         isFinishedDat ?? false
     }
@@ -40,7 +44,7 @@ extension Trip {
         let stopSet = stopsDat as? Set<Stop> ?? []
         
         return stopSet.sorted {
-            $0.store.name < $1.store.name
+            $0.store!.name < $1.store!.name
         }
     }
     
@@ -105,7 +109,7 @@ extension Trip {
     }
     
     public var user: User {
-        userDat ?? User()
+        userDat ?? User(context: context!)
     }
 }
 
