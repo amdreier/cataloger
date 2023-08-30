@@ -11,6 +11,7 @@ import CoreData
 
 
 /// - TODO: Figure out storing/adding/removing unique tracks with multiple filiters
+@objc(User)
 class User: NSManagedObject {
 //    @Published var username: String = ""
 //    @Published var catalog: Catalog = Catalog()
@@ -22,10 +23,11 @@ class User: NSManagedObject {
     
 //    @Published var statistics = Statistics()
     
-    let context: NSManagedObjectContext = NSManagedObjectContext()
+    let context: NSManagedObjectContext? = nil
     
     init(context: NSManagedObjectContext) {
-        super.init(entity: NSEntityDescription(), insertInto: context)
+//        print("U")
+        super.init(entity: NSEntityDescription.entity(forEntityName: "User", in: context)!, insertInto: context)
         self.context = context
     }
     
@@ -34,7 +36,7 @@ class User: NSManagedObject {
     }
     
     func startTrip() -> Trip {
-        let newTrip = Trip(context: context, self)
+        let newTrip = Trip(context: context!, self)
         addToTripsDat(newTrip)
         return newTrip
     }

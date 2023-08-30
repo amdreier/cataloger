@@ -70,7 +70,7 @@ struct AddRecordTrackView: View {
                                             }
                                             
                                             if isMix {
-                                                record.artistsDat = Array(Set(artists + record.artists)).sorted()
+                                                record.artistsDat = Array(Set(artists + record.artists)).sorted() as [NSString]
                                             }
                                         }.onChange(of: focusedElm, perform: { _ in
                                             if newArtistName != "" && !artists.contains(newArtistName) {
@@ -79,7 +79,7 @@ struct AddRecordTrackView: View {
                                             }
                                             
                                             if isMix {
-                                                record.artistsDat = Array(Set(artists + record.artists)).sorted()
+                                                record.artistsDat = Array(Set(artists + record.artists)).sorted() as [NSString]
                                             }
                                         })
                                 }

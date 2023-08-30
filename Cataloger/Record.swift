@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+@objc(Record)
 class Record: NSManagedObject {
 //    @Published var isCompilation: Bool = false                 // songs not originally released together
 //    @Published var isMix: Bool = false                        // different artists
@@ -31,7 +32,7 @@ class Record: NSManagedObject {
 //    @Published var tracks = [Track]()                  // list of all songs on the record
     
     init(context: NSManagedObjectContext, isCompilation: Bool = false, isMix: Bool = false, isGH: Bool = false, isCollection: Bool = false, isLive: Bool = false, genre: String = "", releaseYear: Int? = nil, title: String = "", label: String = "", artists: [String] = [String](), speed: Int = 33, value: Double = 0, cost: Double = 0, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, album: Album? = nil, store: Store? = nil, tracks: [Track] = [Track]()) {
-        super.init(entity: NSEntityDescription(), insertInto: context)
+        super.init(entity: NSEntityDescription.entity(forEntityName: "Record", in: context)!, insertInto: context)
         
         self.isCompilationDat = isCompilation
         self.isMixDat = isMix
@@ -42,7 +43,7 @@ class Record: NSManagedObject {
         self.releaseYearDat = releaseYear == nil ? -1 : Int64(releaseYear!)
         self.titleDat = title
         self.labelDat = label
-        self.artistsDat = artists
+        self.artistsDat = artists as [NSString]
         self.speedDat = Int64(speed)
         self.valueDat = value
         self.costDat = cost

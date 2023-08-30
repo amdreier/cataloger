@@ -12,6 +12,7 @@
 		FA05C7282A99B42E00E80EE7 /* TrackTitleAndArtist+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA05C7212A99B42E00E80EE7 /* TrackTitleAndArtist+CoreDataProperties.swift */; };
 		FA59AD072A99C6D2008785ED /* AddStoreAlbumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA59AD062A99C6D2008785ED /* AddStoreAlbumView.swift */; };
 		FA59AD082A9D901E008785ED /* CatalogerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2B22A5A4820005824D6 /* CatalogerTests.swift */; };
+		FA59AD092A9F9613008785ED /* Cataloger.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = FA8FE2A92A5A481F005824D6 /* Cataloger.xcdatamodel */; };
 		FA71B92E2A9812A0002F58B1 /* CatalogerModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71B91A2A9812A0002F58B1 /* CatalogerModel+CoreDataProperties.swift */; };
 		FA71B9302A9812A0002F58B1 /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71B91C2A9812A0002F58B1 /* User+CoreDataProperties.swift */; };
 		FA71B9322A9812A0002F58B1 /* Track+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA71B91E2A9812A0002F58B1 /* Track+CoreDataProperties.swift */; };
@@ -172,15 +173,15 @@
 		FA8FE29A2A5A481C005824D6 /* Cataloger */ = {
 			isa = PBXGroup;
 			children = (
-				FA9A43EC2A8AB50000F56182 /* CatalogerModel.swift */,
 				FA8FE29B2A5A481C005824D6 /* CatalogerApp.swift */,
+				FA9A43EC2A8AB50000F56182 /* CatalogerModel.swift */,
+				FA8FE2D32A5C6173005824D6 /* User.swift */,
+				FA8FE2D92A605B33005824D6 /* Catalog.swift */,
 				FA8FE2CB2A5A493F005824D6 /* Album.swift */,
 				FA8FE2CD2A5A498D005824D6 /* Record.swift */,
 				FA8FE2D12A5C4D5C005824D6 /* Track.swift */,
 				FA8FE2CF2A5A53A8005824D6 /* Store.swift */,
-				FA8FE2D32A5C6173005824D6 /* User.swift */,
 				FA9A43EE2A8BE50E00F56182 /* Statistics.swift */,
-				FA8FE2D92A605B33005824D6 /* Catalog.swift */,
 				FA8FE2D72A60541E005824D6 /* UniqueTracks.swift */,
 				FA8FE2D52A5C627B005824D6 /* Trip.swift */,
 				FA8FE29D2A5A481C005824D6 /* ContentView.swift */,
@@ -354,6 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FA59AD092A9F9613008785ED /* Cataloger.xcdatamodel in Sources */,
 				FA9A43EF2A8BE50E00F56182 /* Statistics.swift in Sources */,
 				FA71B93A2A9812A0002F58B1 /* Statistics+CoreDataProperties.swift in Sources */,
 				FA71B9302A9812A0002F58B1 /* User+CoreDataProperties.swift in Sources */,

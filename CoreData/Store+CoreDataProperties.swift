@@ -33,7 +33,7 @@ extension Store {
     }
     
     public var statistics: Statistics {
-        statisticsDat ?? Statistics(context: NSManagedObjectContext())
+        statisticsDat ?? Statistics(context: context!)
     }
 }
 

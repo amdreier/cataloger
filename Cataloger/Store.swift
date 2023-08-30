@@ -11,14 +11,20 @@ import CoreData
 
 /// - TODO: Add metric calculations
 ///     - Breakdowns of metrics by genre
+
+@objc(Store)
 class Store: NSManagedObject {
 //    var name: String = ""
 //    var location: String = ""
 //    var statistics = Statistics()
     
+    
+    let context: NSManagedObjectContext? = nil
+    
     init(context: NSManagedObjectContext, name: String, location: String) {
-        super.init(entity: NSEntityDescription(), insertInto: context)
+        super.init(entity: NSEntityDescription.entity(forEntityName: "Store", in: context)!, insertInto: context)
         
+        self.context = context
         self.nameDat = name
         self.locationDat = location
     }

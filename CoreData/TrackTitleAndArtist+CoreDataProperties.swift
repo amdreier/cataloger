@@ -16,7 +16,7 @@ extension UniqueTracks.TrackTitleAndArtists {
         return NSFetchRequest<UniqueTracks.TrackTitleAndArtists>(entityName: "TrackTitleAndArtists")
     }
 
-    @NSManaged public var artistsDat: [String]?
+    @NSManaged public var artistsDat: [NSString]?
     @NSManaged public var titleDat: String?
     @NSManaged public var tracksDat: NSSet?
     @NSManaged public var uniqueTracksDat: UniqueTracks?

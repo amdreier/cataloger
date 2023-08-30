@@ -15,10 +15,14 @@ import CoreData
  *  - Artists
  *  - Version (Year + Live)
 */
+
+@objc(UniqueTracks)
 class UniqueTracks: NSManagedObject {
     let context: NSManagedObjectContext? = nil
     
     init(context: NSManagedObjectContext) {
+        print("UT")
+        
         super.init(entity: NSEntityDescription(), insertInto: context)
         self.context = context
     }

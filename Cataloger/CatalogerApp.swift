@@ -7,11 +7,13 @@
 
 import SwiftUI
 
+
+// TODO: figure out ContentView mananagedObjectContext for CatalogerModel
 @main
 struct CatalogerApp: App {
     let persistenceController = PersistenceController.shared
     
-    @FetchRequest(sortDescriptors: [])
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.userDat!.usernameDat)])
     private var modelSet: FetchedResults<CatalogerModel>
 
     var body: some Scene {
@@ -21,3 +23,4 @@ struct CatalogerApp: App {
         }
     }
 }
+

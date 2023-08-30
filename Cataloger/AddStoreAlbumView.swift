@@ -188,7 +188,7 @@ struct AddStoreAlbumView: View {
                             .onSubmit {
                                 if !formData.manualMode{
                                     if newArtistName != "" && !formData.artists.contains(newArtistName) {
-                                        record.artistsDat?.append(newArtistName)
+                                        record.artistsDat?.append(newArtistName as NSString)
                                         newArtistName = ""
                                     }
                                 }
@@ -199,7 +199,7 @@ struct AddStoreAlbumView: View {
                             }.onChange(of: focusedElm, perform: { _ in
                                 if !formData.manualMode{
                                     if newArtistName != "" && !formData.artists.contains(newArtistName) {
-                                        record.artistsDat?.append(newArtistName)
+                                        record.artistsDat?.append(newArtistName as NSString)
                                         newArtistName = ""
                                     }
                                 }
@@ -494,7 +494,7 @@ struct AddStoreAlbumView: View {
                                         
                                         if !formData.isMix {
                                             for view in formData.records {
-                                                view.record.artistsDat = Array(Set(view.record.artists + formData.artists))
+                                                view.record.artistsDat = Array(Set(view.record.artists + formData.artists)) as [NSString]
                                             }
                                         }
                                     }.onChange(of: focusedElm, perform: { _ in
@@ -507,7 +507,7 @@ struct AddStoreAlbumView: View {
                                         
                                         if !formData.isMix {
                                             for view in formData.records {
-                                                view.record.artistsDat = Array(Set(view.record.artists + formData.artists))
+                                                view.record.artistsDat = Array(Set(view.record.artists + formData.artists)) as [NSString]
                                             }
                                         }
                                     })

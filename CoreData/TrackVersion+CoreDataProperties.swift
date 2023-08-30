@@ -16,7 +16,7 @@ extension UniqueTracks.TrackVersion {
         return NSFetchRequest<UniqueTracks.TrackVersion>(entityName: "TrackVersion")
     }
 
-    @NSManaged public var artistsDat: [String]?
+    @NSManaged public var artistsDat: [NSString]?
     @NSManaged public var isLiveDat: Bool
     @NSManaged public var releaseYearDat: Int64
     @NSManaged public var titleDat: String?

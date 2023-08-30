@@ -22,15 +22,21 @@ class CatalogerModel: NSManagedObject {
     let context: NSManagedObjectContext? = nil
     
     init(context: NSManagedObjectContext) {
-        super.init(entity: NSEntityDescription(), insertInto: context)
+        
+//        print("CM")
+        super.init(entity: NSEntityDescription.entity(forEntityName: "CatalogerModel", in: context)!, insertInto: context)
         
         self.context = context
     }
     
     func startTrip() {
+        print("")
         endTrip()
+        print("et")
         stop = 0
+        print("sz")
         currentTrip = user.startTrip()
+        print("ct")
     }
     
     func endTrip() {
@@ -44,6 +50,11 @@ class CatalogerModel: NSManagedObject {
         }
         
         currentTrip?.endTrip()
+        do {
+            try context?.save()
+        } catch {
+            print("Error saving trip")
+        }
         currentTrip = nil
     }
     

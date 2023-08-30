@@ -17,7 +17,7 @@ extension Track {
     }
 
     @NSManaged public var titleDat: String?
-    @NSManaged public var artistsDat: [String]?
+    @NSManaged public var artistsDat: [NSString]?
     @NSManaged public var releaseYearDat: Int64
     @NSManaged public var genreDat: String?
     @NSManaged public var isLiveDat: Bool
@@ -33,7 +33,7 @@ extension Track {
     }
     
     public var artists: [String] {
-        artistsDat ?? []
+        artistsDat as? [String] ?? []
     }
     
     public var releaseYear: Int? {

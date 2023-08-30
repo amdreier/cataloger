@@ -20,7 +20,7 @@ extension CatalogerModel {
     @NSManaged public var userDat: User?
 
     public var user: User {
-            userDat ?? User(context: context!)
+        userDat ?? {print("nu"); return User(context: context!)}()
     }
     
     public var stores: [Store] {

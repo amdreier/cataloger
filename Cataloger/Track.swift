@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+@objc(Track)
 class Track: NSManagedObject {
     static func ==(lhs: Track, rhs: Track) -> Bool {
         lhs.title == rhs.title && lhs.artists == rhs.artists && lhs.releaseYear == rhs.releaseYear && lhs.genre == rhs.genre && lhs.isLive == rhs.isLive && lhs.uniqueness == rhs.uniqueness && lhs.record == rhs.record
@@ -22,10 +23,10 @@ class Track: NSManagedObject {
 //    var record: Record?                     // record this track is on
     
     init(context: NSManagedObjectContext, title: String, artists: [String] = [String](), releaseYear: Int? = nil, genre: String = "", isLive: Bool = false, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, record: Record? = nil) {
-        super.init(entity: NSEntityDescription(), insertInto: context)
+        super.init(entity: NSEntityDescription.entity(forEntityName: "Track", in: context)!, insertInto: context)
         
         self.titleDat = title
-        self.artistsDat = artists
+        self.artistsDat = artists as [NSString]
         self.releaseYearDat = releaseYear == nil ? -1 : Int64(releaseYear!)
         self.genreDat = genre
         self.isLiveDat = isLive

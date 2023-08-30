@@ -25,7 +25,7 @@ extension Record {
     @NSManaged public var releaseYearDat: Int64
     @NSManaged public var titleDat: String?
     @NSManaged public var labelDat: String?
-    @NSManaged public var artistsDat: [String]?
+    @NSManaged public var artistsDat: [NSString]?
     @NSManaged public var speedDat: Int64
     @NSManaged public var valueDat: Double
     @NSManaged public var costDat: Double
@@ -80,7 +80,7 @@ extension Record {
     }
     
     public var artists: [String] {
-        artistsDat ?? []
+        artistsDat as? [String] ?? []
     }
     
     public var speed: Int {

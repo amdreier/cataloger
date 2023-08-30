@@ -9,13 +9,20 @@ import Foundation
 import CoreData
 
 /// - TODO: Add and remove records from albums
-
+@objc(Catalog)
 class Catalog: NSManagedObject {
     var allAlbums = [Album]()
 //    var uniqueTracks = UniqueTracks()
     
+    let context: NSManagedObjectContext? = nil
     
-
+    init(context: NSManagedObjectContext) {
+//        print("C")
+        
+        super.init(entity: NSEntityDescription.entity(forEntityName: "Catalog", in: context)!, insertInto: context)
+        self.context = context
+    }
+    
     
     func getNumRecords() -> Int {
         var count: Int = 0

@@ -73,7 +73,7 @@ extension Trip {
     }
     
     public var numRecordsBought: Int {
-        if numRecordsBought != nil {
+        if numRecordsBoughtDat != nil {
             return Int(truncatingIfNeeded: numRecordsBoughtDat)
         } else {
             return 0

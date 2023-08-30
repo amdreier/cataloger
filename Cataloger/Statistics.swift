@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+@objc(Statistics)
 class Statistics: NSManagedObject {
 //    var timeSpent: Int = 0
 //    var recordsBought: Int = 0
@@ -27,7 +28,7 @@ class Statistics: NSManagedObject {
 //    var averageSellPrice: Double = 0
     
     init(context: NSManagedObjectContext) {
-        super.init(entity: NSEntityDescription(), insertInto: context)
+        super.init(entity: NSEntityDescription.entity(forEntityName: "Statistics", in: context)!, insertInto: context)
     }
     
     func updateStatistics(timeSpent: Int, recordsBought: Int, recordsSold: Int, totalSpent: Double, totalEarned: Double, isTrip: Bool, travelTime: Int, costSold: Double = 0, valueAdded: Double = 0, valueSold: Double = 0) {

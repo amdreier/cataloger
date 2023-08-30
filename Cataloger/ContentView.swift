@@ -25,9 +25,11 @@ struct ContentView: View {
         return formatter
     }()
     
-    
-    
     @EnvironmentObject var model: CatalogerModel
+    
+//    init(viewModel: @autoclosure @escaping () -> CatalogerModel) {
+//        _model = StateObject(wrappedValue: viewModel())
+//    }
     
     var body: some View {
         NavigationView {
@@ -60,6 +62,15 @@ struct ContentView: View {
                     }.foregroundColor(.green)
                     NavigationLink(destination: TripView(), label: {Text("Start Trip")})
                         .simultaneousGesture(TapGesture().onEnded {
+                            
+//                            do {
+//                                model.user.statistics.averageSellPriceDat += 10
+//
+//                                try viewContext.save()
+//                            } catch {
+//                                print("error saving contextView")
+//                            }
+//
                         model.startTrip()
                     })
                     Spacer()
@@ -131,8 +142,8 @@ struct ContentView: View {
 //}()
 
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)//.environmentObject(CatalogerModel(context: PersistenceController.preview.container))
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)//.environmentObject(CatalogerModel(context: PersistenceController.preview.container))
+//    }
+//}

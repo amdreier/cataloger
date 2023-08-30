@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+@objc(Album)
 class Album: NSManagedObject {
     static func ==(lhs: Album, rhs: Album) -> Bool {
         lhs.isCompilation == rhs.isCompilation && lhs.isMix == rhs.isMix && lhs.isGH == rhs.isGH && lhs.isCollection == rhs.isCollection && lhs.isLive == rhs.isLive && lhs.genre == rhs.genre && lhs.releaseYear == rhs.releaseYear && lhs.title == rhs.title && lhs.label == rhs.label && lhs.artists == rhs.artists && lhs.value == rhs.value && lhs.cost == rhs.cost && lhs.uniqueness == rhs.uniqueness && lhs.store == rhs.store && lhs.records == rhs.records
@@ -31,7 +32,7 @@ class Album: NSManagedObject {
 //    var records = [Record]()
     
     init(context: NSManagedObjectContext, isCompilation: Bool = false, isMix: Bool = false, isGH: Bool = false, isCollection: Bool = false, isLive: Bool = false, genre: String = "N/A", releaseYear: Int? = nil, title: String = "N/A", label: String = "N/A", artists: [String] = [String](), value: Double = 0, cost: Double = 0, uniqueness: UniqueTracks.Uniqueness = UniqueTracks.Uniqueness.unique, store: Store? = nil, records: [Record] = [Record]()) {
-        super.init(entity: NSEntityDescription(), insertInto: context)
+        super.init(entity: NSEntityDescription.entity(forEntityName: "Album", in: context)!, insertInto: context)
         
         self.isCompilationDat = isCompilation
         self.isMixDat = isMix
@@ -42,7 +43,7 @@ class Album: NSManagedObject {
         self.releaseYearDat = releaseYear == nil ? -1 : Int64(releaseYear!)
         self.titleDat = title
         self.labelDat = label
-        self.artistsDat = artists
+        self.artistsDat = artists as [NSString]
         self.valueDat = value
         self.costDat = cost
         self.uniquenessDat = Int64(uniqueness.rawValue)

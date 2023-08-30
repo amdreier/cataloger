@@ -16,7 +16,7 @@ extension Album {
         return NSFetchRequest<Album>(entityName: "Album")
     }
 
-    @NSManaged public var artistsDat: [String]?
+    @NSManaged public var artistsDat: [NSString]?
     @NSManaged public var costDat: Double
     @NSManaged public var genreDat: String?
     @NSManaged public var isCollectionDat: Bool
@@ -77,7 +77,7 @@ extension Album {
     }
     
     public var artists: [String] {
-        artistsDat ?? []
+        artistsDat as? [String] ?? []
     }
     
     public var value: Double {
