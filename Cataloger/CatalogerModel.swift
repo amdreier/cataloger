@@ -22,8 +22,6 @@ class CatalogerModel: NSManagedObject {
     let context: NSManagedObjectContext? = nil
     
     init(context: NSManagedObjectContext) {
-        
-//        print("CM")
         super.init(entity: NSEntityDescription.entity(forEntityName: "CatalogerModel", in: context)!, insertInto: context)
         
         self.context = context

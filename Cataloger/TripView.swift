@@ -64,6 +64,8 @@ struct TripView: View {
                 }.scrollContentBackground(.hidden)
             }
             .navigationBarItems(trailing: Button(action : {
+                model.objectWillChange.send()
+                model.user.objectWillChange.send()
                 model.endTrip()
                 self.mode.wrappedValue.dismiss()
             }) {

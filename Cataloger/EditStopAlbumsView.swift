@@ -32,7 +32,7 @@ struct EditStopAlbumsView: View {
                 }.scrollContentBackground(.hidden)
             }
             .navigationBarItems(trailing: Button(action: {
-                
+                model.objectWillChange.send()
                 self.mode.wrappedValue.dismiss()
             }){
                 HStack{

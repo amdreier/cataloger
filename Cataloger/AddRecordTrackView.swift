@@ -98,6 +98,7 @@ struct AddRecordTrackView: View {
                 .scrollContentBackground(.hidden)
             }
             .navigationBarItems(trailing: Button(action: {
+                model.objectWillChange.send()
                 if title != "" {
                     record.addToTracksDat(Track(context: viewContext, title: title, artists: artists, releaseYear: (releaseYearStr == "" ? nil : Int(releaseYearStr)), genre: genre, isLive: isLive))
                 }

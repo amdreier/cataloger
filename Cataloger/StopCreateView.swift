@@ -34,6 +34,7 @@ struct StopCreateView: View {
                                 VStack {
                                     ForEach(model.stores, id: \.self) { store in
                                         Button {
+                                            model.objectWillChange.send()
                                             model.selectStore(store: store)
                                         } label: {
                                             HStack {
@@ -55,6 +56,7 @@ struct StopCreateView: View {
                         } else {
                             VStack {
                                 Button {
+                                    model.objectWillChange.send()
                                     model.deselectStore()
                                 } label: {
                                     HStack {
@@ -91,6 +93,7 @@ struct StopCreateView: View {
                 
             }
             .navigationBarItems(trailing: Button(action: {
+                model.objectWillChange.send()
                 model.addStop(timeSpent: timeSpent, timeTraveled: timeTraveled)
                 self.mode.wrappedValue.dismiss()
             }){

@@ -34,6 +34,7 @@ struct NewStoreView: View {
                 }
             }
             .navigationBarItems(trailing: Button(action: {
+                model.objectWillChange.send()
                 if storeName != "" {
                     model.addStore(store: Store(context: viewContext, name: storeName, location: storeLocation))
                 }

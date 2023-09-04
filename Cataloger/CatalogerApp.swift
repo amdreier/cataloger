@@ -18,7 +18,8 @@ struct CatalogerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            //ContentView()
+            CoreDataLoader()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)//.environmentObject(modelSet.first ?? CatalogerModel(context: persistenceController.container.viewContext))
         }
     }

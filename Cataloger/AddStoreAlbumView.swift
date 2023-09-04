@@ -538,6 +538,7 @@ struct AddStoreAlbumView: View {
             }
             
             .navigationBarItems(trailing: Button(action: {
+                model.objectWillChange.send()
                 if formData.title != "" {
                     var recordsArr = [Record]()
                     for view in formData.records {
