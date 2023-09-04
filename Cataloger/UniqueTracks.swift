@@ -21,33 +21,51 @@ class UniqueTracks: NSManagedObject {
     let context: NSManagedObjectContext? = nil
     
     init(context: NSManagedObjectContext) {
-        print("UT")
-        
-        super.init(entity: NSEntityDescription(), insertInto: context)
+        super.init(entity: NSEntityDescription.entity(forEntityName: "UniqueTracks", in: context)!, insertInto: context)
         self.context = context
+    }
+    
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+        
+        self.context = context!
     }
     
     
     /* Dictionary Key data structures */
+    @objc(TrackTitle)
     class TrackTitle: NSManagedObject {
         var title: String = ""
         
         init(context: NSManagedObjectContext, _ title: String) {
-            super.init(entity: NSEntityDescription(), insertInto: context)
+            super.init(entity: NSEntityDescription.entity(forEntityName: "TrackTitle", in: context)!, insertInto: context)
             self.titleDat = title
         }
+        
+        @objc
+        private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+            super.init(entity: entity, insertInto: context)
+        }
     }
+    @objc(trackTitleAndArtists)
     class TrackTitleAndArtists: NSManagedObject {
         var title: String = ""
         var artists: [String] = []
         
         init(context: NSManagedObjectContext, title: String, artists: [String]) {
-            super.init(entity: NSEntityDescription(), insertInto: context)
+            super.init(entity: NSEntityDescription.entity(forEntityName: "TrackTitleAndArtists", in: context)!, insertInto: context)
             
             self.title = title
             self.artists = artists
         }
+        
+        @objc
+        private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+            super.init(entity: entity, insertInto: context)
+        }
     }
+    @objc(TrackVersion)
     class TrackVersion: NSManagedObject {
         var title: String = ""
         var artists: [String] = []
@@ -55,12 +73,17 @@ class UniqueTracks: NSManagedObject {
         var isLive: Bool = false
         
         init(context: NSManagedObjectContext, title: String, artists: [String], releaseYear: Int? = nil, isLive: Bool) {
-            super.init(entity: NSEntityDescription(), insertInto: context)
+            super.init(entity: NSEntityDescription.entity(forEntityName: "TrackVersion", in: context)!, insertInto: context)
             
             self.title = title
             self.artists = artists
             self.releaseYear = releaseYear
             self.isLive = isLive
+        }
+        
+        @objc
+        private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+            super.init(entity: entity, insertInto: context)
         }
     }
     

@@ -29,7 +29,7 @@ extension User {
     }
     
     public var catalog: Catalog {
-        catalogDat ?? Catalog(context: context!)
+        catalogDat ?? {catalogDat = Catalog(context: context!); return catalogDat!}()
     }
     
     public var albumWishlist: [Album] {
@@ -57,7 +57,7 @@ extension User {
     }
     
     public var statistics: Statistics {
-        statisticsDat ?? Statistics(context: context!)
+        statisticsDat ?? {statisticsDat = Statistics(context: context!); return statisticsDat!}()
     }
 }
 

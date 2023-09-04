@@ -11,16 +11,21 @@ import CoreData
 /// - TODO: Add and remove records from albums
 @objc(Catalog)
 class Catalog: NSManagedObject {
-    var allAlbums = [Album]()
+//    var allAlbums = [Album]()
 //    var uniqueTracks = UniqueTracks()
     
     let context: NSManagedObjectContext? = nil
     
     init(context: NSManagedObjectContext) {
-//        print("C")
-        
         super.init(entity: NSEntityDescription.entity(forEntityName: "Catalog", in: context)!, insertInto: context)
         self.context = context
+    }
+    
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+        
+        self.context = context!
     }
     
     
@@ -34,7 +39,7 @@ class Catalog: NSManagedObject {
     }
     
     func addAlbum(album: Album) -> UniqueTracks.Uniqueness {
-        allAlbums.append(album)
+        addToAllAlbumsDat(album)
         var uniqueness = UniqueTracks.Uniqueness.version
         for track in album.getTracks() {
             let trackUniqueness = uniqueTracks?.addTrack(track: track) ?? UniqueTracks.Uniqueness.unique
@@ -48,16 +53,13 @@ class Catalog: NSManagedObject {
     }
     
     func removeAlbum(album: Album) -> Bool {
-        let index = allAlbums.firstIndex(of: album)
-        if index != nil {
-            allAlbums.remove(at: index!)
-            for track in album.getTracks() {
-                let _ = uniqueTracks?.removeTrack(track: track)
-            }
-            return true
-        } else {
-            return false
+        let count = allAlbums.count
+        
+        removeFromAllAlbumsDat(album)
+        for track in album.getTracks() {
+            let _ = uniqueTracks?.removeTrack(track: track)
         }
+        return allAlbums.count != count
     }
     
     func addRecord(record: Record, album: Album) -> Bool {

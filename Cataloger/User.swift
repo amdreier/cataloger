@@ -26,9 +26,15 @@ class User: NSManagedObject {
     let context: NSManagedObjectContext? = nil
     
     init(context: NSManagedObjectContext) {
-//        print("U")
         super.init(entity: NSEntityDescription.entity(forEntityName: "User", in: context)!, insertInto: context)
         self.context = context
+    }
+    
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+        
+        self.context = context!
     }
     
     func setUsername(username: String) {

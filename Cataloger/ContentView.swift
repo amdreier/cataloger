@@ -18,6 +18,9 @@ struct ContentView: View {
 //        animation: .default)
 //    private var items: FetchedResults<Item>
     
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.userDat!.usernameDat)])
+    private var modelSet: FetchedResults<CatalogerModel>
+    
     let currencyFormatter = {
         var formatter = NumberFormatter()
         formatter.numberStyle = .currency
@@ -25,7 +28,11 @@ struct ContentView: View {
         return formatter
     }()
     
-    @EnvironmentObject var model: CatalogerModel
+//    @EnvironmentObject var model: CatalogerModel
+    
+    var model: CatalogerModel {
+        modelSet.first ?? CatalogerModel(context: viewContext)
+    }
     
 //    init(viewModel: @autoclosure @escaping () -> CatalogerModel) {
 //        _model = StateObject(wrappedValue: viewModel())

@@ -12,6 +12,7 @@ import CoreData
 class Trip: NSManagedObject {
     let context: NSManagedObjectContext? = nil
     
+    @objc(Stop)
     class Stop: NSManagedObject {
         var store: Store? = nil
         var newAlbums = [Album]()
@@ -22,8 +23,12 @@ class Trip: NSManagedObject {
         var moneyEarned: Double = 0
         var timeTraveled: Int = 0
         
+        let context: NSManagedObjectContext? = nil
+        
         init(context: NSManagedObjectContext, store: Store, newAlbums: [Album] = [Album](), soldAlbums: [Album] = [Album](), timeSpent: Int, moneySpent: Double, moneyEarned: Double, timeTraveled: Int) {
-            super.init(entity: NSEntityDescription(), insertInto: context)
+            super.init(entity: NSEntityDescription.entity(forEntityName: "Stop", in: context)!, insertInto: context)
+            
+            self.context = context
             
             self.store = store
             self.newAlbums = newAlbums
@@ -32,6 +37,13 @@ class Trip: NSManagedObject {
             self.moneySpent = moneySpent
             self.moneyEarned = moneyEarned
             self.timeTraveled = timeTraveled
+        }
+        
+        @objc
+        private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+            super.init(entity: entity, insertInto: context)
+            
+            self.context = context!
         }
     }
     
@@ -63,10 +75,17 @@ class Trip: NSManagedObject {
 //    var user: User = User()
     
     init(context: NSManagedObjectContext, _ user: User) {
-        super.init(entity: NSEntityDescription(), insertInto: context)
+        super.init(entity: NSEntityDescription.entity(forEntityName: "Trip", in: context)!, insertInto: context)
         
         self.context = context
         self.userDat = user
+    }
+    
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+        
+        self.context = context!
     }
     
     enum illegalArgument: Error {

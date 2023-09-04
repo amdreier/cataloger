@@ -34,6 +34,11 @@ class Track: NSManagedObject {
         self.recordDat = record
     }
     
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
+    
     static func artistsStr(artists: [String]) -> String {
         var output: String = ""
         for artist in artists {

@@ -53,6 +53,11 @@ class Record: NSManagedObject {
         self.tracksDat = NSSet(array: tracks)
     }
     
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
+    
     func removeTrack(_ track: Track) -> Bool {
         removeFromTracksDat(track)
         

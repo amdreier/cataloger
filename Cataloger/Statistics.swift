@@ -31,6 +31,11 @@ class Statistics: NSManagedObject {
         super.init(entity: NSEntityDescription.entity(forEntityName: "Statistics", in: context)!, insertInto: context)
     }
     
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
+    
     func updateStatistics(timeSpent: Int, recordsBought: Int, recordsSold: Int, totalSpent: Double, totalEarned: Double, isTrip: Bool, travelTime: Int, costSold: Double = 0, valueAdded: Double = 0, valueSold: Double = 0) {
         
         self.timeSpentDat += Int64(timeSpent)

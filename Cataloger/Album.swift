@@ -51,6 +51,11 @@ class Album: NSManagedObject {
         self.recordsDat = NSSet(array: records)
     }
     
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+    }
+    
     func updateUniqueness(newUniqueness: UniqueTracks.Uniqueness) {
         if newUniqueness > self.uniqueness {
             self.uniquenessDat = Int64(newUniqueness.rawValue)

@@ -29,6 +29,13 @@ class Store: NSManagedObject {
         self.locationDat = location
     }
     
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+        
+        self.context = context!
+    }
+    
     static func ==(lhs: Store, rhs: Store) -> Bool {
         (lhs.name.caseInsensitiveCompare(rhs.name) == .orderedSame) && (lhs.location.caseInsensitiveCompare(rhs.location) == .orderedSame)
     }

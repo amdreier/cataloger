@@ -20,6 +20,14 @@ extension Catalog {
     @NSManaged public var uniqueTracks: UniqueTracks?
     @NSManaged public var userDat: User?
     
+    public var allAlbums: [Album] {
+        let albumSet = allAlbumsDat as? Set<Album> ?? []
+        
+        return albumSet.sorted {
+            $0.title < $1.title
+        }
+    }
+    
     
     
 //    public var uniqueTracks: UniqueTracks {

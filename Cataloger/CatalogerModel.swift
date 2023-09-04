@@ -29,14 +29,16 @@ class CatalogerModel: NSManagedObject {
         self.context = context
     }
     
+    @objc
+    private override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertInto: context)
+        self.context = context!
+    }
+    
     func startTrip() {
-        print("")
         endTrip()
-        print("et")
         stop = 0
-        print("sz")
         currentTrip = user.startTrip()
-        print("ct")
     }
     
     func endTrip() {
@@ -52,6 +54,8 @@ class CatalogerModel: NSManagedObject {
         currentTrip?.endTrip()
         do {
             try context?.save()
+            print("saving")
+            print("\(user.trips.count)")
         } catch {
             print("Error saving trip")
         }
